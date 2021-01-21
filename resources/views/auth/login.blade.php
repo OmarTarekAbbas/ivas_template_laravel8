@@ -1,73 +1,89 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Template Login</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+        <!--base css styles-->
+        <link rel="stylesheet" href="{{url('assets/bootstrap/css/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{url('assets/font-awesome/css/font-awesome.min.css')}}">
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+        <!--page specific css styles-->
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+        <!--flaty css styles-->
+        <link rel="stylesheet" href="{{url('css/flaty.css')}}">
+        <link rel="stylesheet" href="{{url('css/flaty-responsive.css')}}">
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+        <link rel="shortcut icon" href="{{url('img/favicon.png')}}">
+    </head>
+    <body class="login-page">
+
+        <!-- BEGIN Main Content -->
+        <div class="login-wrapper">
+
+            <!-- BEGIN Login Form -->
+                {!! Form::open(['url'=>'login']) !!}
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <h3>Login to your account</h3>
+                    @include('errors')
+                    <hr/>
+                    <div class="form-group">
+                        <div class="controls">
+                            {!! Form::email("email",null ,['class'=>'form-control','placeholder'=>'Email']) !!}<br>
                         </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="controls">
+                            {!! Form::password('password' ,['class'=>'form-control','placeholder'=>'password']) !!}<br>
                         </div>
+                    </div>
 
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
+                    <div class="form-group">
+                        <div class="controls">
+                            {!! Form::submit('Login',['class'=>'btn btn-primary form-control']) !!}
                         </div>
+                    </div>
+                    <hr/>
+                    <p class="clearfix">
+                        <a href="{{ url('password/reset') }}" class="goto-forgot pull-left">Forgot Password?</a>
+                        <!--a href="#" class="goto-register pull-right">Sign up now</a-->
+                    </p>
+                {!! Form::close() !!}
+            <!-- END Login Form -->
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
-    </div>
-</div>
-@endsection
+        <!-- END Main Content -->
+
+
+        <!--basic scripts-->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+        <script>window.jQuery || document.write('<script src="{{url('assets/jquery/jquery-2.1.4.min.js')}}"><\/script>')</script>
+        <script src="{{url('assets/bootstrap/js/bootstrap.min.js')}}"></script>
+
+        <script type="text/javascript">
+            function goToForm(form)
+            {
+                $('.login-wrapper > form:visible').fadeOut(500, function(){
+                    $('#form-' + form).fadeIn(500);
+                });
+            }
+            $(function() {
+                $('.goto-login').click(function(){
+                    goToForm('login');
+                });
+                $('.goto-forgot').click(function(){
+                    goToForm('forgot');
+                });
+                $('.goto-register').click(function(){
+                    goToForm('register');
+                });
+            });
+        </script>
+    </body>
+</html>
