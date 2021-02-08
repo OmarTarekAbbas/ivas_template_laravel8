@@ -1,17 +1,17 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class DeleteAll extends Model
 {
-    protected $table = "delete_all_flags"; 
-    protected $fillable = ['route_id'] ; 
+    protected $table = "delete_all_flags";
+    protected $fillable = ['route_id'] ;
 
     public function route_ref()
     {
-        return $this->belongsTo('App\RouteModel','route_id','id') ; 
+        return $this->belongsTo('App\Models\RouteModel','route_id','id') ;
     }
 
 }

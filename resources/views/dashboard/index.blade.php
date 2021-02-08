@@ -1,7 +1,6 @@
 @extends('template')
 @section('content')
 <!-- BEGIN Tiles -->
-    @if(Auth::user()->hasRole('super_admin'))
         <div class="row">
             <div class="col-md-7">
                 <div class="row">
@@ -17,5 +16,4 @@
                 </div>
             </div>
         </div>
-    @endif
 @stop

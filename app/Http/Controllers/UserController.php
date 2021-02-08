@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\User;
+use App\Models\UserHasRoles;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -16,18 +17,18 @@ class UserController extends Controller
 {
 
     public function index()
-    { 
+    {
         $userdata = \Auth::user() ;
-        $userRole = $userdata->roles()->first() ; 
-        $userPiriority = 999 ; 
+        $userRole = $userdata->roles()->first() ;
+        $userPiriority = 999 ;
         if($userRole)
-            $userPiriority = $userRole->role_priority ; 
+            $userPiriority = $userRole->role_priority ;
         $users = User::join('user_has_roles','user_has_roles.user_id','=','users.id')
         ->join('roles','user_has_roles.role_id','=','roles.id')
         ->where('roles.role_priority','<=',$userPiriority)
         ->select('roles.name AS role','users.*')
-        ->get() ; 
- 
+        ->get() ;
+
         return view('users.index', compact('users'));
     }
 
@@ -40,8 +41,8 @@ class UserController extends Controller
 
 
     public function store(Request $request)
-    {        
-        # code...
+    {
+
         $validator = Validator::make($request->all(),[
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
@@ -52,19 +53,17 @@ class UserController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-
-        $user = new \App\User();
-
+        $user = new User();
         $user->email = $request->email;
         $user->name = $request->name;
         $user->password = Hash::make($request->password);
         if(isset($request->phone)&&!empty($request->phone))
             $user->phone = $request->phone ;
 
-
         $user->save();
-
-        $user->assignRole($request->role);
+        if($request->role) {
+            $user->roles()->attach($request->role);
+        }
 
         $request->session()->flash('success','User Added Successfully');
         return redirect('users');
@@ -73,10 +72,13 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        $user = User::select('*','users.id as id' , 'users.name as user_name', 'roles.name as role_name')
+        ->join('user_has_roles', 'user_has_roles.user_id', '=', 'users.id')
+        ->join('roles', 'roles.id', '=', 'user_has_roles.role_id')
+        ->where('users.id', $id)
+        ->first();
 
-        $user = \App\User::findOrfail($id);
         $roles = Role::all();
-
         return view('users.edit', compact('user', 'roles'));
     }
 
@@ -84,7 +86,6 @@ class UserController extends Controller
     public function update($id,Request $request)
     {
 
-        # code...
         $validator = Validator::make($request->all(),[
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
@@ -94,8 +95,7 @@ class UserController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        $user = \App\User::findOrfail($id);
-
+        $user = User::findOrfail($id);
         $user->email = $request->email;
         $user->name = $request->name;
         if(isset($request->password) && !empty($request->password))
@@ -106,22 +106,21 @@ class UserController extends Controller
         if(isset($request->phone)&&!empty($request->phone))
             $user->phone = $request->phone ;
 
-        \Session::flash('success','User updated successfully');
         $user->save();
-
-        $user->syncRoles([$request->role]);
-
-        // dd($user->hasAnyRole(['admin']));
-
+        if($request->role) {
+            $user->roles()->sync($request->role);
+        }
+        \Session::flash('success','User updated successfully');
         return redirect('users');
     }
 
 
     public function destroy($id)
     {
-        if (Auth::user()->hasRole('super_admin')) {
+        
+        if (Auth::user()->roles->first()->name == "super_admin") {
             # code...
-            $user = \App\User::findOrfail($id);
+            $user = User::findOrfail($id);
             if (file_exists($user->profile_image))
                 Storage::delete($user->profile_image);
             $user->delete();
@@ -137,7 +136,7 @@ class UserController extends Controller
     {
 
             # code...
-        $user = \App\User::findOrfail($request->user_id);
+        $user = User::findOrfail($request->user_id);
         $user->assignRole($request->role_name);
             \Session::flash('success','Role Added successfully');
         return redirect('users/edit/'.$request->user_id);
@@ -148,7 +147,7 @@ class UserController extends Controller
     {
 
         # code...
-        $user = \App\User::findorfail($user_id);
+        $user = User::findorfail($user_id);
 
         $user->removeRole(str_slug($role, ' '));
 

@@ -15,8 +15,8 @@ class CreateUserHasPermissionsTable extends Migration {
 		Schema::create('user_has_permissions', function(Blueprint $table)
 		{
 			$table->integer('user_id')->unsigned();
-			 $table->integer('permission_id')->unsigned()->index('user_has_permissions_permission_id_foreign');
-			 $table->primary(['user_id','permission_id']);
+			$table->integer('permission_id')->unsigned()->index('user_has_permissions_permission_id_foreign');
+			$table->primary(['user_id','permission_id']);
 		});
 	}
 

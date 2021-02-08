@@ -1,7 +1,5 @@
-
 <?php $__env->startSection('content'); ?>
 <!-- BEGIN Tiles -->
-    <?php if(Auth::user()->hasRole('super_admin')): ?>
         <div class="row">
             <div class="col-md-7">
                 <div class="row">
@@ -17,6 +15,6 @@
                 </div>
             </div>
         </div>
-    <?php endif; ?>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\ivas_template_laravel8.0\resources\views/dashboard/index.blade.php ENDPATH**/ ?>

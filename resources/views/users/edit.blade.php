@@ -20,8 +20,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 col-lg-2 control-label">@lang('messages.users.user_name') *</label>
                             <div class="col-sm-9 col-lg-10 controls">
-                                {{-- {!! Form::text('category_name',null,['placeholder'=>'Category Name','class'=>'form-control input-lg']) !!} --}}
-                                <input type="text" name="name" placeholder="@lang('messages.users.user_name')" value="{{$user->name}}" class="form-control input-lg" required>
+                                <input type="text" name="name" placeholder="@lang('messages.users.user_name')" value="{{$user->user_name}}" class="form-control input-lg" required>
                                 <span class="help-inline">@lang('messages.users.add_user')</span>
                             </div>
                         </div>
@@ -49,12 +48,13 @@
                                 <input type="text" name="phone" placeholder="@lang('messages.users.phone')" value="{{$user->phone}}" class="form-control input-lg" >
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label class="col-sm-3 col-lg-2 control-label">@lang('messages.users.role') *</label>
                             <div class="col-sm-9 col-lg-10 controls">
                                 <select class="form-control chosen-rtl" data-placeholder="Choose a Role" name="role" tabindex="1">
                                     @foreach($roles as $role)
-                                        <option value="{{$role->name}}" @if($user->roles()->first()->name==$role->name) selected="selected" @endif>{{$role->name}}</option>
+                                        <option value="{{$role->id}}" @if($user->role_name == $role->name) selected="selected" @endif>{{$role->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
