@@ -21,7 +21,7 @@
                         {!! Form::model($route, ['url'=>'all_routes/'.$route->id.'/update' , 'method' => 'post', 'class' => 'form-horizontal' ]) !!}
 
                     @else
-                        {!! Form::open(['method' => 'POST', 'url'=>'all_routes' , 'class' => 'form-horizontal']) !!}
+                        {!! Form::open(['method' => 'POST', 'url'=>'all_routes_create' , 'class' => 'form-horizontal']) !!}
 
                     @endif
                         @include('route._form')

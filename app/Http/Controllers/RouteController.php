@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\RouteModel ;
-use App\Role ;
+use App\Models\RouteModel ;
+use App\Models\Role ;
 use DB;
-use App\RoleRoute ;
+use App\Models\RoleRoute ;
 use Validator;
 class RouteController extends Controller
 {
@@ -331,8 +331,8 @@ class RouteController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(),[
-            'method' => 'required|min:3|unique_with:routes,method,route,'.$id,
-            'route' => 'required|min:3|unique_with:routes,method,route,'.$id,
+            'method' => 'required|min:3',
+            'route' => 'required|min:3',
             'controller_name' => 'required' ,
             'function_name' => 'required'
         ]);
@@ -357,7 +357,7 @@ class RouteController extends Controller
             }
         }
         \Session::flash('success',\Lang::get('messages.custom-messages.updated'));
-        return redirect('all_routes') ;        
+        return redirect('all_routes') ;
     }
 
     /**
@@ -370,6 +370,6 @@ class RouteController extends Controller
     {
         RouteModel::destroy($id) ;
         \Session::flash('success',\Lang::get('messages.custom-messages.deleted'));
-        return redirect('all_routes') ;        
+        return redirect('all_routes') ;
     }
 }

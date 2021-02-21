@@ -17,7 +17,7 @@
                     <div class="btn-toolbar pull-right">
                         <div class="btn-group">
                             <a class="btn btn-circle show-tooltip" title="" href="{{url('roles/new')}}" data-original-title="Add new record"><i class="fa fa-plus"></i></a>
-							<?php 
+							<?php
 								$table_name = "roles" ;
 							?>
 							@include('partial.delete_all')
@@ -29,7 +29,7 @@
 							<thead>
 								<tr>
 									<th style="width:18px"><input type="checkbox" onclick="select_all('{{$table_name}}')"></th>
-									<th>Role name</th> 
+									<th>Role name</th>
 									<th class="visible-md visible-lg" style="width:130px">Action</th>
 								</tr>
 							</thead>
@@ -39,9 +39,9 @@
 						                <td>{{$role->name}}</td>
 						                <td class="visible-md visible-lg">
 						                    <div class="btn-group">
-                                                <a class="btn btn-sm show-tooltip btn-success" data-original-title="View Access"  href="{{url('roles/'.$role->id.'/view_access')}}">
+                                                <!-- <a class="btn btn-sm show-tooltip btn-success" data-original-title="View Access"  href="{{url('roles/'.$role->id.'/view_access')}}">
                                                     <i class="fa fa-eye"></i>
-                                                </a>
+                                                </a> -->
 						                        <a class="btn btn-sm show-tooltip" title="" href="{{url('roles/'.$role->id.'/edit')}}" data-original-title="Edit"><i class="fa fa-edit"></i></a>
 						                        <a class="btn btn-sm btn-danger show-tooltip" title="" onclick="return confirm('Are you sure you want to delete this ?');" href="{{url('roles/'.$role->id.'/delete')}}" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
 						                    </div>

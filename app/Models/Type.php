@@ -11,7 +11,7 @@ class Type extends Model
 
     public function settings()
     {
-        return $this->hasMany('App\Setting');
+        return $this->hasMany('App\Models\Setting');
     }
 
 }

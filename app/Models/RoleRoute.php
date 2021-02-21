@@ -11,11 +11,11 @@ class RoleRoute extends Model
 
     public function route()
     {
-        return $this->belongsTo('App\RouteModel','route_id','id');
+        return $this->belongsTo('App\Models\RouteModel','route_id','id');
     }
 
     public function role()
     {
-        return $this->belongsTo('App\Role','role_id','id');
+        return $this->belongsTo('App\Models\Role','role_id','id');
     }
 }
