@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Language;
@@ -17,7 +17,7 @@ class StaticTranslation extends Model
     {
     	return $this->hasMany('App\StaticBody');
     }
-    
+
     public function getBody($locale='')
     {
     	if (!$locale) {
@@ -40,9 +40,9 @@ class StaticTranslation extends Model
         }else{
             $language = Language::where('short_code',$locale)->first();
         }
-        
+
         $body = StaticTranslation::where('key_word',$key_word)->first()->translations()->where('language_id',$language->id)->first()->body;
-        
+
         return $body;
     }
 }

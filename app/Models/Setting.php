@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,7 +16,7 @@ class Setting extends Model
 
     protected $table = 'settings';
     protected $fillable = ['key','value','type_id','order'];
-    
+
     public function type()
     {
         return $this->belongsTo('App\Type');
