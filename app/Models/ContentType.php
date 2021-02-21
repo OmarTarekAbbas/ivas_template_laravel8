@@ -10,6 +10,6 @@ class ContentType extends Model
 
     public function contents()
     {
-      return $this->hasMany('App\Content','content_type_id','id');
+      return $this->hasMany('App\Models\Content','content_type_id','id');
     }
 }

@@ -57,29 +57,29 @@ class Content extends Model
 
   public function category()
   {
-    return $this->belongsTo('App\Category','category_id','id');
+    return $this->belongsTo('App\Models\Category','category_id','id');
   }
 
   public function type()
   {
-    return $this->belongsTo('App\ContentType','content_type_id','id');
+    return $this->belongsTo('App\Models\ContentType','content_type_id','id');
   }
 
   // rbt sms code realtion
   public function rbt_operators()
   {
-    return $this->belongsToMany('App\Operator','rbt_codes','content_id','operator_id')
+    return $this->belongsToMany('App\Models\Operator','rbt_codes','content_id','operator_id')
     ->withPivot('id','rbt_code')->withTimestamps();
   }
 
   public function operators()
   {
-    return $this->belongsToMany('App\Operator','posts','content_id','operator_id')
+    return $this->belongsToMany('App\Models\Operator','posts','content_id','operator_id')
     ->withPivot('id','published_date','active','url','user_id')->withTimestamps();
   }
 
   public function posts()
   {
-    return $this->hasMany('App\Post','content_id','id');
+    return $this->hasMany('App\Models\Post','content_id','id');
   }
 }

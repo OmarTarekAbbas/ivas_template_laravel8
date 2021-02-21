@@ -27,17 +27,17 @@ class Operator extends Model
 
   public function country()
   {
-      return $this->belongsTo('App\Country') ;
+      return $this->belongsTo('App\Models\Country') ;
   }
 
   public function posts()
   {
-    return $this->hasMany('App\Post','operator_id','id');
+    return $this->hasMany('App\Models\Post','operator_id','id');
   }
 
   public function contents()
   {
-    return $this->belongsToMany('App\Content','posts','operator_id','content_id')
+    return $this->belongsToMany('App\Models\Content','posts','operator_id','content_id')
     ->withPivot('id','published_date','active','url','user_id')->withTimestamps();
   }
 

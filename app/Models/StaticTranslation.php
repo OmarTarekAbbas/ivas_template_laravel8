@@ -10,7 +10,7 @@ class StaticTranslation extends Model
 
     public function languages()
     {
-    	return $this->belongsToMany('App\Language','static_bodies','static_translation_id','language_id')->withPivot('body');
+    	return $this->belongsToMany('App\Models\Language','static_bodies','static_translation_id','language_id')->withPivot('body');
     }
 
     public function translations()

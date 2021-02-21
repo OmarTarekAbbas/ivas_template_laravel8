@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\StaticTranslation;
-use App\Language;
+use App\Models\StaticTranslation;
+use App\Models\Language;
 use Validator;
 
 class StaticTranslationController extends Controller
@@ -47,7 +47,7 @@ class StaticTranslationController extends Controller
                         "key_word" => "required",
                         'translations' => 'required'
                     ]);
-        
+
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
@@ -102,7 +102,7 @@ class StaticTranslationController extends Controller
                         "key_word" => "required",
                         'translations' => 'required'
                     ]);
-        
+
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }

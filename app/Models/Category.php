@@ -23,17 +23,17 @@ class Category extends Model
 
   public function contents()
   {
-    return $this->hasMany('App\Content','category_id','id');
+    return $this->hasMany('App\Models\Content','category_id','id');
   }
 
   public function sub_cats()
   {
-    return $this->hasMany('App\Category','parent_id','id');
+    return $this->hasMany('App\Models\Category','parent_id','id');
   }
 
   public function cat()
   {
-    return $this->belongsTo('App\Category','parent_id','id');
+    return $this->belongsTo('App\Models\Category','parent_id','id');
   }
 
 }

@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Operator;
-use App\Country;
+use App\Models\Operator;
+use App\Models\Country;
 use Validator;
 class OperatorController extends Controller
 {

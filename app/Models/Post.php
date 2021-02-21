@@ -11,16 +11,16 @@ class Post extends Model
 
   public function operator()
   {
-    return $this->belongsTo('App\Operator','operator_id','id');
+    return $this->belongsTo('App\Models\Operator','operator_id','id');
   }
 
   public function content()
   {
-    return $this->belongsTo('App\Content','content_id','id');
+    return $this->belongsTo('App\Models\Content','content_id','id');
   }
 
   public function user()
   {
-    return $this->belongsTo('App\User','user_id','id');
+    return $this->belongsTo('App\Models\User','user_id','id');
   }
 }

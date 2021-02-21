@@ -10,6 +10,6 @@ class HasBody extends Model
 
     public function has_translation()
     {
-    	return $this->belognsTo('App\HasTranslation');
+    	return $this->belognsTo('App\Models\HasTranslation');
     }
 }

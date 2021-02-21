@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Models\Category;
+use App\Models\Provider;
 use Validator;
-class CategoryController extends Controller
+class ProviderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +18,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categorys = Category::whereNull('parent_id')->get();
-        return view('category.index',compact('categorys'));
+        $providers = Provider::all();
+        return view('provider.index',compact('providers'));
     }
 
     /**
@@ -29,8 +29,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $category = null;
-        return view('category.form',compact('category'));
+        $provider = null;
+        return view('provider.form',compact('provider'));
     }
 
     /**
@@ -61,10 +61,10 @@ class CategoryController extends Controller
          }
        }
 
-      $category = Category::create($request->all());
+      $provider = Provider::create($request->all());
 
-      \Session::flash('success', 'Category Created Successfully');
-      return redirect('/category');
+      \Session::flash('success', 'provider Created Successfully');
+      return redirect('/provider');
     }
 
     /**
@@ -75,9 +75,10 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = Category::findOrFail($id);
-        $contents = $category->contents;
-        return view('content.index',compact('contents','category'));
+        $provider = Provider::findOrFail($id);
+        $categorys = $provider->categories;
+        //dd($categorys);
+        return view('category.index',compact('provider','categorys'));
     }
 
     /**
@@ -88,8 +89,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
-        return view('category.form',compact('category'));
+        $provider = Provider::findOrFail($id);
+        return view('provider.form',compact('provider'));
     }
 
     /**
@@ -109,7 +110,7 @@ class CategoryController extends Controller
       if ($validator->fails()) {
           return back()->withErrors($validator)->withInput();
       }
-      $category = Category::findOrFail($id);
+      $provider = Provider::findOrFail($id);
 
       if($request->image){
         $imgExtensions = array("png","jpeg","jpg");
@@ -119,13 +120,13 @@ class CategoryController extends Controller
             \Session::flash('failed','Image must be jpg, png, or jpeg only !! No updates takes place, try again with that extensions please..');
             return back();
        }
-        $this->delete_image_if_exists(base_path('/uploads/category/'.basename($category->image)));
+        $this->delete_image_if_exists(base_path('/uploads/provider/'.basename($provider->image)));
       }
 
-      $category->update($request->all());
+      $provider->update($request->all());
 
       \Session::flash('success', 'Category Updated Successfully');
-      return redirect('/category');
+      return redirect('/provider');
     }
 
     /**
@@ -136,14 +137,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-      $category = Category::findOrFail($id);
+        $provider = Provider::find($id);
+        $provider->delete();
 
-      if($category->image){
-        $this->delete_image_if_exists(base_path('/uploads/category/'.basename($category->image)));
-      }
-      $category->delete();
-
-      \Session::flash('success', 'Category Delete Successfully');
-      return back();
+        return redirect()->back();
     }
 }

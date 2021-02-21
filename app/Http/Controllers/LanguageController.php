@@ -7,7 +7,7 @@ use Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use App\Language;
+use App\Models\Language;
 use Validator;
 
 class LanguageController extends Controller
