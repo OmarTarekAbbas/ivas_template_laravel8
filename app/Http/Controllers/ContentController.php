@@ -9,6 +9,8 @@ use App\Http\Repository\ContentRepository;
 use App\Http\Repository\ContentTypeRepository;
 use App\Http\Requests\ContentRequest;
 use App\Http\Services\ContentService;
+use App\Models\Content;
+use Illuminate\Http\Request;
 
 class ContentController extends Controller
 {
@@ -25,17 +27,18 @@ class ContentController extends Controller
      */
     private $contentService;
     /**
-     * contentUpdateService
-     *
-     * @var ContentUpdateService
-     */
-    private $contentUpdateService;
-    /**
      * contentTypeRepository
      *
      * @var ContentTypeRepository
      */
     private $contentTypeRepository;
+
+    /**
+     * categoryRepository
+     *
+     * @var categoryRepository
+     */
+    private $categoryRepository;
     /**
      * __construct
      *
@@ -49,8 +52,8 @@ class ContentController extends Controller
         ContentRepository $contentRepository,
         ContentTypeRepository $contentTypeRepository,
         CategoryRepository $categoryRepository,
-        ContentService $contentService
-    ) {
+        ContentService $contentService)
+    {
         $this->contentRepository = $contentRepository;
         $this->contentService = $contentService;
         $this->contentTypeRepository = $contentTypeRepository;
@@ -64,8 +67,60 @@ class ContentController extends Controller
      */
     public function index()
     {
-        $contents = $this->contentRepository->with('type')->get();
-        return view('content.index',compact('contents'));
+        return view('content.index');
+    }
+
+    public function allData(Request $request)
+    {
+      $contents = Content::with(['type', 'category'])->withCount(['rbt_operators', 'operators']);
+
+      if($request->filled("category_id")){
+        $contents = $contents->where('category_id', $request->category_id);
+      }
+
+      return \DataTables::eloquent($contents)
+        ->addColumn('index', function(Content $content) {
+            return '<input class="select_all_template" type="checkbox" name="selected_rows[]" value="{{$content->id}}" class="roles" onclick="collect_selected(this)">';
+        })
+        ->addColumn('id', function(Content $content) {
+            return $content->id;
+        })
+        ->addColumn('title', function(Content $content) {
+            return $content->title;
+        })
+        ->addColumn('content', function(Content $content) {
+            if($content->type->id == 1)
+                return $content->path;
+            elseif($content->type->id == 2)
+                return $content->path;
+            elseif($content->type->id == 3)
+                return '<img src="'.url(isset($content->path)?$content->path: '').'" alt="" style="width:250px" height="200px">';
+            elseif($content->type->id == 4)
+                return '<audio controls src="'.url(isset($content->path)?$content->path: '').'" style="width:100%"></audio>';
+            elseif($content->type->id == 5)
+                return '<video src="'.url(isset($content->path)?$content->path: '').'" style="width:250px;height:200px" height="200px" controls poster="'.url(isset($content->image_preview)?$content->image_preview: '').'"></video>';
+            elseif($content->type->id == 6)
+                return '<iframe src="'.$content->path.'" width="250px" height="200px"></iframe>';
+            elseif($content->type->id == 7)
+                return '<a href="'.$content->path.'">'.$content->path.'</a>' ;
+        })
+        ->addColumn('content_type', function(Content $content) {
+            return $content->type->title;
+        })
+        ->addColumn('Category', function(Content $content) {
+            if(isset($content->category))
+              return $content->category->title;
+        })
+        ->addColumn('patch number', function(Content $content) {
+              return $content->patch_number;
+        })
+        ->addColumn('action', function(Content $content) {
+          $value = $content;
+          return view('content.action', compact('value'))->render();
+        })
+        ->escapeColumns([])
+        ->make(true);
+
     }
 
     /**
@@ -79,6 +134,18 @@ class ContentController extends Controller
         $content_types = $this->contentTypeRepository->all();
         $categorys = $this->categoryRepository->all();
         return view('content.form',compact('content_types','content','categorys'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+      $content = $this->contentRepository->with('type')->findOrfail($id);
+      return view('content.show_post',compact('content'));
     }
 
     /**
