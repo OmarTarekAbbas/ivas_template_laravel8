@@ -1,149 +1,143 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Http\Filters\CategoryFilter\ParentFilter;
+use App\Http\Repository\CategoryRepository;
+use App\Http\Requests\CategoryRequest;
+use App\Http\Services\CategoryService;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
-use App\Models\Category;
-use Validator;
 class CategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * categoryRepository
      *
-     * @return \Illuminate\Http\Response
+     * @var CategoryRepository
      */
-    public function index()
+    private $categoryRepository;
+    /**
+     * categoryService
+     *
+     * @var CategoryService
+     */
+    private $categoryService;
+
+    /**
+     * __construct
+     * inject needed data in constructor
+     * @param  CategoryRepository $categoryRepository
+     * @param  CategoryService $categoryService
+     * @return void
+     */
+    public function __construct(CategoryRepository $categoryRepository, CategoryService $categoryService)
     {
-        $categorys = Category::whereNull('parent_id')->get();
-        return view('category.index',compact('categorys'));
+        $this->categoryRepository    = $categoryRepository;
+        $this->categoryService       = $categoryService;
     }
 
     /**
-     * Show the form for creating a new resource.
+     * get all category
      *
-     * @return \Illuminate\Http\Response
+     * @return View
+     */
+    public function index(Request $request)
+    {
+        $parentTitle = '';
+        if($request->filled('parent_id')) {
+            $parentTitle  = $this->categoryRepository->where("id",$request->parent_id)->first()->title;
+            $categorys = $this->categoryRepository->filter($this->categoryFilter())->get();
+        } else {
+            $categorys = $this->categoryRepository->filter($this->categoryFilter())->parent()->get();
+        }
+
+    	return view('category.index',compact('categorys','parentTitle'));
+    }
+
+    /**
+     * get page for create category
+     *
+     * @return View
      */
     public function create()
     {
         $category = null;
-        return view('category.form',compact('category'));
+        $parents = $this->categoryRepository->parent()->get();
+    	return view('category.form',compact('category','parents'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * store Category Data
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  CategoryStoreRequest $request
+     * @return Redirect
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-      $validator = Validator::make($request->all(), [
-                  'title' => 'required|string',
-                  'image' => ''
-          ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+    	$category = $this->categoryService->handle($request->validated());
+    	$request->session()->flash('success', 'Created Successfully');
+        if($request->has('parent_id')) {
+            return redirect('category?parent_id='.$request->parent_id.'');
         }
-
-        if($request->image)
-        {
-          $imgExtensions = array("png","jpeg","jpg");
-          $file = $request->image;
-          if(! in_array($file->getClientOriginalExtension(),$imgExtensions))
-          {
-              \Session::flash('failed','Image must be jpg, png, or jpeg only !! No updates takes place, try again with that extensions please..');
-              return back();
-         }
-       }
-
-      $category = Category::create($request->all());
-
-      \Session::flash('success', 'Category Created Successfully');
-      return redirect('/category');
+        return redirect('category');
     }
 
     /**
-     * Display the specified resource.
+     * get page for update category
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $category = Category::findOrFail($id);
-        $contents = $category->contents;
-        return view('content.index',compact('contents','category'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @return View
      */
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
-        return view('category.form',compact('category'));
+    	$category = $this->categoryRepository->find($id);
+    	$parents = $this->categoryRepository->parent()->get();
+    	return view('category.form',compact('category','parents'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * update Category Data
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @param  CategoryUpdateRequest $request
+     * @return redirect
      */
-    public function update(Request $request, $id)
+    public function update($id,CategoryRequest $request)
     {
-      $validator = Validator::make($request->all(), [
-                  'title' => 'required|string',
-                  'image' => ''
-          ]);
-
-      if ($validator->fails()) {
-          return back()->withErrors($validator)->withInput();
-      }
-      $category = Category::findOrFail($id);
-
-      if($request->image){
-        $imgExtensions = array("png","jpeg","jpg");
-        $file = $request->image;
-        if(! in_array($file->getClientOriginalExtension(),$imgExtensions))
-        {
-            \Session::flash('failed','Image must be jpg, png, or jpeg only !! No updates takes place, try again with that extensions please..');
-            return back();
-       }
-        $this->delete_image_if_exists(base_path('/uploads/category/'.basename($category->image)));
-      }
-
-      $category->update($request->all());
-
-      \Session::flash('success', 'Category Updated Successfully');
-      return redirect('/category');
+    	$this->categoryService->handle($request->validated(), $id);
+        $request->session()->flash('success', 'Updated Successfully');
+        if($request->has('parent_id')) {
+            return redirect('category?parent_id='.$request->parent_id.'');
+        }
+    	return redirect('category');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * remove category data
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @return redirect
      */
     public function destroy($id)
     {
-      $category = Category::findOrFail($id);
+        $category = $this->categoryRepository->find($id);
+        $this->categoryRepository->destroy($id);
+    	\Session::flash('success', 'Deleted Successfully');
+        if($category->parent_id) {
+            return redirect('category?parent_id='.$category->parent_id.'');
+        }
+    	return redirect('category');
+    }
 
-      if($category->image){
-        $this->delete_image_if_exists(base_path('/uploads/category/'.basename($category->image)));
-      }
-      $category->delete();
-
-      \Session::flash('success', 'Category Delete Successfully');
-      return back();
+    /**
+     * Method categoryFilter
+     *
+     * @return array
+     */
+    public function categoryFilter()
+    {
+        return [
+            'parent_id' => new ParentFilter
+        ];
     }
 }

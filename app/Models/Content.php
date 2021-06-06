@@ -8,50 +8,20 @@ class Content extends Model
 {
   protected $fillable = ['title','path','image_preview','content_type_id','category_id','patch_number'];
 
-  ///////////////////set image///////////////////////////////
-  public function setImagePreviewAttribute($value){
-    if(!is_numeric($value))
-    {
-      $img_name = time().rand(0,999).'.'.$value->getClientOriginalExtension();
-      $value->move(base_path('/uploads/content/image'),$img_name);
-      $this->attributes['image_preview']= $img_name ;
-    }
-    else{
-      $this->attributes['image_preview']= $value.'.jpg' ;
-    }
-
-  }
 
   public function getImagePreviewAttribute($value)
   {
-    return url('/uploads/content/image/'.$value);
+    return $value ? url($value) : '';
   }
 
-  ////////////////// set path ////////////////
-  public function setPathAttribute($value){
-    if(!is_string($value))
-    {
-      $img_name = time().rand(0,999).'.'.$value->getClientOriginalExtension();
-      $value->move(base_path('/uploads/content/path'),$img_name);
-      $this->attributes['path']= $img_name ;
-    }
-    else
-    {
-      $this->attributes['path']= $value ;
-    }
-  }
 
   public function getPathAttribute($value)
   {
     if(preg_match('(mp4|flv|3gp|mp3|webm|wav|png|jpeg|jpg)', $value))
     {
-    return url('/uploads/content/path/'.$value);
+        return $value ? url($value) : '';
     }
-    else
-    {
-      return $value;
-    }
-
+    return $value;
   }
 
 
@@ -74,7 +44,7 @@ class Content extends Model
 
   public function operators()
   {
-    return $this->belongsToMany('App\Models\Operator','posts','content_id','operator_id')
+    return $this->belongsToMany('App\Models\Operator','posts','content_id','operator_id')->using(Post::class)
     ->withPivot('id','published_date','active','url','user_id')->withTimestamps();
   }
 

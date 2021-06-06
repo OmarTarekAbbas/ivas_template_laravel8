@@ -1,114 +1,113 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Country;
-use Validator;
+use App\Http\Repository\CountryRepository;
+use App\Http\Requests\CountryStoreRequest;
+use App\Http\Requests\CountryUpdateRequest;
+use App\Http\Services\CountryService;
+use Illuminate\Support\Facades\Session;
+use Config;
+
 class CountryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * countryRepository
      *
-     * @return \Illuminate\Http\Response
+     * @var CountryRepository
+     */
+    private $countryRepository;
+    /**
+     * countryService
+     *
+     * @var CountryService
+     */
+    private $countryService;
+
+    /**
+     * __construct
+     * inject needed data in constructor
+     * @param  CountryRepository $countryRepository
+     * @param  CountryService $countryService
+     * @return void
+     */
+    public function __construct(CountryRepository $countryRepository, CountryService $countryService)
+    {
+        $this->countryRepository    = $countryRepository;
+        $this->countryService    = $countryService;
+    }
+
+    /**
+     * get all country
+     *
+     * @return View
      */
     public function index()
     {
-        $countrys = Country::all();
-        return view('country.index',compact('countrys'));
+    	$countrys = $this->countryRepository->all();
+    	return view('country.index',compact('countrys'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * get page for create country
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function create()
     {
-        $country = NULL;
-        return view('country.form',compact('country'));
+        $country = null;
+    	return view('country.form',compact('country'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * store Country Data
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  CountryStoreRequest $request
+     * @return Redirect
      */
-    public function store(Request $request)
+    public function store(CountryStoreRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-                    'title' => 'required|string|unique:countries',
-            ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
-        $country = Country::create($request->all());
-        \Session::flash('success', 'Country Created Successfully');
-        return redirect('/country');
+    	$country = $this->countryService->handle($request->validated());
+    	$request->session()->flash('success', 'Created Successfully');
+    	return redirect('country');
     }
 
     /**
-     * Display the specified resource.
+     * get page for update country
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @return View
      */
     public function edit($id)
     {
-        $country = Country::findOrFail($id);
-        return view('country.form',compact('country'));
+    	$country = $this->countryRepository->find($id);
+    	return view('country.form',compact('country'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * update Country Data
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @param  CountryUpdateRequest $request
+     * @return redirect
      */
-    public function update(Request $request, $id)
+    public function update($id,CountryUpdateRequest $request)
     {
-      $validator = Validator::make($request->all(), [
-                  'title' => 'required|string|unique:countries,title,'.$id,
-          ]);
-
-      if ($validator->fails()) {
-          return back()->withErrors($validator)->withInput();
-      }
-
-      $country = Country::findOrFail($id)->update($request->all());
-
-      \Session::flash('success', 'Country Update Successfully');
-      return redirect('/country');
+    	$this->countryService->handle($request->validated(), $id);
+    	$request->session()->flash('success', 'Updated Successfully');
+    	return redirect('country');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * remove country data
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @return redirect
      */
     public function delete($id)
     {
-      $country = Country::findOrFail($id)->delete();
-      \Session::flash('success', 'Country Delete Successfully');
-      return back();
+    	$this->countryRepository->destroy($id);
+    	\Session::flash('success', 'Deleted Successfully');
+    	return redirect('country');
     }
 }

@@ -3,6 +3,33 @@
   Category
 @stop
 @section('content')
+<style>
+.grid-custom img {
+        margin-bottom: 3px;
+        border-radius: 4px;
+    }
+
+    .grid-custom {
+        background: #d59a878c;
+        border-radius: 7px;
+        border: 3px solid #eee;
+        padding: 5px;
+    }
+
+    .remove-image{
+      position: absolute;
+      cursor: pointer;
+      background-color: #e40b0b;
+      color: white;
+      top: -1px;
+      right: 15px;
+      padding: 0 3px;
+      font-size: 13px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+    }
+</style>
     @include('errors')
     <div class="row">
         <div class="col-md-12">
@@ -33,9 +60,8 @@
 @stop
 @section('script')
     <script>
-
         $('#category').addClass('active');
-        $('#category_create').addClass('active');       
-
+        $('#category_create').addClass('active');
+        
     </script>
 @stop

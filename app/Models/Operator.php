@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use App\Traits\DeleteFile;
 
 class Operator extends Model
 {
+  use DeleteFile;
+
   protected $fillable = [
       'name',
       'country_id',
@@ -14,15 +18,9 @@ class Operator extends Model
       'rbt_ussd_code',
   ];
 
-  public function setImageAttribute($value){
-    $img_name = time().rand(0,999).'.'.$value->getClientOriginalExtension();
-    $value->move(base_path('/uploads/operator'),$img_name);
-    $this->attributes['image']= $img_name ;
-  }
-
   public function getImageAttribute($value)
   {
-    return url('/uploads/operator/'.$value);
+    return $value ? url($value) : '';
   }
 
   public function country()
@@ -37,7 +35,7 @@ class Operator extends Model
 
   public function contents()
   {
-    return $this->belongsToMany('App\Models\Content','posts','operator_id','content_id')
+    return $this->belongsToMany('App\Models\Content','posts','operator_id','content_id')->using(Post::class)
     ->withPivot('id','published_date','active','url','user_id')->withTimestamps();
   }
 

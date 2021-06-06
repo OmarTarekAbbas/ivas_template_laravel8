@@ -2,16 +2,47 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests;
-use Config;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
+use App\Http\Repository\LanguageRepository;
+use App\Http\Requests\LanguageStoreRequest;
+use App\Http\Requests\LanguageUpdateRequest;
+use App\Http\Services\LanguageService;
 use Illuminate\Support\Facades\Session;
-use App\Models\Language;
-use Validator;
+use Config;
 
 class LanguageController extends Controller
 {
+    /**
+     * languageRepository
+     *
+     * @var LanguageRepository
+     */
+    private $languageRepository;
+    /**
+     * languageService
+     *
+     * @var LanguageService
+     */
+    private $languageService;
+
+    /**
+     * __construct
+     * inject needed data in constructor
+     * @param  LanguageRepository $languageRepository
+     * @param  LanguageService $languageService
+     * @return void
+     */
+    public function __construct(LanguageRepository $languageRepository, LanguageService $languageService)
+    {
+        $this->languageRepository    = $languageRepository;
+        $this->languageService    = $languageService;
+    }
+
+    /**
+     * switchLang
+     *
+     * @param  string $lang
+     * @return void
+     */
     public function switchLang($lang)
     {
         if (array_key_exists($lang, Config::get('languages'))) {
@@ -20,62 +51,75 @@ class LanguageController extends Controller
         return Redirect::back();
     }
 
+    /**
+     * get all language
+     *
+     * @return View
+     */
     public function index()
     {
-    	$languages = Language::all();
+    	$languages = $this->languageRepository->all();
     	return view('language.index',compact('languages'));
     }
 
+    /**
+     * get page for create language
+     *
+     * @return View
+     */
     public function create()
     {
     	return view('language.create');
     }
 
-    public function store(Request $request)
+    /**
+     * store Language Data
+     *
+     * @param  LanguageStoreRequest $request
+     * @return Redirect
+     */
+    public function store(LanguageStoreRequest $request)
     {
-    	// return $request->all();
-    	$validator = Validator::make($request->all(),[
-    	                "title" => "required|unique:languages,title",
-    	                "short_code" => "required|unique:languages,short_code",
-    	                "rtl" => "required"
-    	            ]);
-
-    	if ($validator->fails()) {
-    		return back()->withErrors($validator)->withInput();
-    	}
-
-    	$language = Language::create($request->all());
+    	$language = $this->languageService->handle($request->validated());
     	$request->session()->flash('success', 'Created Successfully');
     	return redirect('language');
     }
 
+    /**
+     * get page for update language
+     *
+     * @param  int $id
+     * @return View
+     */
     public function edit($id)
     {
-    	$language = Language::find($id);
+    	$language = $this->languageRepository->find($id);
     	return view('language.create',compact('language'));
     }
 
-    public function update($id,Request $request)
+    /**
+     * update Language Data
+     *
+     * @param  int $id
+     * @param  LanguageUpdateRequest $request
+     * @return redirect
+     */
+    public function update($id,LanguageUpdateRequest $request)
     {
-    	$validator = Validator::make($request->all(),[
-    	                "title" => "required|unique:languages,title,".$id,
-    	                "short_code" => "required|unique:languages,short_code,".$id,
-    	                "rtl" => "required"
-    	            ]);
-
-    	if ($validator->fails()) {
-    		return back()->withErrors($validator)->withInput();
-    	}
-
-    	$language = Language::find($id);
-    	$language->update($request->all());
+    	$this->languageService->handle($request->validated(), $id);
     	$request->session()->flash('success', 'Updated Successfully');
     	return redirect('language');
     }
 
+    /**
+     * remove language data
+     *
+     * @param  int $id
+     * @return redirect
+     */
     public function destroy($id)
     {
-    	Language::destroy($id);
+    	$this->languageRepository->destroy($id);
     	\Session::flash('success', 'Deleted Successfully');
     	return redirect('language');
     }

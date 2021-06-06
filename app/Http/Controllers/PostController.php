@@ -2,153 +2,152 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Http\Controllers\Controller;
+use App\Http\Repository\ContentRepository;
+use App\Http\Repository\PostRepository;
+use App\Http\Repository\OperatorRepository;
+use App\Http\Requests\PostStoreRequest;
+use App\Http\Requests\PostUpdateRequest;
+use App\Http\Services\PostStoreService;
+use App\Http\Services\PostUpdateService;
+use App\Models\Post;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
-use App\Content;
-use App\Country;
-use App\Operator;
-use App\Post;
-
-use Validator;
-use Auth;
 class PostController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @var PostRepository
+     */
+    private $postRepository;
+    /**
+     * @var PostStoreService
+     */
+    private $postStoreService;
+    /**
+     * @var PostUpdateService
+     */
+    private $postUpdateService;
+    /**
+     * @var OperatorRepository
+     */
+    private $operatorRepository;
+    /**
+     * @var ContentRepository
+     */
+    private $contentRepository;
+    /**
+     * __construct
      *
-     * @return \Illuminate\Http\Response
+     * @param  PostRepository $postRepository
+     * @param  OperatorRepository $operatorRepository
+     * @param  ContentRepository $contentRepository
+     * @param  PostStoreService $postStoreService
+     * @param  PostUpdateService $postUpdateService
+     * @return void
+     */
+    public function __construct(
+        PostRepository $postRepository,
+        OperatorRepository $operatorRepository,
+        ContentRepository $contentRepository,
+        PostStoreService $postStoreService,
+        PostUpdateService $postUpdateService
+    ) {
+        $this->postRepository = $postRepository;
+        $this->postStoreService = $postStoreService;
+        $this->postUpdateService = $postUpdateService;
+        $this->operatorRepository = $operatorRepository;
+        $this->contentRepository = $contentRepository;
+    }
+
+    /**
+     * index
+     * get all post data
+     * @return View
      */
     public function index()
     {
-        $contents = Content::all();
-        return view('post.index',compact('contents'));
+        $posts = $this->postRepository->get();
+        $contents = $this->contentRepository->all();
+        return view('post.index',compact('posts', 'contents'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return  View
      */
     public function create()
     {
-      $contents  = Content::all();
-      $operators = Operator::all();
-      $post      = NULL;
-      return view('post.form',compact('contents','operators','post'));
+        $operators = $this->operatorRepository->all();
+        $contents = $this->contentRepository->all();
+        $post = null;
+        return view('post.form',compact('post' ,'operators', 'contents'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * store post data
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  PostStoreRequest $request
+     * @return Redirect
      */
-    public function store(Request $request)
+    public function store(PostStoreRequest $request)
     {
-      $validator = Validator::make($request->all(), [
-                  'published_date' => 'required|date',
-                  'content_id' => 'required',
-                  'active' => 'required',
-                  'operator_id'=> 'required'
-          ]);
+        $this->postStoreService->handle($request->validated());
 
-      if ($validator->fails()) {
-          return back()->withErrors($validator)->withInput();
-      }
+        $request->session()->flash('success', 'Post created successfull');
 
-
-      $content = Content::findOrFail($request->content_id);
-
-      foreach ($request->operator_id as  $operator_id) {
-        $operator = $content->operators()->attach([$operator_id => ['url' => url('user/content/'.$request->content_id.'?op_id='.$operator_id) ,
-        'published_date' => $request->published_date,'active' => $request->active , 'user_id' => Auth::user()->id]]);
-      }
-
-      $posts = Post::where('content_id',$request->content_id)->whereIn('operator_id',$request->operator_id)->get();
-
-      foreach ($posts as $post) {
-        Post::find($post->id)->update([
-          'url' => url('user/content/'.$request->content_id.'?op_id='.$post->operator_id.'&post_id='.$post->id)
-        ]);
-      }
-
-      \Session::flash('success', 'post created Successfully');
-      return redirect('content/'.$request->content_id);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-      // $operator =  Operator::findOrFail($id);
-      // $place_id = [];
-      // foreach ($operator->posts as $post) {
-      //   array_push($place_id,$post->place_id);
-      // }
-      // $places = Content::whereIn('id',$place_id)->get();
-      // return view('front.place_in_post' , compact('operator','places','id'));
+        return redirect('post');
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int  $id
+     * @return  View
      */
-    public function edit($id,Request $request)
+    public function edit($id)
     {
-      $post = Post::findOrFail($id);
-      $contents= Content::all();
-      $operators = Operator::all();
-      return view('post.form',compact('post','contents','operators'));
+        $post = $this->postRepository->findOrfail($id);
+        $operators = $this->operatorRepository->all();
+        $contents = $this->contentRepository->all();
+
+        return view('post.form',compact('post', 'operators', 'contents'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * update
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @param  PostUpdateRequest $request
+     * @return Redirect
      */
-    public function update(Request $request, $id)
+    public function update($id, PostUpdateRequest $request)
     {
-      $validator = Validator::make($request->all(), [
-              'published_date' => 'required|date',
-              'content_id' => 'required',
-              'active' => 'required',
-              'operator_id'=> 'required'
-          ]);
+        $post = $this->postRepository->findOrfail($id);
 
-      if ($validator->fails()) {
-          return back()->withErrors($validator)->withInput();
-      }
-      $input =$request->only('published_date','active','patch_number','content_id');
-      $post = Post::findOrFail($id);
-      $content = Content::findOrFail($request->content_id);
-      $post->update($input+['operator_id' => $request->operator_id[0] , 'url' => url('user/content/'.$request->content_id.'?op_id='.$request->operator_id[0].'&post_id='.$post->id) , 'user_id' => Auth::id()]);
+        $this->postUpdateService->handle($request->validated(), $post);
 
-      \Session::flash('success', 'Post Update Successfully');
-      return redirect('content/'.$request->content_id);
+        $request->session()->flash('success', 'updated successfully');
+
+        return redirect('post');
     }
+
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param    int $id
+     * @return  \Illuminate\Http\Response
      */
-    public function destroy($id,Request $request)
+    public function destroy($id)
     {
-      $post = Post::findOrFail($id);
-      $post->delete();
-      \Session::flash('success', 'Post Delete Successfully');
-      return back();
+        $post = $this->postRepository->findOrfail($id);
+
+        $post->delete();
+
+        session()->flash('success', 'deleted successfully');
+
+        return back();
     }
 }

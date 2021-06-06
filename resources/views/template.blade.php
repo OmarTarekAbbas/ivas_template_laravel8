@@ -446,21 +446,6 @@ if (Config::get('languages')[App::getLocale()] == "English") {
                         </li>
                     </ul>
                     @endif
-                    <ul class="nav nav-list">
-                        <li id="sub_category">
-                            <a href="#" class="dropdown-toggle">
-                                <i class="glyphicon glyphicon-folder-open"></i>
-                                <span>Sub Category</span>
-                                <b class="arrow fa fa-angle-right"></b>
-                            </a>
-
-
-                            <ul class="submenu">
-                                <li id="sub_category_index"><a href="{{url('sub_category')}}">List Sub category</a></li>
-                                <li id="sub_category_create"><a href="{{url('sub_category/create')}}">Create Sub Category</a></li>
-                            </ul>
-                        </li>
-                    </ul>
 
                     @if (get_action_icons('content_type', 'get'))
                     <?php $content_type_flag = DB::table('settings')->where('key','like','%content_type_flag%')->first(); ?>

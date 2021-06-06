@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Content;
-use App\Country;
-use App\Operator;
-use App\RbtCode;
+use App\Models\Content;
+use App\Models\Country;
+use App\Models\Operator;
+use App\Models\RbtCode;
 
 use Validator;
 use Auth;

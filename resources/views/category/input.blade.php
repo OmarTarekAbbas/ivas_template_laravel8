@@ -1,8 +1,27 @@
+@if(isset($_REQUEST['category_id']))
+<div class="form-group">
+    <label for="textfield5" class="col-sm-3 col-lg-2 control-label">Category<span class="text-danger">*</span></label>
+    <div class="col-sm-9 col-lg-10 controls">
+        <select  name="parent_id" class="form-control chosen-rtl">
+            <option id="category_{{ $_REQUEST['category_id'] }}" value="{{ $_REQUEST['category_id'] }}">{{ $_REQUEST['title']}}</option>
+        </select>
+    </div>
+</div>
+@elseif($category && !$category->parent_id)
+
+@else
+<div class="form-group">
+    <label class="col-sm-3 col-lg-2 control-label">Category<span class="text-danger">*</span></label>
+    <div class="col-sm-9 col-lg-10 controls">
+        {!! Form::select('parent_id',[""=>""]+$parents->pluck('title','id')->toArray(),null,['class'=>'form-control chosen-rtl']) !!}
+    </div>
+</div>
+@endif
+
 <div class="form-group">
     <label class="col-sm-3 col-lg-2 control-label">Title <span class="text-danger">*</span></label>
     <div class="col-sm-9 col-lg-10 controls">
         {!! Form::text('title',null,['placeholder'=>'Title','class'=>'form-control input-lg']) !!}
-    </div>
 </div>
 
 <div class="form-group">

@@ -1,6 +1,10 @@
 @extends('template')
 @section('page_title')
+ @if(request()->has('parent_id') && request()->get('parent_id') != '')
+    {{ $parentTitle }}
+ @else
  Category
+ @endif
 @stop
 @section('content')
 <div class="row">
@@ -51,7 +55,7 @@
                                             {{$value->title}}
                                         </td>
                                         <td>
-                                            <img class=" img-circle" width="100px" height="100px" src="{{$value->image}}"/>
+                                            <i class="{{$value->image}}"></i>
                                         </td>
                                         <td class="visible-md visible-lg">
                                             <div class="btn-group">
@@ -61,9 +65,9 @@
                                                 @endif
                                                 <a class="btn btn-sm show-tooltip" href="{{url("category/$value->id/edit")}}" title="Edit"><i class="fa fa-edit"></i></a>
                                                 <a class="btn btn-sm show-tooltip btn-danger" onclick="return ConfirmDelete();" href="{{url("category/$value->id/delete")}}" title="Delete"><i class="fa fa-trash"></i></a>
-                                                <a class="btn btn-sm btn-warning show-tooltip" title="Add Sub Category" href="{{url("sub_category/create?category_id=".$value->id."&title=".$value->title)}}" data-original-title="Add Sub Category"><i class="fa fa-plus"></i></a>
+                                                <a class="btn btn-sm btn-warning show-tooltip" title="Add Sub Category" href="{{url("category/create?category_id=".$value->id."&title=".$value->title)}}" data-original-title="Add Sub Category"><i class="fa fa-plus"></i></a>
                                                 @if(count($value->sub_cats) > 0)
-                                                <a class="btn btn-sm  btn-primary show-tooltip" title="Show Sub Category" href="{{url("sub_category/$value->id")}}" data-original-title="Show Sub Category"><i class="fa fa-step-forward"></i></a>
+                                                <a class="btn btn-sm  btn-primary show-tooltip" title="Show Sub Category" href="{{url("category?parent_id=$value->id")}}" data-original-title="Show Sub Category"><i class="fa fa-step-forward"></i></a>
                                                 @endif
                                             </div>
                                         </td>

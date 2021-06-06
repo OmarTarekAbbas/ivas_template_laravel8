@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Repository\LanguageRepository;
+use App\Http\Repository\StaticTranslationRepository;
+use App\Http\Requests\StaticTranslationRequest;
+use App\Http\Services\StaticTranslationService;
 use App\Models\StaticTranslation;
 use App\Models\Language;
 use Validator;
@@ -13,66 +17,85 @@ use Validator;
 class StaticTranslationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * staticTraslationRepository
      *
-     * @return \Illuminate\Http\Response
+     * @var StaticTranslationRepository
+     */
+    private $staticTraslationRepository;
+    /**
+     * languageRepository
+     *
+     * @var LanguageRepository
+     */
+    private $languageRepository;
+    /**
+     * staticTraslationService
+     *
+     * @var StaticTranslationService
+     */
+    private $staticTraslationService;
+
+    /**
+     * __construct
+     * inject needed data in constructor
+     * @param  StaticTranslationRepository $staticTraslationRepository
+     * @param  StaticTranslationRepository $languageRepository
+     * @param  LanguageRepository $staticTraslationService
+     * @return void
+     */
+    public function __construct(StaticTranslationService $staticTraslationService, StaticTranslationRepository $staticTraslationRepository,LanguageRepository $languageRepository)
+    {
+        $this->staticTraslationRepository    = $staticTraslationRepository;
+        $this->languageRepository    = $languageRepository;
+        $this->staticTraslationService  = $staticTraslationService;
+
+    }
+    /**
+     * index
+     *
+     * @return View
      */
     public function index()
     {
-        $static_translations = StaticTranslation::all();
-        $languages = Language::all();
+        $static_translations = $this->staticTraslationRepository->all();
+        $languages = $this->languageRepository->all();
         return view('static_translation.index',compact('static_translations','languages'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function create()
     {
-        $languages = Language::all();
+        $languages = $this->languageRepository->all();
         return view('static_translation.create',compact('languages'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * store
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  StaticTranslationRequest $request
+     * @return Redirect
      */
-    public function store(Request $request)
+    public function store(StaticTranslationRequest $request)
     {
-        $validator = Validator::make($request->all(),[
-                        "key_word" => "required",
-                        'translations' => 'required'
-                    ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
-        $static_translation = new StaticTranslation();
-        $static_translation->key_word = $request->key_word;
-        $static_translation->save();
-
-        foreach ($request->translations as $key => $value) {
-            $static_translation->languages()->attach($key,['body'=>$value]);
-        }
+        $this->staticTraslationService->handle($request->validated());
         $request->session()->flash('success', 'Created Successfully');
         return redirect('static_translation');
     }
 
     /**
-     * Display the specified resource.
+     * show
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @return View
      */
     public function show($id)
     {
-        $static_translation = StaticTranslation::find($id);
-        $languages = Language::all();
+        $static_translation = $this->staticTraslationRepository->find($id);
+        $languages = $this->languageRepository->all();
         return view('static_translation.view',compact('languages','static_translation'));
     }
 
@@ -80,40 +103,25 @@ class StaticTranslationController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function edit($id)
     {
-        $static_translation = StaticTranslation::find($id);
-        $languages = Language::all();
+        $static_translation = $this->staticTraslationRepository->find($id);
+        $languages = $this->languageRepository->all();
         return view('static_translation.create',compact('languages','static_translation'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  StaticTranslationRequest $request
+     * @param  int $id
+     * @return Redirect
      */
-    public function update(Request $request, $id)
+    public function update(StaticTranslationRequest $request, $id)
     {
-        $validator = Validator::make($request->all(),[
-                        "key_word" => "required",
-                        'translations' => 'required'
-                    ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
-        $static_translation = StaticTranslation::find($id);
-        $static_translation->key_word = $request->key_word;
-        $static_translation->save();
-        $static_translation->languages()->sync([]);
-        foreach ($request->translations as $key => $value) {
-            $static_translation->languages()->attach($key,['body'=>$value]);
-        }
+        $this->staticTraslationService->handle($request->validated(), $id);
         $request->session()->flash('success', 'Created Successfully');
         return redirect('static_translation');
     }
@@ -122,11 +130,11 @@ class StaticTranslationController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Redirect
      */
     public function destroy($id,Request $request)
     {
-        $static_translation = StaticTranslation::find($id);
+        $static_translation = $this->staticTraslationRepository->find($id);
         $static_translation->delete();
         $request->session()->flash('success', 'Deleted Successfully');
         return redirect('static_translation');

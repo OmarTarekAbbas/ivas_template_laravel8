@@ -2,24 +2,26 @@
 
 namespace App\Models;
 
+use App\Traits\Filterable;
+use App\Traits\LatestState;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-  protected $fillable = ['title','image' ,'parent_id'];
+  use LatestState, Filterable;
 
-  ///////////////////set image///////////////////////////////
-  public function setImageAttribute($value){
-    $img_name = time().rand(0,999).'.'.$value->getClientOriginalExtension();
-    $value->move(base_path('/uploads/category'),$img_name);
-    $this->attributes['image']= $img_name ;
-  }
+  protected $fillable = ['title','image' ,'parent_id'];
 
   public function getImageAttribute($value)
   {
-    return url('/uploads/category/'.$value);
+    return $value ? url($value) : '';
   }
 
+  public function scopeParent(Builder $builder)
+  {
+      return $builder->whereNull('parent_id');
+  }
 
   public function contents()
   {

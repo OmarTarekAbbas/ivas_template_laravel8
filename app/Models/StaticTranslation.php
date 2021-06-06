@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Language;
+use App\Models\Language;
 class StaticTranslation extends Model
 {
     protected $table = 'static_translations';
+    protected $fillable = ["key_word"];
 
     public function languages()
     {
@@ -15,7 +16,7 @@ class StaticTranslation extends Model
 
     public function translations()
     {
-    	return $this->hasMany('App\StaticBody');
+    	return $this->hasMany('App\Models\StaticBody');
     }
 
     public function getBody($locale='')

@@ -2,105 +2,130 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Type;
-use Auth;
-use App\Http\Requests;
-use App\Http\Requests\TypeRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Repository\TypeRepository;
+use App\Http\Requests\TypeRequest;
+use App\Http\Requests\TypeUpdateRequest;
+use App\Http\Services\TypeService;;
 
 class TypeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * typeRepository
      *
-     * @return \Illuminate\Http\Response
+     * @var TypeRepository
      */
-    public function index()
+    private $typeRepository;
+    /**
+     * typeService
+     *
+     * @var TypeService
+     */
+    private $typeService;
+
+    /**
+     * __construct
+     * inject needed data in constructor
+     * @param  TypeRepository $typeRepository
+     * @param  TypeService $typeService
+     * @return void
+     */
+    public function __construct(TypeService $typeService, TypeRepository $typeRepository)
     {
-        $types = Type::all();
-        return view('types/index',compact('types'));
+        $this->typeRepository    = $typeRepository;
+        $this->typeService  = $typeService;
+
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * index
+     * indexes all types in view
+     * @return View
+     */
+    public function index()
+    {
+        $types = $this->typeRepository->all();
+
+        return view('types.index', compact('types'));
+    }
+
+
+    /**
+     * create
+     * return page for create
+     * @return View
      */
     public function create()
     {
         $type = null;
-        return view('types.input',compact('type'));
+
+        return view('types.input', compact('type'));
     }
 
+
     /**
-     * Store a newly created resource in storage.
+     * store
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  TypeRequest $request
+     * @return Redirect
      */
-    public function store(Request $request)
+    public function store(TypeRequest $request)
     {
-         $type =  new Type();
-         $type->title = $request->title;
-         \Session::flash('success','Type Added Successfully');
-         $type->save() ;
-         return redirect('types/index');
+        $this->typeService->handle($request->validated());
+
+        \Session::flash('success','Type added successfully');
+
+        return redirect('types/index');
+
     }
 
     /**
-     * Display the specified resource.
+     * edit
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Integer $id
+     * @return View
      */
     public function edit($id)
     {
-        $type = Type::findOrFail($id) ;
-        return view('types.input',compact('type'));
+        $type = $this->typeRepository->find($id);
+
+        return view('types.input', compact('type'));
     }
 
+
     /**
-     * Update the specified resource in storage.
+     * update
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  TypeUpdateRequest $request
+     * @return Redirect
      */
-    public function update(Request $request, $id)
+    public function update(TypeRequest $request)
     {
-        $oldtype = Type::findOrfail($id);
-        $newtype = $request->all();
-        $oldtype->update($newtype);
+
+        $this->typeService->handle($request->validated(), $request->type_id);
+
         \Session::flash('success','Type Updated successfully');
+
         return redirect('types/index');
+
     }
 
+
     /**
-     * Remove the specified resource from storage.
+     * destroy
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Integer $id
+     * @return Reirect
      */
     public function destroy($id)
     {
-        if (Auth::user()->roles->first()->name == "super_admin")
-        {
-           $type = Type::findOrfail($id);
-           $type->delete();
-           \Session::flash('success','Type has been Deleted Successfully');
-           return redirect('types/index');
-        }
+        $type = $this->typeRepository->findOrfail($id);
+
+        $type->delete();
+
+        \Session::flash('success','Type Deleted successfully');
+
+        return redirect('types/index');
     }
+
 }

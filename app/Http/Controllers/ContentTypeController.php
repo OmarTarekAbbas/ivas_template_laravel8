@@ -1,120 +1,112 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Repository\ContentTypeRepository;
+use App\Http\Requests\ContentTypeStoreRequest;
+use App\Http\Requests\ContentTypeUpdateRequest;
+use App\Http\Services\ContentTypeService;
+use Illuminate\Support\Facades\Session;
+use Config;
 
-use App\ContentType;
-use Validator;
 class ContentTypeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * contentTypeRepository
      *
-     * @return \Illuminate\Http\Response
+     * @var ContentTypeRepository
+     */
+    private $contentTypeRepository;
+    /**
+     * contentTypeService
+     *
+     * @var ContentTypeService
+     */
+    private $contentTypeService;
+
+    /**
+     * __construct
+     * inject needed data in constructor
+     * @param  ContentTypeRepository $contentTypeRepository
+     * @param  ContentTypeService $contentTypeService
+     * @return void
+     */
+    public function __construct(ContentTypeRepository $contentTypeRepository, ContentTypeService $contentTypeService)
+    {
+        $this->contentTypeRepository    = $contentTypeRepository;
+        $this->contentTypeService    = $contentTypeService;
+    }
+    /**
+     * get all contentType
+     *
+     * @return View
      */
     public function index()
     {
-        $content_types = ContentType::all();
-        return view('content_type.index',compact('content_types'));
+    	$contentTypes = $this->contentTypeRepository->all();
+    	return view('content_type.index',compact('contentTypes'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * get page for create contentType
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function create()
     {
-        $content_type = null;
-        return view('content_type.form',compact('content_type'));
+    	$contentType = null;
+    	return view('content_type.form',compact('content_type'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * store ContentType Data
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  ContentTypeStoreRequest $request
+     * @return Redirect
      */
-    public function store(Request $request)
+    public function store(ContentTypeStoreRequest $request)
     {
-      $validator = Validator::make($request->all(), [
-                  'title' => 'required|string'
-          ]);
-
-      if ($validator->fails()) {
-          return back()->withErrors($validator)->withInput();
-      }
-
-      $content_type = ContentType::create($request->all());
-
-      \Session::flash('success', 'ContentType Created Successfully');
-      return redirect('/content_type');
+    	$contentType = $this->contentTypeService->handle($request->validated());
+    	$request->session()->flash('success', 'Created Successfully');
+    	return redirect('contentType');
     }
 
     /**
-     * Display the specified resource.
+     * get page for update contentType
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @return View
      */
     public function edit($id)
     {
-        $content_type = ContentType::findOrFail($id);
-        return view('content_type.form',compact('content_type'));
+    	$contentType = $this->contentTypeRepository->find($id);
+    	return view('content_type.form',compact('content_type'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * update ContentType Data
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @param  ContentTypeUpdateRequest $request
+     * @return redirect
      */
-    public function update(Request $request, $id)
+    public function update($id,ContentTypeUpdateRequest $request)
     {
-      $validator = Validator::make($request->all(), [
-                  'title' => 'required|string'
-          ]);
-
-      if ($validator->fails()) {
-          return back()->withErrors($validator)->withInput();
-      }
-      $content_type = ContentType::findOrFail($id);
-      $content_type->update($request->all());
-
-      \Session::flash('success', 'ContentType Updated Successfully');
-      return redirect('/content_type');
+    	$this->contentTypeService->handle($request->validated(), $id);
+    	$request->session()->flash('success', 'Updated Successfully');
+    	return redirect('contentType');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * remove contentType data
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @return redirect
      */
     public function destroy($id)
     {
-      $content_type = ContentType::findOrFail($id);
-
-
-      $content_type->delete();
-
-      \Session::flash('success', 'ContentType Delete Successfully');
-      return back();
+    	$this->contentTypeRepository->destroy($id);
+    	\Session::flash('success', 'Deleted Successfully');
+    	return redirect('contentType');
     }
 }
