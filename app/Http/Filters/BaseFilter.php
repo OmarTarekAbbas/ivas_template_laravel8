@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
 class BaseFilter
-{    
+{
     /**
      * request
-     * request that comming from search query 
+     * request that comming from search query
      * @var Request $request
      */
     private $request;
-    
+
     /**
      * __construct
      *
@@ -25,7 +25,7 @@ class BaseFilter
     {
         $this->request = $request;
     }
-    
+
     /**
      * apply
      * apply function that have query builder that comming from model and filter that comming from query search that in Controller ofter search
@@ -37,14 +37,14 @@ class BaseFilter
     public function apply(Builder $builder, array $filters)
     {
         foreach ($this->getFilters($filters) as $key => $filter) {
-            if(!$filter instanceof Filter){
+            if(!$filter instanceof Filter || !$this->request->filled($key)){
                 continue;
             }
             $filter->apply($builder, $this->request->get($key));
         }
         return $builder;
     }
-    
+
     /**
      * getFilters
      * return array of filter that exsist in request not all filter like you make request has function but with diffrent way
@@ -53,6 +53,6 @@ class BaseFilter
      */
     public function getFilters(array $filters)
     {
-        return Arr::only($filters,array_keys($this->request->all()));
+        return Arr::only($filters, array_keys($this->request->all()));
     }
 }

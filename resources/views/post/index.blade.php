@@ -1,6 +1,6 @@
 @extends('template')
 @section('page_title')
- Post
+ {{ request()->filled('operator_id') || request()->filled('content_id') ? $pageTitle : 'Posts' }}
 @stop
 @section('content')
 <div class="row">
@@ -31,7 +31,7 @@
                         </div>
                         <br><br>
                         <div class="table-responsive">
-                            <table id="example" class="table table-striped dt-responsive" cellspacing="0" width="100%">
+                            <table id="dtcontent" class="table table-striped dt-responsive" cellspacing="0" width="100%">
 
                                 <thead>
                                     <tr>
@@ -44,34 +44,7 @@
                                         <th >Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach($contents as $key=>$content)
-                                    @foreach($content->operators as $value)
-                                    <tr>
-                                        <td><input class="select_all_template" type="checkbox" name="selected_rows[]" value="{{$value->id}}" class="roles" onclick="collect_selected(this)"></td>
-                                        <td>
-                                            {{$content->title}}
-                                        </td>
-                                        <td>{{$value->pivot->published_date}}</td>
-                                        <td>@if($value->pivot->active) active @else not active @endif</td>
-                                        <td>
-                                          <input type="text"  id="url_h{{$value->id}}{{$key}}{{$value->pivot->id}}" value="{{$value->pivot->url}}">
-                                          <span class="btn">{{$value->country->title}}-{{$value->name}}</span>
-                                          <span class="btn" onclick="x = document.getElementById('url_h{{$value->id}}{{$key}}{{$value->pivot->id}}'); x.select();document.execCommand('copy')"> <i class="fa fa-copy"></i> </span>
-                                          <br>
-                                        </td>
-                                        <td>{{DB::table('users')->where('id',$value->pivot->user_id)->first()->name}}</td>
-                                        </td>
-                                        <td class="visible-md visible-lg">
-                                            <div class="btn-group">
-                                                <a class="btn btn-sm show-tooltip" href="{{url("post/".$value->pivot->id."/edit")}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                                <a class="btn btn-sm show-tooltip btn-danger" onclick="return ConfirmDelete();" href="{{url("post/".$value->pivot->id."/delete")}}" title="Delete"><i class="fa fa-trash"></i></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                    @endforeach
-                                </tbody>
+
                             </table>
                         </div>
                     </div>
@@ -86,10 +59,32 @@
 
 @section('script')
 <script>
+    $('#post').addClass('active');
+    $('#post_index').addClass('active');
+</script>
 
-
-$('#post').addClass('active');
-$('#post_index').addClass('active');
-
+<script>
+    window.onload = function() {
+        $('#dtcontent').DataTable({
+            "processing": true,
+            "serverSide": true,
+            // "search": {"regex": true},
+            "ajax": {
+            type: "GET",
+            "url": "{!! url('post/allData?operator_id='.request('operator_id').'&content_id='.request('content_id')) !!}",
+            "data":"{{csrf_token()}}"
+            },
+            columns: [
+            {data: 'index', searchable: false, orderable: false},
+            {data: 'content'},
+            {data: 'published date'},
+            {data: 'status'},
+            {data: 'url'},
+            {data: 'user'},
+            {data: 'action', searchable: false}
+            ]
+            , "pageLength": 5
+        });
+    };
 </script>
 @stop

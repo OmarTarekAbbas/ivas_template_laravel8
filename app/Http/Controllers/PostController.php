@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Constants\ActiveStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Filters\PostFilter\ContentFilter;
+use App\Http\Filters\PostFilter\OperatorFilter;
 use App\Http\Repository\ContentRepository;
 use App\Http\Repository\PostRepository;
 use App\Http\Repository\OperatorRepository;
@@ -12,7 +14,6 @@ use App\Http\Requests\PostUpdateRequest;
 use App\Http\Services\PostStoreService;
 use App\Http\Services\PostUpdateService;
 use App\Models\Post;
-use App\Models\Type;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -66,11 +67,56 @@ class PostController extends Controller
      * get all post data
      * @return View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = $this->postRepository->get();
-        $contents = $this->contentRepository->all();
-        return view('post.index',compact('posts', 'contents'));
+        $pageTitle = '';
+        if($request->filled('operator_id')) {
+            $pageTitle = $this->operatorRepository->whereId($request->operator_id)->first()->title;
+
+        }
+        if($request->filled('content_id')) {
+            $pageTitle = $this->contentRepository->whereId($request->content_id)->first()->title;
+        }
+        return view('post.index', compact('pageTitle'));
+    }
+
+    /**
+     * Method allData
+     *
+     * @param \Illuminate\Http\Request $request (parent_id)
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function allData(Request $request)
+    {
+        $posts = $this->postRepository
+                        ->with(['operator', 'content' , 'operator.country'])
+                        ->filter($this->postFilter());
+
+        return \DataTables::eloquent($posts)
+            ->addColumn('index', function(Post $post) {
+                return '<input class="select_all_template" type="checkbox" name="selected_rows[]" value="{{$post->id}}" class="roles" onclick="collect_selected(this)">';
+            })
+            ->addColumn('content', function(Post $post) {
+                return $post->content->title;
+            })
+            ->addColumn('published date', function(Post $post) {
+                return $post->published_date;
+            })
+            ->addColumn('status', function(Post $post) {
+                return ActiveStatus::getLabel($post->active);
+            })
+            ->addColumn('url', function(Post $post) {
+                return view('post.post_link', compact('post'))->render();
+            })
+            ->addColumn('user', function(Post $post) {
+                return $post->user->name;
+            })
+            ->addColumn('action', function(Post $post) {
+                return view('post.action', compact('post'))->render();
+            })
+            ->escapeColumns([])
+            ->make(true);
     }
 
     /**
@@ -149,5 +195,18 @@ class PostController extends Controller
         session()->flash('success', 'deleted successfully');
 
         return back();
+    }
+
+    /**
+     * Method filters
+     *
+     * @return array
+     */
+    public function postFilter()
+    {
+        return [
+            'operator_id' => new OperatorFilter,
+            'content_id'  => new ContentFilter
+        ];
     }
 }

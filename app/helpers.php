@@ -87,6 +87,7 @@ Route::get('/test','DashboardController@test');
         Route::post('admin/migrate_tables', 'DashboardController@migrate_tables');
         Route::get('content/allData', 'ContentController@allData');
         Route::get('category/allData', 'CategoryController@allData');
+        Route::get('post/allData', 'PostController@allData');
     });
 
 
