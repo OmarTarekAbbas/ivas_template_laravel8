@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Constants\ContentTypes;
 use App\Http\Controllers\Controller;
 use App\Http\Repository\CategoryRepository;
 use App\Http\Repository\ContentRepository;
@@ -104,7 +104,8 @@ class ContentController extends Controller
             return $content->title;
         })
         ->addColumn('content', function(Content $content) {
-            return view('content.type', compact('content'))->render();
+            $contentTypes = new ContentTypes;
+            return view('content.type', compact('content', 'contentTypes'))->render();
         })
         ->addColumn('content_type', function(Content $content) {
             return $content->type->title;

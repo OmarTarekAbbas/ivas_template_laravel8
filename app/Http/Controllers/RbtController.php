@@ -2,20 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\ContentTypes;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use App\Models\Content;
-use App\Models\Country;
-use App\Models\Operator;
-use App\Models\RbtCode;
-
-use Validator;
-use Auth;
+use App\Http\Repository\ContentRepository;
+use App\Http\Repository\OperatorRepository;
+use App\Http\Repository\RbtRepository;
+use App\Http\Requests\RbtRequest;
+use App\Http\Services\RbtService;
 class RbtController extends Controller
 {
+    public function __construct(
+        RbtRepository $rbtRepository,
+        ContentRepository $contentRepository,
+        OperatorRepository $operatorRepository,
+        RbtService $rbtService)
+    {
+        $this->rbtService         = $rbtService;
+        $this->rbtRepository      = $rbtRepository;
+        $this->contentRepository  = $contentRepository;
+        $this->operatorRepository = $operatorRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -23,8 +31,9 @@ class RbtController extends Controller
      */
     public function index()
     {
-        $contents = Content::all();
-        return view('rbt.index',compact('contents'));
+        $contents = $this->contentRepository->all();
+
+        return view('rbt.index', compact('contents'));
     }
 
     /**
@@ -34,9 +43,10 @@ class RbtController extends Controller
      */
     public function create()
     {
-      $contents  = Content::where('content_type_id',4)->get();
-      $operators = Operator::all();
+      $contents  = $this->contentRepository->where('content_type_id', ContentTypes::AUDIO)->get();
+      $operators = $this->operatorRepository->all();
       $rbt      = NULL;
+
       return view('rbt.form',compact('contents','operators','rbt'));
     }
 
@@ -46,26 +56,12 @@ class RbtController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RbtRequest $request)
     {
-      $validator = Validator::make($request->all(), [
-                  'rbt_code' => 'required',
-                  'content_id' => 'required',
-                  'operator_id'=> 'required'
-          ]);
+      $this->rbtService->handle($request->validated());
 
-      if ($validator->fails()) {
-          return back()->withErrors($validator)->withInput();
-      }
+      session()->flash('success', 'rbt created Successfully');
 
-
-      $content = Content::findOrFail($request->content_id);
-
-      foreach ($request->operator_id as  $key=>$operator_id) {
-        $operator = $content->rbt_operators()->attach([$operator_id => ['rbt_code' => $request->rbt_code[$key]]]);
-      }
-
-      \Session::flash('success', 'rbt created Successfully');
       return redirect('rbt/'.$request->content_id);
     }
 
@@ -77,7 +73,7 @@ class RbtController extends Controller
      */
     public function show($id)
     {
-     $contents=  Content::whereId($id)->get();
+     $contents=  $this->contentRepository->whereId($id)->get();
      return view('rbt.index',compact('contents'));
     }
 
@@ -89,9 +85,10 @@ class RbtController extends Controller
      */
     public function edit($id,Request $request)
     {
-      $rbt = RbtCode::findOrFail($id);
-      $contents= Content::where('content_type_id',4)->get();
-      $operators = Operator::all();
+      $rbt       = $this->rbtRepository->findOrFail($id);
+      $contents  = $this->contentRepository->where('content_type_id', ContentTypes::AUDIO)->get();
+      $operators = $this->operatorRepository->all();
+
       return view('rbt.form',compact('rbt','contents','operators'));
     }
 
@@ -102,23 +99,13 @@ class RbtController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RbtRequest $request, $id)
     {
-      $validator = Validator::make($request->all(), [
-          'rbt_code' => 'required',
-          'content_id' => 'required',
-          'operator_id'=> 'required'
-          ]);
+        $this->rbtService->handle($request->validated(), $id);
 
-      if ($validator->fails()) {
-          return back()->withErrors($validator)->withInput();
-      }
-      $rbt = RbtCode::findOrFail($id);
-      $content = Content::findOrFail($request->content_id);
-      $rbt->update($request->all());
+        session()->flash('success', 'RbtCode Update Successfully');
 
-      \Session::flash('success', 'RbtCode Update Successfully');
-      return redirect('rbt/'.$request->content_id);
+        return redirect('rbt/'.$request->content_id);
     }
 
     /**
@@ -129,9 +116,9 @@ class RbtController extends Controller
      */
     public function destroy($id,Request $request)
     {
-      $rbt = RbtCode::findOrFail($id);
+      $rbt = $this->rbtRepository->findOrFail($id);
       $rbt->delete();
-      \Session::flash('success', 'RbtCode Delete Successfully');
+      session()->flash('success', 'RbtCode Delete Successfully');
       return back();
     }
 }

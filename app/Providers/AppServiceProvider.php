@@ -35,5 +35,11 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultstringLength(191);
         Post::observe(PostObserver::class);
+        
+        \View::composer("*", function ($view) {
+            $view->with("activeStatus", ActiveStatus::class);
+            $view->with("conentTypes",  ConentTypes::class);
+            $view->with("settingTypes", SettingTypes::class);
+        });
     }
 }
