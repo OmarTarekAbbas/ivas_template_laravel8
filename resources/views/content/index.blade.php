@@ -1,6 +1,6 @@
 @extends('template')
 @section('page_title')
-@if(isset($category)) {{$category->title}} @else Content @endif
+{{ request()->filled('categoy_id')?  $categoryTitle : 'Contents' }}
 @stop
 @section('content')
 <div class="row" style="margin-right: 0; margin-left: 0;">
@@ -71,7 +71,7 @@
             // "search": {"regex": true},
             "ajax": {
             type: "GET",
-            "url": "{!! url('content/allData?category_id=') !!}{{isset($category)? $category->id : ''}}",
+            "url": "{!! url('content/allData?category_id='.request('category_id')) !!}",
             "data":"{{csrf_token()}}"
             },
             columns: [

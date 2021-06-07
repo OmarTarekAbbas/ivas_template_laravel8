@@ -1,10 +1,6 @@
 @extends('template')
 @section('page_title')
- @if(request()->has('parent_id') && request()->get('parent_id') != '')
-    {{ $parentTitle }}
- @else
- Category
- @endif
+ {{ request()->filled('parent_id')?  $parentTitle : 'Category' }}
 @stop
 @section('content')
 <div class="row">
@@ -35,8 +31,7 @@
                         </div>
                         <br><br>
                         <div class="table-responsive">
-                            <table id="example" class="table table-striped dt-responsive" cellspacing="0" width="100%">
-
+                            <table id="dtcontent" class="table table-striped dt-responsive" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                         <th style="width:18px"><input type="checkbox" onclick="select_all('categories')"></th>
@@ -46,34 +41,7 @@
                                         <th >Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach($categorys as $value)
-                                    <tr>
-                                        <td><input class="select_all_template" type="checkbox" name="selected_rows[]" value="{{$value->id}}" class="roles" onclick="collect_selected(this)"></td>
-                                        <td>{{$value->id}}</td>
-                                        <td>
-                                            {{$value->title}}
-                                        </td>
-                                        <td>
-                                            <i class="{{$value->image}}"></i>
-                                        </td>
-                                        <td class="visible-md visible-lg">
-                                            <div class="btn-group">
-                                                <a class="btn btn-sm btn-success show-tooltip" title="Add Content" href="{{url("content/create?category_id=".$value->id."&title=".$value->title)}}" data-original-title="Add Content"><i class="fa fa-plus"></i></a>
-                                                @if(count($value->contents) > 0)
-                                                <a class="btn btn-sm show-tooltip" title="Show Content" href="{{url("category/$value->id")}}" data-original-title="show Content"><i class="fa fa-step-forward"></i></a>
-                                                @endif
-                                                <a class="btn btn-sm show-tooltip" href="{{url("category/$value->id/edit")}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                                <a class="btn btn-sm show-tooltip btn-danger" onclick="return ConfirmDelete();" href="{{url("category/$value->id/delete")}}" title="Delete"><i class="fa fa-trash"></i></a>
-                                                <a class="btn btn-sm btn-warning show-tooltip" title="Add Sub Category" href="{{url("category/create?category_id=".$value->id."&title=".$value->title)}}" data-original-title="Add Sub Category"><i class="fa fa-plus"></i></a>
-                                                @if(count($value->sub_cats) > 0)
-                                                <a class="btn btn-sm  btn-primary show-tooltip" title="Show Sub Category" href="{{url("category?parent_id=$value->id")}}" data-original-title="Show Sub Category"><i class="fa fa-step-forward"></i></a>
-                                                @endif
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
+                                
                             </table>
                         </div>
                     </div>
@@ -88,10 +56,29 @@
 
 @section('script')
 <script>
-
-
     $('#category').addClass('active');
     $('#category_index').addClass('active');
-
+</script>
+<script>
+    window.onload = function() {
+        $('#dtcontent').DataTable({
+            "processing": true,
+            "serverSide": true,
+            // "search": {"regex": true},
+            "ajax": {
+            type: "GET",
+            "url": "{!! url('category/allData?parent_id='.request('parent_id')) !!}",
+            "data":"{{csrf_token()}}"
+            },
+            columns: [
+            {data: 'index', searchable: false, orderable: false},
+            {data: 'id'},
+            {data: 'title'},
+            {data: 'image'},
+            {data: 'action', searchable: false}
+            ]
+            , "pageLength": 5
+        });
+    };
 </script>
 @stop

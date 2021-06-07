@@ -6,6 +6,7 @@ use App\Http\Filters\CategoryFilter\ParentFilter;
 use App\Http\Repository\CategoryRepository;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Services\CategoryService;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -45,13 +46,47 @@ class CategoryController extends Controller
     {
         $parentTitle = '';
         if($request->filled('parent_id')) {
-            $parentTitle  = $this->categoryRepository->where("id",$request->parent_id)->first()->title;
-            $categorys = $this->categoryRepository->filter($this->categoryFilter())->get();
-        } else {
-            $categorys = $this->categoryRepository->filter($this->categoryFilter())->parent()->get();
+            $parentTitle  = $this->categoryRepository->where("id", $request->parent_id)->first()->title;
+        }
+    	return view('category.index', compact('parentTitle'));
+    }
+
+    /**
+     * Method allData
+     *
+     * @param \Illuminate\Http\Request $request (parent_id)
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function allData(Request $request)
+    {
+        $categorys = $this->categoryRepository
+                        ->withCount(['contents', 'sub_cats'])
+                        ->filter($this->categoryFilter());
+
+        if(!$request->filled("parent_id")){
+            $categorys = $categorys->parent();
         }
 
-    	return view('category.index',compact('categorys','parentTitle'));
+
+        return \DataTables::eloquent($categorys)
+            ->addColumn('index', function(Category $category) {
+                return '<input class="select_all_template" type="checkbox" name="selected_rows[]" value="{{$category->id}}" class="roles" onclick="collect_selected(this)">';
+            })
+            ->addColumn('id', function(Category $category) {
+                return $category->id;
+            })
+            ->addColumn('title', function(Category $category) {
+                return $category->title;
+            })
+            ->addColumn('image', function(Category $category) {
+                return "<img src='$category->image' alt='$category->title' style='width:250px' height='200px'>";
+            })
+            ->addColumn('action', function(Category $value) {
+                return view('category.action', compact('value'))->render();
+            })
+            ->escapeColumns([])
+            ->make(true);
     }
 
     /**

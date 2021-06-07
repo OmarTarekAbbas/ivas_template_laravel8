@@ -11,6 +11,7 @@ use App\Http\Requests\ContentRequest;
 use App\Http\Services\ContentService;
 use App\Models\Content;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class ContentController extends Controller
 {
@@ -63,22 +64,36 @@ class ContentController extends Controller
     /**
      * index
      * get all content data
+     *
      * @return View
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('content.index');
+        $categoryTitle = '';
+        if($request->filled('category_id')) {
+            $categoryTitle = $this->categoryRepository->whereId($request->category_id)->first()->title;
+        }
+        return view('content.index', compact('categoryTitle'));
     }
 
+    /**
+     * Method allData
+     *
+     * @param \Illuminate\Http\Request $request (category_id)
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function allData(Request $request)
     {
-      $contents = Content::with(['type', 'category'])->withCount(['rbt_operators', 'operators']);
+      $contents = $this->contentRepository
+                    ->with(['type', 'category'])
+                    ->withCount(['rbt_operators', 'operators']);
 
-      if($request->filled("category_id")){
+      if($request->filled("category_id")) {
         $contents = $contents->where('category_id', $request->category_id);
       }
 
-      return \DataTables::eloquent($contents)
+      return DataTables::eloquent($contents)
         ->addColumn('index', function(Content $content) {
             return '<input class="select_all_template" type="checkbox" name="selected_rows[]" value="{{$content->id}}" class="roles" onclick="collect_selected(this)">';
         })
@@ -89,34 +104,20 @@ class ContentController extends Controller
             return $content->title;
         })
         ->addColumn('content', function(Content $content) {
-            if($content->type->id == 1)
-                return $content->path;
-            elseif($content->type->id == 2)
-                return $content->path;
-            elseif($content->type->id == 3)
-                return '<img src="'.url(isset($content->path)?$content->path: '').'" alt="" style="width:250px" height="200px">';
-            elseif($content->type->id == 4)
-                return '<audio controls src="'.url(isset($content->path)?$content->path: '').'" style="width:100%"></audio>';
-            elseif($content->type->id == 5)
-                return '<video src="'.url(isset($content->path)?$content->path: '').'" style="width:250px;height:200px" height="200px" controls poster="'.url(isset($content->image_preview)?$content->image_preview: '').'"></video>';
-            elseif($content->type->id == 6)
-                return '<iframe src="'.$content->path.'" width="250px" height="200px"></iframe>';
-            elseif($content->type->id == 7)
-                return '<a href="'.$content->path.'">'.$content->path.'</a>' ;
+            return view('content.type', compact('content'))->render();
         })
         ->addColumn('content_type', function(Content $content) {
             return $content->type->title;
         })
         ->addColumn('Category', function(Content $content) {
             if(isset($content->category))
-              return $content->category->title;
+                return $content->category->title;
         })
         ->addColumn('patch number', function(Content $content) {
-              return $content->patch_number;
+            return $content->patch_number;
         })
-        ->addColumn('action', function(Content $content) {
-          $value = $content;
-          return view('content.action', compact('value'))->render();
+        ->addColumn('action', function(Content $value) {
+            return view('content.action', compact('value'))->render();
         })
         ->escapeColumns([])
         ->make(true);
