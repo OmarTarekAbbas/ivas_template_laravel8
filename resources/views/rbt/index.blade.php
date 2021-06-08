@@ -1,6 +1,6 @@
 @extends('template')
 @section('page_title')
- Rbt Code
+ {{ request()->filled('operator_id') || request()->filled('content_id') ? $pageTitle : 'Rbt Code' }}
 @stop
 @section('content')
 <div class="row">
@@ -31,43 +31,19 @@
                         </div>
                         <br><br>
                         <div class="table-responsive">
-                            <table id="example" class="table table-striped dt-responsive" cellspacing="0" width="100%">
+                            <table id="dtcontent" class="table table-striped dt-responsive" cellspacing="0" width="100%">
 
                                 <thead>
                                     <tr>
                                         <th style="width:18px"><input type="checkbox" onclick="select_all('rbt_codes')"></th>
                                         <th>content</th>
-                                        <th>rbt_code</th>
+                                        <th>rbt code</th>
                                         <th>operator code</th>
                                         <th>operator</th>
                                         <th >Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach($contents as $key=>$content)
-                                    @foreach($content->rbt_operators as $value)
-                                    <tr>
-                                        <td><input class="select_all_template" type="checkbox" name="selected_rows[]" value="{{$value->id}}" class="roles" onclick="collect_selected(this)"></td>
-                                        <td>
-                                            {{$content->title}}
-                                        </td>
-                                        <td>{{$value->pivot->rbt_code}}</td>
-                                        <td>{{$value->rbt_sms_code}}</td>
-                                        <td>
-                                          <span class="btn">{{$value->country->title}}-{{$value->name}}</span>
-                                        <br>
-                                        </td>
-                                        </td>
-                                        <td class="visible-md visible-lg">
-                                            <div class="btn-group">
-                                                <a class="btn btn-sm show-tooltip" href="{{url("rbt/".$value->pivot->id."/edit")}}" title="Edit"><i class="fa fa-edit"></i></a>
-                                                <a class="btn btn-sm show-tooltip btn-danger" onclick="return ConfirmDelete();" href="{{url("rbt/".$value->pivot->id."/delete")}}" title="Delete"><i class="fa fa-trash"></i></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                    @endforeach
-                                </tbody>
+
                             </table>
                         </div>
                     </div>
@@ -83,9 +59,32 @@
 @section('script')
 <script>
 
+$('#rbts').addClass('active');
+$('#rbts_index').addClass('active');
 
-$('#contents').addClass('active');
-$('#contents_index').addClass('active');
+</script>
 
+<script>
+    window.onload = function() {
+        $('#dtcontent').DataTable({
+            "processing": true,
+            "serverSide": true,
+            // "search": {"regex": true},
+            "ajax": {
+            type: "GET",
+            "url": "{!! url('rbt/allData?content_id='.request('content_id').'&operator_id='.request('operator_id')) !!}",
+            "data":"{{csrf_token()}}"
+            },
+            columns: [
+            {data: 'index', searchable: false, orderable: false},
+            {data: 'content'},
+            {data: 'rbt code'},
+            {data: 'operator code'},
+            {data: 'operator'},
+            {data: 'action', searchable: false}
+            ]
+            , "pageLength": 5
+        });
+    };
 </script>
 @stop

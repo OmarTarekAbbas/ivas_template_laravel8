@@ -33,6 +33,11 @@ class Operator extends Model
     return $this->hasMany('App\Models\Post','operator_id','id');
   }
 
+  public function rbts()
+  {
+    return $this->hasMany('App\Models\RbtCode','operator_id','id');
+  }
+
   public function contents()
   {
     return $this->belongsToMany('App\Models\Content','posts','operator_id','content_id')->using(Post::class)

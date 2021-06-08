@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
 class RbtCode extends Model
 {
+    use Filterable;
+
     protected $fillable = ['content_id','operator_id','rbt_code'];
 
     public function operator()

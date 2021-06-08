@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Constants\ContentTypes;
-use Illuminate\Http\Request;
-
-use App\Http\Controllers\Controller;
 use App\Http\Repository\ContentRepository;
+use Illuminate\Http\Request;
 use App\Http\Repository\OperatorRepository;
 use App\Http\Repository\RbtRepository;
 use App\Http\Requests\RbtRequest;
 use App\Http\Services\RbtService;
+use App\Models\RbtCode;
+
 class RbtController extends Controller
 {
     public function __construct(
@@ -29,11 +29,55 @@ class RbtController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $contents = $this->contentRepository->all();
+        $pageTitle = '';
+        if($request->filled('operator_id')) {
+            $pageTitle = $this->operatorRepository->whereId($request->operator_id)->first()->title;
 
-        return view('rbt.index', compact('contents'));
+        }
+        if($request->filled('content_id')) {
+            $pageTitle = $this->contentRepository->whereId($request->content_id)->first()->title;
+        }
+
+        return view('rbt.index', compact('pageTitle'));
+    }
+
+    /**
+     * Method allData
+     *
+     * @param \Illuminate\Http\Request $request (category_id)
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function allData(Request $request)
+    {
+        $rbts = $this->rbtRepository
+                    ->with(['content', 'operator', 'operator.country'])
+                    ->filter($this->Filter());
+
+        return \DataTables::eloquent($rbts)
+            ->addColumn('index', function(RbtCode $rbt) {
+                return '<input class="select_all_template" type="checkbox" name="selected_rows[]" value="{{$rbt->id}}" class="roles" onclick="collect_selected(this)">';
+            })
+            ->addColumn('content', function(RbtCode $rbt) {
+                return $rbt->content->title;
+            })
+            ->addColumn('rbt code', function(RbtCode $rbt) {
+                return $rbt->rbt_code;
+            })
+            ->addColumn('operator code', function(RbtCode $rbt) {
+                return $rbt->operator->rbt_sms_code;
+            })
+            ->addColumn('operator', function(RbtCode $rbt) {
+                return $rbt->operator->country->title.'-'.$rbt->operator->name;
+            })
+            ->addColumn('action', function(RbtCode $value) {
+                return view('rbt.action', compact('value'))->render();
+            })
+            ->escapeColumns([])
+            ->make(true);
+
     }
 
     /**

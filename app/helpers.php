@@ -88,6 +88,7 @@ Route::get('/test','DashboardController@test');
         Route::get('content/allData', 'ContentController@allData');
         Route::get('category/allData', 'CategoryController@allData');
         Route::get('post/allData', 'PostController@allData');
+        Route::get('rbt/allData', 'RbtController@allData');
     });
 
 

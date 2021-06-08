@@ -16,11 +16,6 @@ class Post extends Pivot
 
     protected $fillable = ['published_date','active','url','content_id','operator_id','user_id'];
 
-    public function FunctionName(Type $var = null)
-    {
-        # code...
-    }
-
     public function operator()
     {
         return $this->belongsTo('App\Models\Operator','operator_id','id');

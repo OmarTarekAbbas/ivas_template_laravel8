@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Constants\ActiveStatus;
 use App\Http\Controllers\Controller;
-use App\Http\Filters\PostFilter\ContentFilter;
-use App\Http\Filters\PostFilter\OperatorFilter;
 use App\Http\Repository\ContentRepository;
 use App\Http\Repository\PostRepository;
 use App\Http\Repository\OperatorRepository;
@@ -91,7 +89,7 @@ class PostController extends Controller
     {
         $posts = $this->postRepository
                         ->with(['operator', 'content' , 'operator.country'])
-                        ->filter($this->postFilter());
+                        ->filter($this->Filter());
 
         return \DataTables::eloquent($posts)
             ->addColumn('index', function(Post $post) {
@@ -195,18 +193,5 @@ class PostController extends Controller
         session()->flash('success', 'deleted successfully');
 
         return back();
-    }
-
-    /**
-     * Method filters
-     *
-     * @return array
-     */
-    public function postFilter()
-    {
-        return [
-            'operator_id' => new OperatorFilter,
-            'content_id'  => new ContentFilter
-        ];
     }
 }

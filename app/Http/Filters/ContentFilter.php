@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Filters\PostFilter;
+namespace App\Http\Filters;
 
-use App\Http\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 
 class ContentFilter implements Filter

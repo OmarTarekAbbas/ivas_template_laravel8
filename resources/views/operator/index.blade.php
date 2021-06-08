@@ -55,8 +55,14 @@
 								</td>
 								<td class="visible-md visible-lg">
 								    <div class="btn-group">
-								    	<a class="btn btn-sm show-tooltip" title="" href="{{url('operator/'.$operator->id.'/edit')}}" data-original-title="Edit"><i class="fa fa-edit"></i></a>
+                                        <a class="btn btn-sm show-tooltip" title="" href="{{url('operator/'.$operator->id.'/edit')}}" data-original-title="Edit"><i class="fa fa-edit"></i></a>
 								      <a class="btn btn-sm btn-danger show-tooltip" title="" onclick = 'return ConfirmDelete()' href="{{url('operator/'.$operator->id.'/delete')}}" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
+                                      @if($operator->rbts_count > 0)
+                                        <a class="btn btn-sm show-tooltip" title="Show Rbt Code" href="{{url("rbt?operator_id=$operator->id")}}" data-original-title="show RBt_code"><i class="fa fa-step-forward"></i></a>
+                                      @endif
+                                      @if($operator->posts_count > 0)
+                                        <a class="btn btn-sm btn-success show-tooltip" title="Show Post Code" href="{{url("post?operator_id=$operator->id")}}" data-original-title="show Post code"><i class="fa fa-step-forward"></i></a>
+                                      @endif
 								    </div>
 								</td>
 							</tr>

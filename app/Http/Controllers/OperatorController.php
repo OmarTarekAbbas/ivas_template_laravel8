@@ -53,7 +53,7 @@ class OperatorController extends Controller
      */
     public function index()
     {
-        $operators = $this->operatorRepository->all();
+        $operators = $this->operatorRepository->withCount(['rbts', 'posts'])->get();
         return view('operator.index',compact('operators'));
     }
 

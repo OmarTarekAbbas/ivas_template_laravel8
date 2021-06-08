@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Filters\ContentFilter;
+use App\Http\Filters\OperatorFilter;
 use App\Models\RoleRoute;
 use App\Models\Route as RouteModel;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -105,6 +107,19 @@ class Controller extends BaseController
 
         });
 
+    }
+
+    /**
+     * Method filters
+     *
+     * @return array
+     */
+    public function Filter()
+    {
+        return [
+            'operator_id' => new OperatorFilter,
+            'content_id'  => new ContentFilter
+        ];
     }
 
 }
