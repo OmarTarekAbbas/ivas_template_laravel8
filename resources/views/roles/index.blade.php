@@ -37,7 +37,7 @@
 						            <tr class="table-flag-blue">
 										<th><input class="select_all_template" type="checkbox" name="selected_rows[]" value="{{$role->id}}" class="roles" onclick="collect_selected(this)"></th>
 						                <td>{{$role->name}}</td>
-						                <td class="visible-md visible-lg">
+						                <td class="visible-md visible-xs visible-sm visible-lg">
 						                    <div class="btn-group">
                                                 <!-- <a class="btn btn-sm show-tooltip btn-success" data-original-title="View Access"  href="{{url('roles/'.$role->id.'/view_access')}}">
                                                     <i class="fa fa-eye"></i>

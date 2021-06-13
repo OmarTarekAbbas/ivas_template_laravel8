@@ -53,7 +53,7 @@
 								<td>{{$operator->rbt_ussd_code}}</td>
 								<td>{{$operator->country->title}}</td>
 								</td>
-								<td class="visible-md visible-lg">
+								<td class="visible-md visible-xs visible-sm visible-lg">
 								    <div class="btn-group">
                                         <a class="btn btn-sm show-tooltip" title="" href="{{url('operator/'.$operator->id.'/edit')}}" data-original-title="Edit"><i class="fa fa-edit"></i></a>
 								      <a class="btn btn-sm btn-danger show-tooltip" title="" onclick = 'return ConfirmDelete()' href="{{url('operator/'.$operator->id.'/delete')}}" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>

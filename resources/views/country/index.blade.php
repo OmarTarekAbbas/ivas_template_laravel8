@@ -44,7 +44,7 @@
 							<tr class="table-flag-blue">
 								<td><input class="select_all_template" type="checkbox" name="selected_rows[]" value="{{$country->id}}" onclick="collect_selected(this)"></td>
 								<td>{{$country->title}}</td>
-								<td class="visible-md visible-lg">
+								<td class="visible-md visible-xs visible-sm visible-lg">
 								    <div class="btn-group">
 											<a class="btn btn-sm btn-success show-tooltip" title="Add Operator" href="{{url("operator/create?country_id=".$country->id."&title=".$country->title)}}" data-original-title="Add Operator"><i class="fa fa-plus"></i></a>
 								    	<a class="btn btn-sm show-tooltip" title="" href="{{url('country/'.$country->id.'/edit')}}" data-original-title="Edit"><i class="fa fa-edit"></i></a>

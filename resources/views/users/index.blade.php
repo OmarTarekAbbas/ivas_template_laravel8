@@ -3,7 +3,7 @@
 	@lang('messages.users.users')
 @stop
 @section('content')
-	<div class="row">
+	<div class="row" >
 		<div class="col-md-12">
 			<div class="box box-black">
 				<div class="box-title">
@@ -17,7 +17,7 @@
 					<div class="btn-toolbar pull-right">
 						<div class="btn-group">
 							<a class="btn btn-circle show-tooltip" title="" href="{{url('users/new')}}" data-original-title="Add new record"><i class="fa fa-plus"></i></a>
-							<?php 
+							<?php
 								$table_name = "users" ;
 							?>
 							@include('partial.delete_all')
@@ -32,7 +32,7 @@
 								<th>@lang('messages.users.user_name')</th>
 								<th>@lang('messages.users.email')</th>
 								<th>@lang('messages.users.role')</th>
-								<th>@lang('messages.users.phone')</th> 
+								<th>@lang('messages.users.phone')</th>
 								<th class="visible-md visible-lg" style="width:130px">@lang('messages.action')</th>
 							</tr>
 							</thead>
@@ -44,8 +44,8 @@
 										<td>{{$user->name}}</td>
 										<td>{{$user->email}}</td>
 										<td>{{$user->role}}</td>
-										<td>{{$user->phone}}</td> 
-										<td class="visible-md visible-lg">
+										<td>{{$user->phone}}</td>
+										<td class="visible-xs visible-sm visible-md visible-lg">
 											<div class="btn-group">
 												<a class="btn btn-sm show-tooltip" title="" href="{{url('users/'.$user->id.'/edit')}}" data-original-title="Edit"><i class="fa fa-edit"></i></a>
 												<a class="btn btn-sm btn-danger show-tooltip" title="" onclick="return confirm('Are you sure you want to delete this ?');" href="{{url('users/'.$user->id.'/delete')}}" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
@@ -65,7 +65,7 @@
 
 @section('script')
 	<script>
-	var check = false ; 
+	var check = false ;
 		function select_all()
 		{
 			if(!check)
@@ -77,17 +77,17 @@
 					if($user->email!=\Auth::user()->email){
 				?>
 						collect_selected("{{$user->id}}") ;
-				<?php 
+				<?php
 						}
-					}	
+					}
 				?>
-				check = true ; 
+				check = true ;
 			}
 			else
 			{
 				$('.users').prop("checked",!check);
 				check = false ;
-				clear_selected() ; 
+				clear_selected() ;
 			}
 		}
 	</script>

@@ -16,12 +16,12 @@
 				<div class="box-content">
                     <div class="btn-toolbar pull-right">
                         <div class="btn-group">
-                            
+
                             <a class="btn btn-circle show-tooltip" title="" href="{{url('types/create')}}" data-original-title="Add new record"><i class="fa fa-plus"></i></a>
-							<?php 
+							<?php
 								$table_name = "types" ;
 							?>
-							@include('partial.delete_all')                            
+							@include('partial.delete_all')
                         </div>
                     </div>
                     <br><br>
@@ -31,9 +31,9 @@
 							<tr>
 							<th style="width:18px"><input type="checkbox" onclick="select_all('{{$table_name}}')"></th>
 							<th>@lang('messages.type.name-type')</th>
-                            
+
 								<th class="visible-md visible-lg" style="width:130px">@lang('messages.type.type-action')</th>
-                            
+
 
 							</tr>
 							</thead>
@@ -42,15 +42,15 @@
 							@foreach($types as $type)
 								<tr class="table-flag-blue">
                                     <th><input class="select_all_template" type="checkbox" name="selected_rows[]" value="{{$type->id}}" onclick="collect_selected(this)"></th>
-                                    <td>{{$type->title}}</td> 
-                                    
-                                    <td class="visible-md visible-lg">
+                                    <td>{{$type->title}}</td>
+
+                                    <td class="visible-md visible-xs visible-sm visible-lg">
 										<div class="btn-group">
 											<a class="btn btn-sm show-tooltip" title="" href="{{url('types/'.$type->id.'/edit')}}" data-original-title="Edit"><i class="fa fa-edit"></i></a>
 											<a class="btn btn-sm btn-danger show-tooltip" title="" onclick="return confirm('Are you sure you want to delete this ?');" href="{{url('types/'.$type->id.'/delete')}}" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
 										</div>
 									</td>
-                             
+
 								</tr>
 							@endforeach
 							</tbody>

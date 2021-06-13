@@ -57,7 +57,7 @@ provider
                                             <img class=" img-circle" width="100px" height="100px"
                                                 src="{{$value->image}}" />
                                         </td>
-                                        <td class="visible-md visible-lg">
+                                        <td class="visible-md visible-xs visible-sm visible-lg">
                                             <div class="btn-group">
                                             <a class="btn btn-sm btn-success"
                                                 href="{{url("category/create?provider_id=".$value->id."&title=".$value->title)}}" title="Add Category"><i
