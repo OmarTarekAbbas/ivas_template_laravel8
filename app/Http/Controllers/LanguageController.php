@@ -8,6 +8,8 @@ use App\Http\Requests\LanguageUpdateRequest;
 use App\Http\Services\LanguageService;
 use Illuminate\Support\Facades\Session;
 use Config;
+use Illuminate\Support\Facades\Redirect;
+use League\Flysystem\Config as FlysystemConfig;
 
 class LanguageController extends Controller
 {
@@ -49,6 +51,7 @@ class LanguageController extends Controller
             Session::put('applocale', $lang);
         }
         return Redirect::back();
+
     }
 
     /**
