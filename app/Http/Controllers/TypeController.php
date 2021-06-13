@@ -99,10 +99,10 @@ class TypeController extends Controller
      * @param  TypeUpdateRequest $request
      * @return Redirect
      */
-    public function update(TypeRequest $request)
+    public function update(TypeRequest $request ,$id)
     {
 
-        $this->typeService->handle($request->validated(), $request->type_id);
+        $this->typeService->handle($request->validated(), $id);
 
         \Session::flash('success','Type Updated successfully');
 

@@ -30,7 +30,6 @@ class TypeService
     public function handle($request, $typeId = null)
     {
         $type = $this->typeRepository;
-
         if($typeId) {
             $type = $this->typeRepository->find($typeId);
         }

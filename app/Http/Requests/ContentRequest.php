@@ -33,19 +33,19 @@ class ContentRequest extends Request
             'path' => ''
         ];
 
-        if(request()->get('content_type_id') == ContentTypes::IMAGE) {
+        if(request()->get('content_type_id') == ContentTypes::IMAGE && $this->method()=='POST') {
             $rules['path'] = 'required|mimes:png,jpeg,jpg';
         }
 
-        if(request()->get('content_type_id') == ContentTypes::VIDEO) {
+        if(request()->get('content_type_id') == ContentTypes::VIDEO && $this->method()=='POST') {
             $rules['path'] = 'required|mimes:mp4,flv,3gp';
         }
 
-        if(request()->get('content_type_id') == ContentTypes::AUDIO) {
+        if(request()->get('content_type_id') == ContentTypes::AUDIO && $this->method()=='POST') {
             $rules['path'] = 'required|mimes:mp3,webm,wav';
         }
 
-        if(request()->get('content_type_id') == ContentTypes::YOUTUBVIDEO) {
+        if(request()->get('content_type_id') == ContentTypes::YOUTUBVIDEO && $this->method()=='POST') {
             $rules['path'] = 'required|url';
         }
 

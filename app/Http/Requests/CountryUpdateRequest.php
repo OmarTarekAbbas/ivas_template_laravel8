@@ -25,7 +25,7 @@ class CountryUpdateRequest extends Request
     {
        return [
             "title" => 'required|string|unique:countries,title,'.$this->segment(2),
-            'country_id' => 'required|exsists:countries,id'
+            'country_id' => ''
        ];
     }
 }

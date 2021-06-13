@@ -83,9 +83,12 @@ class ContentService
 
         $contentTypeStrategy  = new ContentTypeContext(new $contentTypeClass);
 
-        $request = array_merge($request,[
-            'path' => $contentTypeStrategy->handleType($request['path'])
-        ]);
+        if(isset($request['path'])){
+            $request = array_merge($request,[
+                'path' => $contentTypeStrategy->handleType($request['path'])
+            ]);
+        }
+
 
         if(isset($request['image_preview'])) {
             $request = array_merge($request, [
@@ -129,12 +132,14 @@ class ContentService
      */
     public function handleVideoImagePreview($request)
     {
+            // dd(request()->path());
         $ourPath = $this->uploaderService->creatOurFolderPath(self::IMAGE_PATH);
         $image_path =  'uploads/'.self::IMAGE_PATH.'/'.$ourPath['date_path'].time().'.png';
         $command='ffmpeg -ss 00:00:02 -i '.base_path($request['path']).' -vframes 1 -q:v 2 '.base_path($image_path).'';
         $command=str_replace('\\', '/', $command);
         exec($command);
         return $image_path;
+
     }
     /**
      * handle Youtube Image Preview that return file path

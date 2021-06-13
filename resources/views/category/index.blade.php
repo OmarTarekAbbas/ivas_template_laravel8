@@ -41,7 +41,7 @@
                                         <th >Action</th>
                                     </tr>
                                 </thead>
-                                
+
                             </table>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
         $('#dtcontent').DataTable({
             "processing": true,
             "serverSide": true,
-            // "search": {"regex": true},
+            "search": {"regex": true},
             "ajax": {
             type: "GET",
             "url": "{!! url('category/allData?parent_id='.request('parent_id')) !!}",

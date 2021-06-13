@@ -187,6 +187,7 @@ class ContentController extends Controller
      */
     public function update($id, ContentRequest $request)
     {
+        // dd($id);
         $content = $this->contentRepository->findOrfail($id);
 
         $this->contentService->handle($request->validated(), $id);

@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-use App\Traits\DeleteFile;
+// use App\Traits\DeleteFile;
 
 class Operator extends Model
 {
-  use DeleteFile;
+//   use DeleteFile;
 
   protected $fillable = [
       'name',
