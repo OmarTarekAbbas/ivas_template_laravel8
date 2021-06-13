@@ -27,6 +27,8 @@
                             </div>
                         </div>
 
+                        <input type="hidden" name="type_id" value="{{ $setting->type_id }}">
+
                         <div class="form-group">
                             @if($setting->type->title == "Image" || $setting->type->title == "Normal Editor" || $setting->type->title == "Advanced Editor" || $setting->type->title == "selector")
                                 <label for="textfield5" class="col-sm-3 col-lg-2 control-label">Value</label>
@@ -85,7 +87,7 @@
                                         <?php
                                             $selected_extensions = explode(",",$setting->value)
                                         ?>
-                                        <select class="form-control" name="extensions[]" multiple>
+                                        <select class="form-control" name="value[]" multiple>
                                             <option value="image" @foreach($selected_extensions as $extension) @if($extension=='image') selected @endif @endforeach>Images</option>
                                             <option value="audio" @foreach($selected_extensions as $extension) @if($extension=='audio') selected @endif @endforeach>Audios</option>
                                             <option value="video" @foreach($selected_extensions as $extension) @if($extension=='video') selected @endif @endforeach>Videos</option>

@@ -67,7 +67,7 @@ class SettingStoreRequest extends Request
         if(request()->get('type_id') == SettingTypes::EXSTENTION) {
             $rules['extensions'] = 'required';
         }
-        
+
       return $rules;
     }
 }

@@ -32,7 +32,7 @@ class TypeRequest extends Request
             }
             case 'POST':
             {
-                
+
                 return [
                 'title' => 'required|unique:types',
                 ];

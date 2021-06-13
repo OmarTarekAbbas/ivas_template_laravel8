@@ -27,7 +27,7 @@
                         <div class="form-group">
                             <label for="textfield5" class="col-sm-3 col-lg-2 control-label">Setting type</label>
                             <div class="col-sm-9 col-lg-10 controls">
-                                <select id="first_select" class="form-control chosen-rtl">
+                                <select id="first_select" name="type_id" class="form-control chosen-rtl">
                                    @foreach ($types as $key => $value)
                                     <option value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
@@ -46,14 +46,14 @@
                         <div class="form-group"  id="cktextarea">
                             <label class="col-sm-3 col-lg-2 control-label">Value *</label>
                             <div class="col-sm-9 col-lg-10 controls" >
-                                <textarea class="form-control col-md-12 ckeditor" name="Advanced_Text" rows="6"></textarea>
+                                <textarea class="form-control col-md-12 ckeditor" name="advanced_text" rows="6"></textarea>
                             </div>
                         </div>
 
                         <div class="form-group" hidden id="normal_textarea">
                             <label class="col-sm-3 col-lg-2 control-label">Value *</label>
                             <div class="col-sm-9 col-lg-10 controls" >
-                                <textarea class="form-control col-md-12" name="Normal_Text" rows="6"></textarea>
+                                <textarea class="form-control col-md-12" name="normal_text" rows="6"></textarea>
                             </div>
                         </div>
 
@@ -69,7 +69,7 @@
                                     <div>
                                                 <span class='btn btn-default btn-file'><span class='fileupload-new'>Select image</span>
                                                 <span class='fileupload-exists'>Change</span>
-                                                <input type='file' name='Image' accept="image/*"></span>
+                                                <input type='file' name='image' accept="image/*"></span>
                                         <a href='#' class='btn btn-default fileupload-exists' data-dismiss='fileupload'>Remove</a>
                                     </div>
                                 </div>
@@ -81,7 +81,7 @@
                         <div class="form-group" hidden id="videocont" novalidate>
                           {!! Form::label('Video',\Lang::get('messages.video').'*',['class'=>'col-sm-3 col-lg-2 control-label']) !!}
                           <div class="col-sm-9 col-lg-10 controls">
-                              {!! Form::file('Video',["accept"=>"video/*",'class'=>'default']) !!}
+                              {!! Form::file('video',["accept"=>"video/*",'class'=>'default']) !!}
                                <span class='label label-important'>NOTE!</span>
                                <span>Only extension supported mp4, flv, and 3gp</span>
                           </div>
@@ -91,7 +91,7 @@
                         <div class="form-group" hidden id="audiocont" novalidate>
                             {!! Form::label('Audio',\Lang::get('messages.audio').'*',['class'=>'col-sm-3 col-lg-2 control-label']) !!}
                             <div class="col-sm-9 col-lg-10 controls">
-                                {!! Form::file('Audio',["accept"=>"audio/*",'class'=>'default']) !!}
+                                {!! Form::file('audio',["accept"=>"audio/*",'class'=>'default']) !!}
                              <span class='label label-important'>NOTE!</span>
                              <span>Only extension supported mp3, webm, and wav</span>
                             </div>
@@ -121,8 +121,6 @@
                         </div>
 
 
-                        <input type="hidden" name="myField" id="myField" value="1" />
-
                         <div class="form-group last">
                             <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
                                <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Save</button>
@@ -148,7 +146,6 @@
                 $('#cktextarea').show(1000);
                 $('#fileManCont').hide('slow') ;
                 $('#selector').hide('slow') ;
-                document.getElementById("myField").value = this.value;
             }
             else if (this.value == 2)
             {
@@ -159,7 +156,6 @@
                 $('#audiocont').hide('slow') ;
                 $('#fileManCont').hide('slow') ;
                 $('#selector').hide('slow') ;
-                document.getElementById("myField").value = this.value;
             }
             else if(this.value == 3)
             {
@@ -170,7 +166,6 @@
                 $('#audiocont').hide('slow') ;
                 $('#fileManCont').hide('slow') ;
                 $('#selector').hide('slow') ;
-                document.getElementById("myField").value = this.value;
             }
             else if(this.value == 4)
             {
@@ -181,7 +176,6 @@
                 $('#audiocont').hide('slow') ;
                 $('#fileManCont').hide('slow') ;
                 $('#selector').hide('slow') ;
-                document.getElementById("myField").value = this.value;
             }
             else if (this.value == 5)
             {
@@ -192,7 +186,6 @@
                 $('#videocont').hide('slow') ;
                 $('#fileManCont').hide('slow') ;
                 $('#selector').hide('slow') ;
-                document.getElementById("myField").value = this.value;
             }
             else if (this.value == 6)
             {
@@ -206,7 +199,6 @@
                 $('#key').prop('value',"uploadAllow");
                 $('#hidden_key').val('uploadAllow') ;
                 $('#selector').hide('slow') ;
-                document.getElementById("myField").value = this.value;
             }
             else if (this.value == 7)
             {
@@ -217,8 +209,6 @@
                 $('#videocont').hide('slow') ;
                 $('#fileManCont').hide('slow') ;
                 $('#selector').show(1000) ;
-                document.getElementById("myField").value = this.value;
-                console.log(this.value);
             }
 
         });
