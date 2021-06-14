@@ -35,6 +35,7 @@ class LanguageController extends Controller
      */
     public function __construct(LanguageRepository $languageRepository, LanguageService $languageService)
     {
+        $this->get_privilege();
         $this->languageRepository    = $languageRepository;
         $this->languageService    = $languageService;
     }

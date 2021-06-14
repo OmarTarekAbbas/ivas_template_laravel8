@@ -16,6 +16,10 @@ use Auth;
 class UserController extends Controller
 {
 
+    public function __construct()
+    {
+      $this->get_privilege();
+    }
     public function index()
     {
         $userdata = \Auth::user() ;
@@ -117,7 +121,7 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        
+
         if (Auth::user()->roles->first()->name == "super_admin") {
             # code...
             $user = User::findOrfail($id);

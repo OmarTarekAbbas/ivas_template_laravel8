@@ -53,6 +53,9 @@ class PostController extends Controller
         PostStoreService $postStoreService,
         PostUpdateService $postUpdateService
     ) {
+
+        $this->get_privilege();
+
         $this->postRepository = $postRepository;
         $this->postStoreService = $postStoreService;
         $this->postUpdateService = $postUpdateService;

@@ -33,6 +33,7 @@ class ContentTypeController extends Controller
      */
     public function __construct(ContentTypeRepository $contentTypeRepository, ContentTypeService $contentTypeService)
     {
+        $this->get_privilege();
         $this->contentTypeRepository    = $contentTypeRepository;
         $this->contentTypeService    = $contentTypeService;
     }

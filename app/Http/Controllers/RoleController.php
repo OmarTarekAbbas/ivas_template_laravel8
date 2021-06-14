@@ -14,6 +14,12 @@ use App\Models\RouteModel ;
 class RoleController extends Controller
 {
 
+
+    public function __construct()
+    {
+      $this->get_privilege();
+    }
+    
     public function index()
     {
 

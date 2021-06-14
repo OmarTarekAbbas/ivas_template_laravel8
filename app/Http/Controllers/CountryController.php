@@ -33,6 +33,7 @@ class CountryController extends Controller
      */
     public function __construct(CountryRepository $countryRepository, CountryService $countryService)
     {
+        $this->get_privilege();
         $this->countryRepository    = $countryRepository;
         $this->countryService    = $countryService;
     }

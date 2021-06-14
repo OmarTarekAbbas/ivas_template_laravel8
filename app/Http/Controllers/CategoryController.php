@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+
     /**
      * categoryRepository
      *
@@ -33,6 +34,7 @@ class CategoryController extends Controller
      */
     public function __construct(CategoryRepository $categoryRepository, CategoryService $categoryService)
     {
+        $this->get_privilege();
         $this->categoryRepository    = $categoryRepository;
         $this->categoryService       = $categoryService;
     }

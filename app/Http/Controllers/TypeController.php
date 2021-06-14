@@ -32,6 +32,7 @@ class TypeController extends Controller
      */
     public function __construct(TypeService $typeService, TypeRepository $typeRepository)
     {
+        $this->get_privilege();
         $this->typeRepository    = $typeRepository;
         $this->typeService  = $typeService;
 

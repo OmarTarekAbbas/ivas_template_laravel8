@@ -15,6 +15,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ContentController extends Controller
 {
+
     /**
      * contentRepository
      *
@@ -50,11 +51,13 @@ class ContentController extends Controller
      * @return void
      */
     public function __construct(
+
         ContentRepository $contentRepository,
         ContentTypeRepository $contentTypeRepository,
         CategoryRepository $categoryRepository,
         ContentService $contentService
     ) {
+        $this->get_privilege();
         $this->contentRepository = $contentRepository;
         $this->contentService = $contentService;
         $this->contentTypeRepository = $contentTypeRepository;

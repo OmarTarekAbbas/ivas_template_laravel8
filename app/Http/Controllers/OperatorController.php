@@ -41,6 +41,8 @@ class OperatorController extends Controller
      */
     public function __construct(OperatorService $operatorService, OperatorRepository $operatorRepository,CountryRepository $countryRepository)
     {
+        $this->get_privilege();
+
         $this->operatorRepository    = $operatorRepository;
         $this->countryRepository    = $countryRepository;
         $this->operatorService  = $operatorService;

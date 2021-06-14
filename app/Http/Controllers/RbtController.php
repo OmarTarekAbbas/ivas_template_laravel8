@@ -19,6 +19,8 @@ class RbtController extends Controller
         OperatorRepository $operatorRepository,
         RbtService $rbtService
     ) {
+        $this->get_privilege();
+
         $this->rbtService         = $rbtService;
         $this->rbtRepository      = $rbtRepository;
         $this->contentRepository  = $contentRepository;

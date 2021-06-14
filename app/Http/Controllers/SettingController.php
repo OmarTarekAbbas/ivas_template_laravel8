@@ -19,6 +19,7 @@ class SettingController extends Controller
     /**
      * settingRepository
      *
+     *
      * @var SettingRepository
      */
     private $settingRepository;
@@ -56,6 +57,7 @@ class SettingController extends Controller
         SettingUpdateService $settingUpdateService
     )
     {
+        $this->get_privilege();
         $this->settingRepository = $settingRepository;
         $this->settingStoreService = $settingStoreService;
         $this->settingUpdateService = $settingUpdateService;

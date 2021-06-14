@@ -19,8 +19,11 @@
                     <div class="box-content">
                         <div class="btn-toolbar pull-right">
                             <div class="btn-group">
-                                <a class="btn btn-circle show-tooltip" title="" href="{{ url('operator/create') }}"
-                                    data-original-title="Add new operator"><i class="fa fa-plus"></i></a>
+                                @if (get_action_icons('operator/create', 'get'))
+
+                                    <a class="btn btn-circle show-tooltip" title="" href="{{ url('operator/create') }}"
+                                        data-original-title="Add new operator"><i class="fa fa-plus"></i></a>
+                                @endif
                                 <?php $table_name = 'operators';
                                 // pass table name to delete all function
                                 // if the current route exists in delete all table flags it will appear in view
@@ -66,25 +69,33 @@
                                             </td>
                                             <td class="visible-md visible-xs visible-sm visible-lg">
                                                 <div class="btn-group">
-                                                    <a class="btn btn-sm show-tooltip" title=""
-                                                        href="{{ url('operator/' . $operator->id . '/edit') }}"
-                                                        data-original-title="Edit"><i class="fa fa-edit"></i></a>
-                                                    <a class="btn btn-sm btn-danger show-tooltip" title=""
-                                                        onclick='return ConfirmDelete()'
-                                                        href="{{ url('operator/' . $operator->id . '/delete') }}"
-                                                        data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
-                                                    @if ($operator->rbts_count > 0)
-                                                        <a class="btn btn-sm show-tooltip" title="Show Rbt Code"
-                                                            href="{{ url("rbt?operator_id=$operator->id") }}"
-                                                            data-original-title="show RBt_code"><i
-                                                                class="fa fa-step-forward"></i></a>
+                                                    @if (get_action_icons('operator/{id}/edit', 'get'))
+                                                        <a class="btn btn-sm show-tooltip" title=""
+                                                            href="{{ url('operator/' . $operator->id . '/edit') }}"
+                                                            data-original-title="Edit"><i class="fa fa-edit"></i></a>
                                                     @endif
-                                                    @if ($operator->posts_count > 0)
-                                                        <a class="btn btn-sm btn-success show-tooltip"
-                                                            title="Show Post Code"
-                                                            href="{{ url("post?operator_id=$operator->id") }}"
-                                                            data-original-title="show Post code"><i
-                                                                class="fa fa-step-forward"></i></a>
+                                                    @if (get_action_icons('operator/{id}/delete', 'get'))
+                                                        <a class="btn btn-sm btn-danger show-tooltip" title=""
+                                                            onclick='return ConfirmDelete()'
+                                                            href="{{ url('operator/' . $operator->id . '/delete') }}"
+                                                            data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
+                                                    @endif
+                                                    @if (get_action_icons('rbt', 'get'))
+                                                        @if ($operator->rbts_count > 0)
+                                                            <a class="btn btn-sm show-tooltip" title="Show Rbt Code"
+                                                                href="{{ url("rbt?operator_id=$operator->id") }}"
+                                                                data-original-title="show RBt_code"><i
+                                                                    class="fa fa-step-forward"></i></a>
+                                                        @endif
+                                                    @endif
+                                                    @if (get_action_icons('post', 'get'))
+                                                        @if ($operator->posts_count > 0)
+                                                            <a class="btn btn-sm btn-success show-tooltip"
+                                                                title="Show Post Code"
+                                                                href="{{ url("post?operator_id=$operator->id") }}"
+                                                                data-original-title="show Post code"><i
+                                                                    class="fa fa-step-forward"></i></a>
+                                                        @endif
                                                     @endif
                                                 </div>
                                             </td>

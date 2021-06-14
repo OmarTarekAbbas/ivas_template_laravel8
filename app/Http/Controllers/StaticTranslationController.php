@@ -45,6 +45,7 @@ class StaticTranslationController extends Controller
      */
     public function __construct(StaticTranslationService $staticTraslationService, StaticTranslationRepository $staticTraslationRepository,LanguageRepository $languageRepository)
     {
+        $this->get_privilege();
         $this->staticTraslationRepository    = $staticTraslationRepository;
         $this->languageRepository    = $languageRepository;
         $this->staticTraslationService  = $staticTraslationService;

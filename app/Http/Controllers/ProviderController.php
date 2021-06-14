@@ -16,6 +16,11 @@ class ProviderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+      $this->get_privilege();
+    }
     public function index()
     {
         $providers = Provider::all();

@@ -19,7 +19,9 @@
           <div class="box-content">
             <div class="btn-toolbar pull-right">
               <div class="btn-group">
+                @if (get_action_icons('content/create', 'get'))
                 <a class="btn btn-circle show-tooltip" title="" href="{{url('content/create')}}" data-original-title="Add new record"><i class="fa fa-plus"></i></a>
+                @endif
                 <?php
                 $table_name = "contents";
                 // pass table name to delete all function
