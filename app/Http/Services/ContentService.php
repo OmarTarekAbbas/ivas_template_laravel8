@@ -95,10 +95,8 @@ class ContentService
                 'image_preview' => $this->handleFile($request['image_preview'])
             ]);
         }
-
-        if(!isset($request['image_preview'])) {
+        if(isset($request['image_preview'])) {
             if($request['content_type_id'] == ContentTypes::VIDEO) {
-                // dd(request()->image_preview);
                 $request = array_merge($request, [
                     'image_preview' => $this->handleVideoImagePreview($request)
                 ]);
@@ -133,11 +131,9 @@ class ContentService
      */
     public function handleVideoImagePreview($request)
     {
-            // dd(request()->path());
         $ourPath = $this->uploaderService->creatOurFolderPath(self::IMAGE_PATH);
         $image_path =  'uploads/'.self::IMAGE_PATH.'/'.$ourPath['date_path'].time().'.png';
         $command='ffmpeg -ss 00:00:02 -i '.base_path($request['path']).' -vframes 1 -q:v 2 '.base_path($image_path).'';
-        dd($command);
         $command=str_replace('\\', '/', $command);
         exec($command);
         return $image_path;

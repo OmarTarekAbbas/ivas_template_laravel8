@@ -186,7 +186,7 @@
                         @if($content)
                             <img src="{{$content->image_preview}}" alt="" />
                         @else
-                            <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="omar2" />
+                            <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
                         @endif
                     </div>
                     <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
@@ -209,7 +209,7 @@
                   <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
                     @if($content)
                     <video width="100%" height="100%" controls>
-                      <source src="{{url($content->path)}}">
+                      <source src="{{$content->path}}">
                     </video>
                     @endif
                   </div>
@@ -239,7 +239,7 @@
                         @if($content)
                             <img src="{{$content->image_preview}}" alt="" />
                         @else
-                            <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="omar" />
+                            <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
                         @endif
                     </div>
                     <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
@@ -262,8 +262,8 @@
                   <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
                     @if($content)
                     <video width="100%" height="100%" controls>
-                        <source src="{{url($content->path)}}">
-                        </video>
+                      <source src="{{$content->path}}">
+                    </video>
                     @endif
                   </div>
                   <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
@@ -349,6 +349,21 @@
                 {!! Form::text('path',null,['placeholder'=>'Content','class'=>'form-control','disabled' =>true ]) !!}
             </div>
         </div>
+      </div>
+      @endif
+      @if($content->type->id == 7)
+      <div class="form-group"  id="normal">
+          <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+          <div class="col-sm-9 col-lg-10 controls">
+              {!! Form::text('path',null,['placeholder'=>'Content','class'=>'form-control']) !!}
+          </div>
+      </div>
+      @else
+      <div class="form-group" hidden id="normal">
+          <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+          <div class="col-sm-9 col-lg-10 controls">
+              {!! Form::text('path',null,['placeholder'=>'Content','class'=>'form-control','disabled' =>true ]) !!}
+          </div>
       </div>
       @endif
 @else
