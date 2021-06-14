@@ -184,10 +184,9 @@ class ContentController extends Controller
      * @param  ContentRequest $request
      * @return Redirect
      */
-    public function update($id, Request $request)
+    public function update($id, ContentRequest $request)
     {
-        dd($request->all());
-
+        
         $content = $this->contentRepository->findOrfail($id);
 
         $this->contentService->handle($request->validated(), $id);

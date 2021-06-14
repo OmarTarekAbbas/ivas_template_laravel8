@@ -98,7 +98,7 @@ class ContentService
 
         if(!isset($request['image_preview'])) {
             if($request['content_type_id'] == ContentTypes::VIDEO) {
-                dd(request()->image_preview);
+                // dd(request()->image_preview);
                 $request = array_merge($request, [
                     'image_preview' => $this->handleVideoImagePreview($request)
                 ]);
