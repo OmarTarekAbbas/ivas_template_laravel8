@@ -17,8 +17,8 @@ class RbtController extends Controller
         RbtRepository $rbtRepository,
         ContentRepository $contentRepository,
         OperatorRepository $operatorRepository,
-        RbtService $rbtService)
-    {
+        RbtService $rbtService
+    ) {
         $this->rbtService         = $rbtService;
         $this->rbtRepository      = $rbtRepository;
         $this->contentRepository  = $contentRepository;
@@ -32,11 +32,10 @@ class RbtController extends Controller
     public function index(Request $request)
     {
         $pageTitle = '';
-        if($request->filled('operator_id')) {
+        if ($request->filled('operator_id')) {
             $pageTitle = $this->operatorRepository->whereId($request->operator_id)->first()->title;
-
         }
-        if($request->filled('content_id')) {
+        if ($request->filled('content_id')) {
             $pageTitle = $this->contentRepository->whereId($request->content_id)->first()->title;
         }
 
@@ -53,31 +52,30 @@ class RbtController extends Controller
     public function allData(Request $request)
     {
         $rbts = $this->rbtRepository
-                    ->with(['content', 'operator', 'operator.country'])
-                    ->filter($this->Filter());
+            ->with(['content', 'operator', 'operator.country'])
+            ->filter($this->Filter())->get();
 
-        return \DataTables::eloquent($rbts)
-            ->addColumn('index', function(RbtCode $rbt) {
+        return \DataTables::of($rbts)
+            ->addColumn('index', function (RbtCode $rbt) {
                 return '<input class="select_all_template" type="checkbox" name="selected_rows[]" value="{{$rbt->id}}" class="roles" onclick="collect_selected(this)">';
             })
-            ->addColumn('content', function(RbtCode $rbt) {
+            ->addColumn('content', function (RbtCode $rbt) {
                 return $rbt->content->title;
             })
-            ->addColumn('rbt code', function(RbtCode $rbt) {
+            ->addColumn('rbt code', function (RbtCode $rbt) {
                 return $rbt->rbt_code;
             })
-            ->addColumn('operator code', function(RbtCode $rbt) {
+            ->addColumn('operator code', function (RbtCode $rbt) {
                 return $rbt->operator->rbt_sms_code;
             })
-            ->addColumn('operator', function(RbtCode $rbt) {
-                return $rbt->operator->country->title.'-'.$rbt->operator->name;
+            ->addColumn('operator', function (RbtCode $rbt) {
+                return $rbt->operator->country->title . '-' . $rbt->operator->name;
             })
-            ->addColumn('action', function(RbtCode $value) {
+            ->addColumn('action', function (RbtCode $value) {
                 return view('rbt.action', compact('value'))->render();
             })
             ->escapeColumns([])
             ->make(true);
-
     }
 
     /**
@@ -87,11 +85,11 @@ class RbtController extends Controller
      */
     public function create()
     {
-      $contents  = $this->contentRepository->where('content_type_id', ContentTypes::AUDIO)->get();
-      $operators = $this->operatorRepository->all();
-      $rbt      = NULL;
+        $contents  = $this->contentRepository->where('content_type_id', ContentTypes::AUDIO)->get();
+        $operators = $this->operatorRepository->all();
+        $rbt      = NULL;
 
-      return view('rbt.form',compact('contents','operators','rbt'));
+        return view('rbt.form', compact('contents', 'operators', 'rbt'));
     }
 
     /**
@@ -102,11 +100,11 @@ class RbtController extends Controller
      */
     public function store(RbtRequest $request)
     {
-      $this->rbtService->handle($request->validated());
+        $this->rbtService->handle($request->validated());
 
-      session()->flash('success', 'rbt created Successfully');
+        session()->flash('success', 'rbt created Successfully');
 
-      return redirect('rbt/'.$request->content_id);
+        return redirect('rbt/' . $request->content_id);
     }
 
     /**
@@ -117,8 +115,8 @@ class RbtController extends Controller
      */
     public function show($id)
     {
-     $contents=  $this->contentRepository->whereId($id)->get();
-     return view('rbt.index',compact('contents'));
+        $contents =  $this->contentRepository->whereId($id)->get();
+        return view('rbt.index', compact('contents'));
     }
 
     /**
@@ -127,13 +125,13 @@ class RbtController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id,Request $request)
+    public function edit($id, Request $request)
     {
-      $rbt       = $this->rbtRepository->findOrFail($id);
-      $contents  = $this->contentRepository->where('content_type_id', ContentTypes::AUDIO)->get();
-      $operators = $this->operatorRepository->all();
+        $rbt       = $this->rbtRepository->findOrFail($id);
+        $contents  = $this->contentRepository->where('content_type_id', ContentTypes::AUDIO)->get();
+        $operators = $this->operatorRepository->all();
 
-      return view('rbt.form',compact('rbt','contents','operators'));
+        return view('rbt.form', compact('rbt', 'contents', 'operators'));
     }
 
     /**
@@ -149,7 +147,7 @@ class RbtController extends Controller
 
         session()->flash('success', 'RbtCode Update Successfully');
 
-        return redirect('rbt/'.$request->content_id);
+        return redirect('rbt/' . $request->content_id);
     }
 
     /**
@@ -158,11 +156,11 @@ class RbtController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id,Request $request)
+    public function destroy($id, Request $request)
     {
-      $rbt = $this->rbtRepository->findOrFail($id);
-      $rbt->delete();
-      session()->flash('success', 'RbtCode Delete Successfully');
-      return back();
+        $rbt = $this->rbtRepository->findOrFail($id);
+        $rbt->delete();
+        session()->flash('success', 'RbtCode Delete Successfully');
+        return back();
     }
 }

@@ -53,8 +53,8 @@ class ContentController extends Controller
         ContentRepository $contentRepository,
         ContentTypeRepository $contentTypeRepository,
         CategoryRepository $categoryRepository,
-        ContentService $contentService)
-    {
+        ContentService $contentService
+    ) {
         $this->contentRepository = $contentRepository;
         $this->contentService = $contentService;
         $this->contentTypeRepository = $contentTypeRepository;
@@ -70,7 +70,7 @@ class ContentController extends Controller
     public function index(Request $request)
     {
         $categoryTitle = '';
-        if($request->filled('category_id')) {
+        if ($request->filled('category_id')) {
             $categoryTitle = $this->categoryRepository->whereId($request->category_id)->first()->title;
         }
         return view('content.index', compact('categoryTitle'));
@@ -85,44 +85,43 @@ class ContentController extends Controller
      */
     public function allData(Request $request)
     {
-      $contents = $this->contentRepository
-                    ->with(['type', 'category'])
-                    ->withCount(['rbt_operators', 'operators']);
+        $contents = $this->contentRepository
+            ->with(['type', 'category'])
+            ->withCount(['rbt_operators', 'operators'])->get();
 
-      if($request->filled("category_id")) {
-        $contents = $contents->where('category_id', $request->category_id);
-      }
+        if ($request->filled("category_id")) {
+            $contents = $contents->where('category_id', $request->category_id);
+        }
 
-      return DataTables::eloquent($contents)
-        ->addColumn('index', function(Content $content) {
-            return '<input class="select_all_template" type="checkbox" name="selected_rows[]" value="{{$content->id}}" class="roles" onclick="collect_selected(this)">';
-        })
-        ->addColumn('id', function(Content $content) {
-            return $content->id;
-        })
-        ->addColumn('title', function(Content $content) {
-            return $content->title;
-        })
-        ->addColumn('content', function(Content $content) {
-            $contentTypes = new ContentTypes;
-            return view('content.type', compact('content', 'contentTypes'))->render();
-        })
-        ->addColumn('content_type', function(Content $content) {
-            return $content->type->title;
-        })
-        ->addColumn('Category', function(Content $content) {
-            if(isset($content->category))
-                return $content->category->title;
-        })
-        ->addColumn('patch number', function(Content $content) {
-            return $content->patch_number;
-        })
-        ->addColumn('action', function(Content $value) {
-            return view('content.action', compact('value'))->render();
-        })
-        ->escapeColumns([])
-        ->make(true);
-
+        return DataTables::of($contents)
+            ->addColumn('index', function (Content $content) {
+                return '<input class="select_all_template" type="checkbox" name="selected_rows[]" value="{{$content->id}}" class="roles" onclick="collect_selected(this)">';
+            })
+            ->addColumn('id', function (Content $content) {
+                return $content->id;
+            })
+            ->addColumn('title', function (Content $content) {
+                return $content->title;
+            })
+            ->addColumn('content', function (Content $content) {
+                $contentTypes = new ContentTypes;
+                return view('content.type', compact('content', 'contentTypes'))->render();
+            })
+            ->addColumn('content_type', function (Content $content) {
+                return $content->type->title;
+            })
+            ->addColumn('Category', function (Content $content) {
+                if (isset($content->category))
+                    return $content->category->title;
+            })
+            ->addColumn('patch number', function (Content $content) {
+                return $content->patch_number;
+            })
+            ->addColumn('action', function (Content $value) {
+                return view('content.action', compact('value'))->render();
+            })
+            ->escapeColumns([])
+            ->make(true);
     }
 
     /**
@@ -135,7 +134,7 @@ class ContentController extends Controller
         $content = null;
         $content_types = $this->contentTypeRepository->all();
         $categorys = $this->categoryRepository->all();
-        return view('content.form',compact('content_types','content','categorys'));
+        return view('content.form', compact('content_types', 'content', 'categorys'));
     }
 
     /**
@@ -146,8 +145,8 @@ class ContentController extends Controller
      */
     public function show($id)
     {
-      $content = $this->contentRepository->with('type')->findOrfail($id);
-      return view('content.show_post',compact('content'));
+        $content = $this->contentRepository->with('type')->findOrfail($id);
+        return view('content.show_post', compact('content'));
     }
 
     /**
@@ -175,7 +174,7 @@ class ContentController extends Controller
         $content = $this->contentRepository->with('type')->findOrfail($id);
         $content_types = $this->contentTypeRepository->all();
         $categorys = $this->categoryRepository->all();
-        return view('content.form',compact('content_types','content','categorys'));
+        return view('content.form', compact('content_types', 'content', 'categorys'));
     }
 
     /**
@@ -187,7 +186,6 @@ class ContentController extends Controller
      */
     public function update($id, ContentRequest $request)
     {
-        // dd($id);
         $content = $this->contentRepository->findOrfail($id);
 
         $this->contentService->handle($request->validated(), $id);

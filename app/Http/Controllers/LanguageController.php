@@ -51,7 +51,6 @@ class LanguageController extends Controller
             Session::put('applocale', $lang);
         }
         return Redirect::back();
-
     }
 
     /**
