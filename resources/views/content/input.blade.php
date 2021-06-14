@@ -186,7 +186,7 @@
                         @if($content)
                             <img src="{{$content->image_preview}}" alt="" />
                         @else
-                            <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+                            <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="omar2" />
                         @endif
                     </div>
                     <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
@@ -209,7 +209,7 @@
                   <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
                     @if($content)
                     <video width="100%" height="100%" controls>
-                      <source src="{{$content->path}}">
+                      <source src="{{url($content->path)}}">
                     </video>
                     @endif
                   </div>
@@ -239,7 +239,7 @@
                         @if($content)
                             <img src="{{$content->image_preview}}" alt="" />
                         @else
-                            <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+                            <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="omar" />
                         @endif
                     </div>
                     <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
@@ -262,8 +262,8 @@
                   <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
                     @if($content)
                     <video width="100%" height="100%" controls>
-                      <source src="{{$content->path}}">
-                    </video>
+                        <source src="{{url($content->path)}}">
+                        </video>
                     @endif
                   </div>
                   <div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
