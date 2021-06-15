@@ -9,13 +9,21 @@ use App\Http\Repository\ContentRepository;
 use App\Http\Repository\ContentTypeRepository;
 use App\Http\Requests\ContentRequest;
 use App\Http\Services\ContentService;
+use App\Http\Repository\LanguageRepository;
 use App\Models\Content;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class ContentController extends Controller
 {
-
+    /**
+     * languageRepository
+     *
+     * @var LanguageRepository
+     */
+    private $languageRepository;
+    /**
+     *
     /**
      * contentRepository
      *
@@ -48,6 +56,7 @@ class ContentController extends Controller
      * @param  ContentTypeRepository $contentTypeRepository
      * @param  ContentService $contentService
      * @param  CategoryRepository $categoryRepository
+     * @param  LanguageRepository $languageRepository
      * @return void
      */
     public function __construct(
@@ -55,13 +64,15 @@ class ContentController extends Controller
         ContentRepository $contentRepository,
         ContentTypeRepository $contentTypeRepository,
         CategoryRepository $categoryRepository,
-        ContentService $contentService
+        ContentService $contentService,
+        LanguageRepository $languageRepository
     ) {
         $this->get_privilege();
         $this->contentRepository = $contentRepository;
         $this->contentService = $contentService;
         $this->contentTypeRepository = $contentTypeRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->languageRepository    = $languageRepository;
     }
 
     /**
@@ -76,7 +87,9 @@ class ContentController extends Controller
         if ($request->filled('category_id')) {
             $categoryTitle = $this->categoryRepository->whereId($request->category_id)->first()->title;
         }
-        return view('content.index', compact('categoryTitle'));
+        $languages = $this->languageRepository->all();
+
+        return view('content.index', compact('categoryTitle','languages'));
     }
 
     /**
@@ -88,6 +101,7 @@ class ContentController extends Controller
      */
     public function allData(Request $request)
     {
+
         $contents = $this->contentRepository
             ->with(['type', 'category'])
             ->withCount(['rbt_operators', 'operators'])->get();
@@ -104,11 +118,15 @@ class ContentController extends Controller
                 return $content->id;
             })
             ->addColumn('title', function (Content $content) {
-                return $content->title;
+                return '<ul>
+                <li><span style="font-weight: bold;">AR: </span> ' . $content->getTranslation("title", "ar") . '</li>
+                <li> <span style="font-weight: bold;">EN: </span>' . $content->getTranslation("title", "en") . '</li>
+                </ul>';
             })
             ->addColumn('content', function (Content $content) {
                 $contentTypes = new ContentTypes;
-                return view('content.type', compact('content', 'contentTypes'))->render();
+                $languages = $this->languageRepository->all();
+                return view('content.type', compact('content', 'contentTypes','languages'))->render();
             })
             ->addColumn('content_type', function (Content $content) {
                 return $content->type->title;
@@ -137,7 +155,9 @@ class ContentController extends Controller
         $content = null;
         $content_types = $this->contentTypeRepository->all();
         $categorys = $this->categoryRepository->all();
-        return view('content.form', compact('content_types', 'content', 'categorys'));
+        $languages = $this->languageRepository->all();
+
+        return view('content.form', compact('content_types', 'content', 'categorys','languages'));
     }
 
     /**
@@ -160,6 +180,7 @@ class ContentController extends Controller
      */
     public function store(ContentRequest $request)
     {
+        // dd($request->all());
         $this->contentService->handle($request->validated());
 
         $request->session()->flash('success', 'Content created successfull');
@@ -177,7 +198,8 @@ class ContentController extends Controller
         $content = $this->contentRepository->with('type')->findOrfail($id);
         $content_types = $this->contentTypeRepository->all();
         $categorys = $this->categoryRepository->all();
-        return view('content.form', compact('content_types', 'content', 'categorys'));
+        $languages = $this->languageRepository->all();
+        return view('content.form', compact('content_types', 'content', 'categorys','languages'));
     }
 
     /**

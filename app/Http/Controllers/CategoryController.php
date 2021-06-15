@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -6,11 +7,20 @@ use App\Http\Filters\CategoryFilter\ParentFilter;
 use App\Http\Repository\CategoryRepository;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Services\CategoryService;
+use App\Http\Repository\LanguageRepository;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+
+    /**
+     * languageRepository
+     *
+     * @var LanguageRepository
+     */
+    private $languageRepository;
+    /**
 
     /**
      * categoryRepository
@@ -30,13 +40,15 @@ class CategoryController extends Controller
      * inject needed data in constructor
      * @param  CategoryRepository $categoryRepository
      * @param  CategoryService $categoryService
+     * @param  LanguageRepository $languageRepository
      * @return void
      */
-    public function __construct(CategoryRepository $categoryRepository, CategoryService $categoryService)
+    public function __construct(CategoryRepository $categoryRepository, CategoryService $categoryService, LanguageRepository $languageRepository)
     {
         $this->get_privilege();
         $this->categoryRepository    = $categoryRepository;
         $this->categoryService       = $categoryService;
+        $this->languageRepository    = $languageRepository;
     }
 
     /**
@@ -47,10 +59,11 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $parentTitle = '';
-        if($request->filled('parent_id')) {
+        if ($request->filled('parent_id')) {
             $parentTitle  = $this->categoryRepository->where("id", $request->parent_id)->first()->title;
         }
-    	return view('category.index', compact('parentTitle'));
+        $languages = $this->languageRepository->all();
+        return view('category.index', compact('parentTitle', 'languages'));
     }
 
     /**
@@ -63,28 +76,31 @@ class CategoryController extends Controller
     public function allData(Request $request)
     {
         $categorys = $this->categoryRepository
-                        ->withCount(['contents', 'sub_cats'])
-                        ->filter($this->categoryFilter());
+            ->withCount(['contents', 'sub_cats'])
+            ->filter($this->categoryFilter());
 
-        if(!$request->filled("parent_id")){
+        if (!$request->filled("parent_id")) {
             $categorys = $categorys->parent();
         }
 
 
         return \DataTables::eloquent($categorys)
-            ->addColumn('index', function(Category $category) {
+            ->addColumn('index', function (Category $category) {
                 return '<input class="select_all_template" type="checkbox" name="selected_rows[]" value="{{$category->id}}" class="roles" onclick="collect_selected(this)">';
             })
-            ->addColumn('id', function(Category $category) {
+            ->addColumn('id', function (Category $category) {
                 return $category->id;
             })
-            ->addColumn('title', function(Category $category) {
-                return $category->title;
+            ->addColumn('title', function (Category $category) {
+                return '<ul>
+                        <li> <span style="font-weight: bold;">EN: </span>' . $category->getTranslation("title", "en") . '</li>
+                        <li><span style="font-weight: bold;">AR: </span> ' . $category->getTranslation("title", "ar") . '</li>
+                        </ul>';
             })
-            ->addColumn('image', function(Category $category) {
+            ->addColumn('image', function (Category $category) {
                 return "<img src='$category->image' alt='$category->title' style='width:250px' height='200px'>";
             })
-            ->addColumn('action', function(Category $value) {
+            ->addColumn('action', function (Category $value) {
                 return view('category.action', compact('value'))->render();
             })
             ->escapeColumns([])
@@ -100,7 +116,8 @@ class CategoryController extends Controller
     {
         $category = null;
         $parents = $this->categoryRepository->parent()->get();
-    	return view('category.form',compact('category','parents'));
+        $languages = $this->languageRepository->all();
+        return view('category.form', compact('category', 'parents', 'languages'));
     }
 
     /**
@@ -111,25 +128,23 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-    	$category = $this->categoryService->handle($request->validated());
-    	$request->session()->flash('success', 'Created Successfully');
-        if($request->has('parent_id')) {
-            return redirect('category?parent_id='.$request->parent_id.'');
+        // dd($request->all());
+        $category = $this->categoryService->handle($request->validated());
+        $request->session()->flash('success', 'Created Successfully');
+        if ($request->has('parent_id')) {
+            return redirect('category?parent_id=' . $request->parent_id . '');
         }
         return redirect('category');
     }
 
-    /**
-     * get page for update category
-     *
-     * @param  int $id
-     * @return View
-     */
+
+
     public function edit($id)
     {
-    	$category = $this->categoryRepository->find($id);
-    	$parents = $this->categoryRepository->parent()->get();
-    	return view('category.form',compact('category','parents'));
+        $category = $this->categoryRepository->find($id);
+        $parents = $this->categoryRepository->parent()->get();
+        $languages = $this->languageRepository->all();
+        return view('category.form', compact('category', 'parents','languages'));
     }
 
     /**
@@ -139,14 +154,14 @@ class CategoryController extends Controller
      * @param  CategoryUpdateRequest $request
      * @return redirect
      */
-    public function update($id,CategoryRequest $request)
+    public function update($id, CategoryRequest $request)
     {
-    	$this->categoryService->handle($request->validated(), $id);
+        $this->categoryService->handle($request->validated(), $id);
         $request->session()->flash('success', 'Updated Successfully');
-        if($request->has('parent_id')) {
-            return redirect('category?parent_id='.$request->parent_id.'');
+        if ($request->has('parent_id')) {
+            return redirect('category?parent_id=' . $request->parent_id . '');
         }
-    	return redirect('category');
+        return redirect('category');
     }
 
     /**
@@ -159,11 +174,11 @@ class CategoryController extends Controller
     {
         $category = $this->categoryRepository->find($id);
         $this->categoryRepository->destroy($id);
-    	\Session::flash('success', 'Deleted Successfully');
-        if($category->parent_id) {
-            return redirect('category?parent_id='.$category->parent_id.'');
+        \Session::flash('success', 'Deleted Successfully');
+        if ($category->parent_id) {
+            return redirect('category?parent_id=' . $category->parent_id . '');
         }
-    	return redirect('category');
+        return redirect('category');
     }
 
     /**

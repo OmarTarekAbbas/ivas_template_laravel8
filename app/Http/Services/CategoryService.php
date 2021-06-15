@@ -5,6 +5,7 @@ namespace App\Http\Services;
 
 use App\Http\Repository\CategoryRepository;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Arr;
 
 class CategoryService
 {
@@ -39,6 +40,7 @@ class CategoryService
      */
     public function handle($request, $categoryId = null)
     {
+
         $category = $this->categoryRepository;
 
         if($categoryId) {
@@ -48,14 +50,30 @@ class CategoryService
         if(isset($request['image'])) {
             $request = array_merge($request, [
                 'image' => $this->handleFile($request['image'])
-            ]);
-        }
-
-        $category->fill($request);
+                ]);
+            }
+            $category = $this->transTitle($category, $request);
+            $category->fill(Arr::except($request, ['title']));
 
         $category->save();
 
     	return $category;
+    }
+
+    /**
+     * Method transTitle
+     *
+     * @param Category $category [explicite description]
+     *
+     * @return Category
+     */
+    public function transTitle($category, $request)
+    {
+        foreach ($request['title'] as $key => $value)
+        {
+            $category->setTranslation('title', $key, $value);
+        }
+        return $category;
     }
 
     /**

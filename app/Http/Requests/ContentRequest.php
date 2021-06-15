@@ -25,7 +25,8 @@ class ContentRequest extends Request
     public function rules()
     {
         $rules =  [
-            'title' => 'required|string',
+            'title' => 'required|array',
+            'title.*' => 'required|string',
             'category_id' => 'required|exists:categories,id',
             'content_type_id' => 'required|exists:content_types,id',
             'image_preview' => '',
@@ -47,6 +48,10 @@ class ContentRequest extends Request
 
         if(request()->get('content_type_id') == ContentTypes::YOUTUBVIDEO && $this->method()=='POST') {
             $rules['path'] = 'required|url';
+        }
+
+        if((request()->get('content_type_id') == ContentTypes::ADVANCED_TEXT || request()->get('content_type_id') == ContentTypes::NORMAL_TEXT) && $this->method()=='POST') {
+            $rules['path.*'] = 'required';
         }
 
         return $rules;

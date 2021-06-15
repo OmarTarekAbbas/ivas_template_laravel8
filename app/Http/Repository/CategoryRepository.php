@@ -3,6 +3,7 @@ namespace App\Http\Repository;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\Catch_;
 
 class CategoryRepository
 {
@@ -30,4 +31,5 @@ class CategoryRepository
     {
         return call_user_func_array([$this->category, $method], $args);
     }
+
 }

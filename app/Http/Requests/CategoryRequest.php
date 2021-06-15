@@ -24,7 +24,8 @@ class CategoryRequest extends Request
     public function rules()
     {
        return [
-        'title' => 'required|string',
+        'title' => 'required|array',
+        'title.*' => 'required|string',
         'image' => 'mimes:png,jpg,jpeg',
         'parent_id' => '' ,
        ];
