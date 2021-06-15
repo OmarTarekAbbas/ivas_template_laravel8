@@ -30,4 +30,18 @@ class CategoryRequest extends Request
         'parent_id' => '' ,
        ];
     }
+
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'title.ar' => 'Title Arabic',
+            'title.en' => 'Title English',
+        ];
+    }
 }

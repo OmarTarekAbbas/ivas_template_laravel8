@@ -34,26 +34,61 @@ class ContentRequest extends Request
             'path' => ''
         ];
 
-        if(request()->get('content_type_id') == ContentTypes::IMAGE && $this->method()=='POST') {
+        if (request()->get('content_type_id') == ContentTypes::IMAGE && $this->method() == 'POST') {
             $rules['path'] = 'required|mimes:png,jpeg,jpg';
         }
 
-        if(request()->get('content_type_id') == ContentTypes::VIDEO && $this->method()=='POST') {
+        if (request()->get('content_type_id') == ContentTypes::VIDEO && $this->method() == 'POST') {
             $rules['path'] = 'required|mimes:mp4,flv,3gp';
         }
 
-        if(request()->get('content_type_id') == ContentTypes::AUDIO && $this->method()=='POST') {
+        if (request()->get('content_type_id') == ContentTypes::AUDIO && $this->method() == 'POST') {
             $rules['path'] = 'required|mimes:mp3,webm,wav';
         }
 
-        if(request()->get('content_type_id') == ContentTypes::YOUTUBVIDEO && $this->method()=='POST') {
+        if (request()->get('content_type_id') == ContentTypes::YOUTUBVIDEO && $this->method() == 'POST') {
             $rules['path'] = 'required|url';
         }
 
-        if((request()->get('content_type_id') == ContentTypes::ADVANCED_TEXT || request()->get('content_type_id') == ContentTypes::NORMAL_TEXT) && $this->method()=='POST') {
+        if ((request()->get('content_type_id') == ContentTypes::ADVANCED_TEXT || request()->get('content_type_id') == ContentTypes::NORMAL_TEXT) && $this->method() == 'POST') {
             $rules['path.*'] = 'required';
         }
 
+        return $rules;
+    }
+
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        $rules = [
+            'title.ar' => 'Title Arabic',
+            'title.en' => 'Title English',
+        ];
+
+        if ((request()->get('content_type_id') == ContentTypes::ADVANCED_TEXT || request()->get('content_type_id') == ContentTypes::NORMAL_TEXT) && $this->method() == 'POST') {
+            $rules['path.ar'] = 'TEXT Arabic';
+            $rules['path.en'] = 'TEXT English';
+        }
+
+        if (request()->get('content_type_id') == ContentTypes::IMAGE && $this->method() == 'POST') {
+            $rules['path'] = 'Image';
+        }
+        if (request()->get('content_type_id') == ContentTypes::VIDEO && $this->method() == 'POST') {
+            $rules['path'] = 'Video';
+        }
+
+        if (request()->get('content_type_id') == ContentTypes::AUDIO && $this->method() == 'POST') {
+            $rules['path'] = 'Audio';
+        }
+
+        if (request()->get('content_type_id') == ContentTypes::YOUTUBVIDEO && $this->method() == 'POST') {
+            $rules['path'] = 'Link Youtub';
+        }
         return $rules;
     }
 }

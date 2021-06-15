@@ -1,6 +1,6 @@
 @if(isset($_REQUEST['category_id']))
 <div class="form-group">
-    <label for="textfield5" class="col-sm-3 col-lg-2 control-label">Category<span class="text-danger">*</span></label>
+    <label for="textfield5" class="col-sm-3 col-lg-2 control-label">Parent Category</label>
     <div class="col-sm-9 col-lg-10 controls">
         <select  name="parent_id" class="form-control chosen-rtl">
             <option id="category_{{ $_REQUEST['category_id'] }}" value="{{ $_REQUEST['category_id'] }}">{{ $_REQUEST['title']}}</option>
@@ -11,7 +11,7 @@
 
 @else
 <div class="form-group">
-    <label class="col-sm-3 col-lg-2 control-label">Category<span class="text-danger">*</span></label>
+    <label class="col-sm-3 col-lg-2 control-label">Parent Category</label>
     <div class="col-sm-9 col-lg-10 controls">
         {!! Form::select('parent_id',[""=>""]+$parents->pluck('title','id')->toArray(),null,['class'=>'form-control chosen-rtl']) !!}
     </div>
@@ -33,7 +33,7 @@
             <?php $i=0;?>
             @foreach($languages as $language)
                 <div class="tab-pane fade in {{($i++)? '':'active'}}" id="title{{$language->short_code}}">
-                    <input class="form-control" name="title[{{$language->short_code}}]" value="@if($category){!! $category->getTranslation('title',$language->short_code)  !!}@endif" required />
+                    <input class="form-control" name="title[{{$language->short_code}}]" value="@if($category){!! $category->getTranslation('title',$language->short_code)  !!}@endif"/>
                 </div>
             @endforeach
         </div>
