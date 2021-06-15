@@ -1169,6 +1169,106 @@ class RoutesTableSeeder extends Seeder
                 'updated_at' => '2019-10-13 13:02:42',
                 'function_name' => 'migrate_tables',
             ),
+            115 =>
+            array (
+                'id' => 164,
+                'method' => 'get',
+                'route' => 'provider',
+                'controller_name' => 'ProviderController',
+                'created_at' => '2019-02-14 13:01:13',
+                'updated_at' => '2019-02-14 13:01:13',
+                'function_name' => 'index',
+            ),
+            116 =>
+            array (
+                'id' => 165,
+                'method' => 'get',
+                'route' => 'provider/create',
+                'controller_name' => 'ProviderController',
+                'created_at' => '2019-02-14 13:01:13',
+                'updated_at' => '2019-02-14 13:01:13',
+                'function_name' => 'create',
+            ),
+            117 =>
+            array (
+                'id' => 166,
+                'method' => 'post',
+                'route' => 'provider',
+                'controller_name' => 'ProviderController',
+                'created_at' => '2019-02-14 13:01:13',
+                'updated_at' => '2019-02-14 13:01:13',
+                'function_name' => 'store',
+            ),
+            118 =>
+            array (
+                'id' => 167,
+                'method' => 'get',
+                'route' => 'provider/{id}',
+                'controller_name' => 'ProviderController',
+                'created_at' => '2019-02-14 13:01:13',
+                'updated_at' => '2019-02-14 13:01:13',
+                'function_name' => 'show',
+            ),
+            119 =>
+            array (
+                'id' => 168,
+                'method' => 'get',
+                'route' => 'provider/{id}/edit',
+                'controller_name' => 'ProviderController',
+                'created_at' => '2019-02-14 13:01:13',
+                'updated_at' => '2019-02-14 13:01:13',
+                'function_name' => 'edit',
+            ),
+            120 =>
+            array (
+                'id' => 169,
+                'method' => 'patch',
+                'route' => 'provider/{id}',
+                'controller_name' => 'ProviderController',
+                'created_at' => '2019-02-14 13:01:13',
+                'updated_at' => '2019-02-14 13:01:13',
+                'function_name' => 'update',
+            ),
+            121 =>
+            array (
+                'id' => 170,
+                'method' => 'get',
+                'route' => 'provider/{id}/delete',
+                'controller_name' => 'ProviderController',
+                'created_at' => '2019-02-14 13:01:13',
+                'updated_at' => '2019-02-14 13:01:13',
+                'function_name' => 'destroy',
+            ),
+            122 =>
+            array (
+                'id' => 172,
+                'method' => 'get',
+                'route' => 'all_routes/{id}/edit',
+                'controller_name' => 'RouteController',
+                'created_at' => '2019-02-14 13:01:13',
+                'updated_at' => '2019-02-14 13:01:13',
+                'function_name' => 'edit',
+            ),
+            123 =>
+            array (
+                'id' => 173,
+                'method' => 'get',
+                'route' => 'all_routes/{id}/delete',
+                'controller_name' => 'RouteController',
+                'created_at' => '2019-02-14 13:01:13',
+                'updated_at' => '2019-02-14 13:01:13',
+                'function_name' => 'destroy',
+            ),
+            124 =>
+            array (
+                'id' => 174,
+                'method' => 'post',
+                'route' => 'all_routes/{id}/update',
+                'controller_name' => 'RouteController',
+                'created_at' => '2019-02-14 13:01:13',
+                'updated_at' => '2019-02-14 13:01:13',
+                'function_name' => 'update',
+            ),
         ));
 
 
