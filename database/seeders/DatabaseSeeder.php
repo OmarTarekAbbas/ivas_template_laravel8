@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TypesTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
         //   $this->call(DeleteAllFlagsTableSeeder::class);
-        //   $this->call(LanguagesTableSeeder::class);
+        $this->call(LanguagesTableSeeder::class);
         //   $this->call(StaticBodiesTableSeeder::class);
         //   $this->call(StaticTranslationsTableSeeder::class);
         //   $this->call(TansBodiesTableSeeder::class);
