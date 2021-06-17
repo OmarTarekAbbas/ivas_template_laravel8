@@ -239,8 +239,8 @@ if (Config::get('languages')[App::getLocale()] == "English") {
                         <ul class="submenu">
                             <li id="role-create"><a href="{{url('roles/new')}}">@lang('messages.create-role')</a></li>
                             <li id="role-index"><a href="{{url('roles')}}">@lang('messages.role')</a></li>
-                            <li id="route-index"><a href="{{url('all_routes')}}">Routes</a></li>
-                            <li id="route-v2-index"><a href="{{url('routes/index_v2')}}">Routes V2</a></li>
+                            <li id="route-index"><a href="{{url('all_routes')}}">@lang('messages.Routes.Routes')</a></li>
+                            <li id="route-v2-index"><a href="{{url('routes/index_v2')}}">@lang('messages.Routes.Routes') V2</a></li>
 
                         </ul>
                         <!-- END Submenu -->
@@ -251,18 +251,18 @@ if (Config::get('languages')[App::getLocale()] == "English") {
                     <li id="setting">
                         <a href="#" class="dropdown-toggle">
                             <i class="fa fa-gears"></i>
-                            <span>Setting</span>
+                            <span>@lang('messages.Setting.Setting')</span>
                             <b class="arrow fa fa-angle-right"></b>
                         </a>
 
                         <!-- BEGIN Submenu -->
                         <ul class="submenu">
-                            <li id="setting-create"><a href="{{url('setting/new')}}">Add Settings</a></li>
-                            <li id="setting-index"><a href="{{url('setting')}}">Settings</a></li>
-                            <li id="setting-import-DB"><a href="{{url('database_backups')}}">Database Backups</a></li>
-                            <li id="setting-index"><a href="{{url('clear-cache')}}">Clear Cashe</a></li>
-                            <li id="setting-seed"><a href="{{url('admin/seed_manager')}}">Create Seed Files</a></li>
-                            <li id="setting-migrate"><a href="{{url('admin/migrate_manager')}}">Create Migrate Files</a></li>
+                            <li id="setting-create"><a href="{{url('setting/new')}}">@lang('messages.Setting.Add Settings')</a></li>
+                            <li id="setting-index"><a href="{{url('setting')}}">@lang('messages.Setting.Setting')</a></li>
+                            <li id="setting-import-DB"><a href="{{url('database_backups')}}">@lang('messages.Setting.Database Backups')</a></li>
+                            <li id="setting-index"><a href="{{url('clear-cache')}}">@lang('messages.Setting.Clear Cashe')</a></li>
+                            <li id="setting-seed"><a href="{{url('admin/seed_manager')}}">@lang('messages.Setting.Create Seed Files')</a></li>
+                            <li id="setting-migrate"><a href="{{url('admin/migrate_manager')}}">@lang('messages.Setting.Create Migrate Files')</a></li>
                         </ul>
                         <!-- END Submenu -->
                     </li>
@@ -273,12 +273,12 @@ if (Config::get('languages')[App::getLocale()] == "English") {
                         <li id="type">
                             <a href="#" class="dropdown-toggle">
                                 <i class="glyphicon glyphicon-tag"></i>
-                                <span>Settings Types</span>
+                                <span>@lang('messages.Setting.Settings Types')</span>
                                 <b class="arrow fa fa-angle-right"></b>
                             </a>
                             <ul class="submenu">
-                                <li id="type-create"><a href="{{url('types/create')}}">Add Type</a></li>
-                                <li id="type-index"><a href="{{url('types/index')}}">List Types</a></li>
+                                <li id="type-create"><a href="{{url('types/create')}}">@lang('messages.Setting.Add Type')</a></li>
+                                <li id="type-index"><a href="{{url('types/index')}}">@lang('messages.Setting.List Types')</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -288,15 +288,15 @@ if (Config::get('languages')[App::getLocale()] == "English") {
                     <li id="file_manager">
                         <a href="#" class="dropdown-toggle">
                             <i class="fa fa-file"></i>
-                            <span>File Manager</span>
+                            <span>@lang('messages.File Manager.File Manager')</span>
                             <b class="arrow fa fa-angle-right"></b>
                         </a>
 
                         <!-- BEGIN Submenu -->
                         <ul class="submenu">
                             <!--<li id="elfinder"><a href="{{url('file_manager')}}">UI File Manager</a></li>-->
-                            <li id="file_elfinder"><a href="{{url('admin/elfinder')}}">UI File Manager</a></li>
-                            <li id="uploader"><a href="{{url('upload_items')}}">file uploader</a></li>
+                            <li id="file_elfinder"><a href="{{url('admin/elfinder')}}">@lang('messages.File Manager.uiFile Manager')</a></li>
+                            <li id="uploader"><a href="{{url('upload_items')}}">@lang('messages.File Manager.file uploader')</a></li>
                         </ul>
                         <!-- END Submenu -->
                     </li>
@@ -306,14 +306,14 @@ if (Config::get('languages')[App::getLocale()] == "English") {
                     <li id="images">
                         <a href="#" class="dropdown-toggle">
                             <i class="glyphicon glyphicon-fullscreen"></i>
-                            <span>Image</span>
+                            <span>@lang('messages.Image.Image')</span>
                             <b class="arrow fa fa-angle-right"></b>
                         </a>
 
                         <!-- BEGIN Submenu -->
                         <ul class="submenu">
-                            <li id="upload_resize"><a href="{{url('upload_resize')}}">Upload/Resize Image</a></li>
-                            <li id="upload_resize_v2"><a href="{{url('upload_resize_v2')}}">Upload/Resize Image V2</a></li>
+                            <li id="upload_resize"><a href="{{url('upload_resize')}}">@lang('messages.Image.Upload/Resize Image')</a></li>
+                            <li id="upload_resize_v2"><a href="{{url('upload_resize_v2')}}">@lang('messages.Image.Upload/Resize Image') V2</a></li>
                         </ul>
                         <!-- END Submenu -->
                     </li>
@@ -324,14 +324,14 @@ if (Config::get('languages')[App::getLocale()] == "English") {
                         <li id="static">
                             <a href="#" class="dropdown-toggle">
                                 <i class="glyphicon glyphicon-cog"></i>
-                                <span>Static Translations</span>
+                                <span>@lang('messages.Static Translations.Static Translations')</span>
                                 <b class="arrow fa fa-angle-right"></b>
                             </a>
 
                             <!-- BEGIN Submenu -->
                             <ul class="submenu">
-                                <li id="static-create"><a href="{{url('static_translation/create')}}">Add Static Translation</a></li>
-                                <li id="static-index"><a href="{{url('static_translation')}}">Static Translations</a></li>
+                                <li id="static-create"><a href="{{url('static_translation/create')}}">@lang('messages.Static Translations.Add Static Translation')</a></li>
+                                <li id="static-index"><a href="{{url('static_translation')}}">@lang('messages.Static Translations.Static Translations')</a></li>
                             </ul>
                             <!-- END Submenu -->
                         </li>
@@ -343,14 +343,14 @@ if (Config::get('languages')[App::getLocale()] == "English") {
                         <li id="language">
                             <a href="#" class="dropdown-toggle">
                                 <i class="glyphicon glyphicon-cloud"></i>
-                                <span>Language</span>
+                                <span>@lang('messages.Static Translations.Languages')</span>
                                 <b class="arrow fa fa-angle-right"></b>
                             </a>
 
                             <!-- BEGIN Submenu -->
                             <ul class="submenu">
-                                <li id="language-create"><a href="{{url('language/create')}}">Add Language</a></li>
-                                <li id="language-index"><a href="{{url('language')}}">Languages</a></li>
+                                <li id="language-create"><a href="{{url('language/create')}}">@lang('messages.Static Translations.Add Language')</a></li>
+                                <li id="language-index"><a href="{{url('language')}}">@lang('messages.Static Translations.Languages')</a></li>
                             </ul>
                             <!-- END Submenu -->
                         </li>
@@ -362,13 +362,13 @@ if (Config::get('languages')[App::getLocale()] == "English") {
                         <li id="delete-all">
                             <a href="#" class="dropdown-toggle">
                                 <i class="glyphicon glyphicon-trash"></i>
-                                <span>Delete All Flag</span>
+                                <span>@lang('messages.Delete All Flag.Delete All Flag')</span>
                                 <b class="arrow fa fa-angle-right"></b>
                             </a>
 
                             <!-- BEGIN Submenu -->
                             <ul class="submenu">
-                                <li id="delete-all-index"><a href="{{url('delete_all')}}">All flags</a></li>
+                                <li id="delete-all-index"><a href="{{url('delete_all')}}">@lang('messages.Delete All Flag.All Flag') </a></li>
                             </ul>
                             <!-- END Submenu -->
                         </li>
@@ -380,14 +380,14 @@ if (Config::get('languages')[App::getLocale()] == "English") {
                         <li id="country">
                             <a href="#" class="dropdown-toggle">
                                 <i class="glyphicon glyphicon-globe"></i>
-                                <span>Country</span>
+                                <span>@lang('messages.country.country')</span>
                                 <b class="arrow fa fa-angle-right"></b>
                             </a>
 
                             <!-- BEGIN Submenu -->
                             <ul class="submenu">
-                                <li id="country_index"><a href="{{url('country')}}">List Country</a></li>
-                                <li id="country_create"><a href="{{url('country/create')}}">Create Country</a></li>
+                                <li id="country_index"><a href="{{url('country')}}">@lang('messages.country.countries')</a></li>
+                                <li id="country_create"><a href="{{url('country/create')}}">@lang('messages.country.add')</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -398,14 +398,14 @@ if (Config::get('languages')[App::getLocale()] == "English") {
                         <li id="operator">
                             <a href="#" class="dropdown-toggle">
                                 <i class="glyphicon glyphicon-user"></i>
-                                <span>Operator</span>
+                                <span>@lang('messages.Operator.Operator')</span>
                                 <b class="arrow fa fa-angle-right"></b>
                             </a>
 
                             <!-- BEGIN Submenu -->
                             <ul class="submenu">
-                                <li id="operator_index"><a href="{{url('operator')}}">List operator</a></li>
-                                <li id="operator_create"><a href="{{url('operator/create')}}">Create Operator</a></li>
+                                <li id="operator_index"><a href="{{url('operator')}}">@lang('messages.Operator.Operator')</a></li>
+                                <li id="operator_create"><a href="{{url('operator/create')}}">@lang('messages.Operator.Create Operator')</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -416,14 +416,14 @@ if (Config::get('languages')[App::getLocale()] == "English") {
                         <li id="provider">
                             <a href="#" class="dropdown-toggle">
                                 <i class="glyphicon glyphicon-folder-open"></i>
-                                <span>provider</span>
+                                <span>@lang('messages.provider.provider')</span>
                                 <b class="arrow fa fa-angle-right"></b>
                             </a>
 
                             <!-- BEGIN Submenu -->
                             <ul class="submenu">
-                                <li id="provider_index"><a href="{{url('provider')}}">List provider</a></li>
-                                <li id="provider_create"><a href="{{url('provider/create')}}">Create provider</a></li>
+                                <li id="provider_index"><a href="{{url('provider')}}">@lang('messages.provider.provider')</a></li>
+                                <li id="provider_create"><a href="{{url('provider/create')}}">@lang('messages.provider.Create provider') </a></li>
                             </ul>
                         </li>
                     </ul>
@@ -434,14 +434,14 @@ if (Config::get('languages')[App::getLocale()] == "English") {
                         <li id="category">
                             <a href="#" class="dropdown-toggle">
                                 <i class="glyphicon glyphicon-folder-open"></i>
-                                <span>Category</span>
+                                <span>@lang('messages.Category.Category')</span>
                                 <b class="arrow fa fa-angle-right"></b>
                             </a>
 
                             <!-- BEGIN Submenu -->
                             <ul class="submenu">
-                                <li id="category_index"><a href="{{url('category')}}">List category</a></li>
-                                <li id="category_create"><a href="{{url('category/create')}}">Create Category</a></li>
+                                <li id="category_index"><a href="{{url('category')}}">@lang('messages.Category.Category')</a></li>
+                                <li id="category_create"><a href="{{url('category/create')}}">@lang('messages.Category.Create Category')</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -454,14 +454,14 @@ if (Config::get('languages')[App::getLocale()] == "English") {
                         <li id="content_types">
                             <a href="#" class="dropdown-toggle">
                                 <i class="glyphicon glyphicon-tag"></i>
-                                <span>Content Type</span>
+                                <span>@lang('messages.Content Type.Content Type')</span>
                                 <b class="arrow fa fa-angle-right"></b>
                             </a>
 
                             <!-- BEGIN Submenu -->
                             <ul class="submenu">
-                                <li id="content_types_index"><a href="{{url('content_type')}}">List Content Type</a></li>
-                                <li id="content_types_create"><a href="{{url('content_type/create')}}">Create Content Type</a></li>
+                                <li id="content_types_index"><a href="{{url('content_type')}}">@lang('messages.Content Type.Content Type')</a></li>
+                                <li id="content_types_create"><a href="{{url('content_type/create')}}">@lang('messages.Content Type.Create Content Type')</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -473,14 +473,14 @@ if (Config::get('languages')[App::getLocale()] == "English") {
                         <li id="contents">
                             <a href="#" class="dropdown-toggle">
                                 <i class="glyphicon glyphicon-cloud"></i>
-                                <span>Content</span>
+                                <span>@lang('messages.Content Type.Content')</span>
                                 <b class="arrow fa fa-angle-right"></b>
                             </a>
 
                             <!-- BEGIN Submenu -->
                             <ul class="submenu">
-                                <li id="contents_index"><a href="{{url('content')}}">List Content </a></li>
-                                <li id="contents_create"><a href="{{url('content/create')}}">Create Content</a></li>
+                                <li id="contents_index"><a href="{{url('content')}}">@lang('messages.Content Type.Content') </a></li>
+                                <li id="contents_create"><a href="{{url('content/create')}}">@lang('messages.Content Type.Create Content')</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -491,14 +491,14 @@ if (Config::get('languages')[App::getLocale()] == "English") {
                         <li id="post">
                             <a href="#" class="dropdown-toggle">
                                 <i class="fa fa-file"></i>
-                                <span>Post</span>
+                                <span>@lang('messages.Post.Post')</span>
                                 <b class="arrow fa fa-angle-right"></b>
                             </a>
 
                             <!-- BEGIN Submenu -->
                             <ul class="submenu">
-                                <li id="post_index"><a href="{{url('post')}}">List Post </a></li>
-                                <li id="post_create"><a href="{{url('post/create')}}">Create Post</a></li>
+                                <li id="post_index"><a href="{{url('post')}}">@lang('messages.Post.Post') </a></li>
+                                <li id="post_create"><a href="{{url('post/create')}}">@lang('messages.Post.Create Post')</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -508,13 +508,13 @@ if (Config::get('languages')[App::getLocale()] == "English") {
                         <li id="rbts">
                             <a href="#" class="dropdown-toggle">
                                 <i class="glyphicon glyphicon-sound-stereo"></i>
-                                <span>Rbts</span>
+                                <span>@lang('messages.Rbts.Rbts')</span>
                                 <b class="arrow fa fa-angle-right"></b>
                             </a>
                             <!-- BEGIN Submenu -->
                             <ul class="submenu">
-                                <li id="rbts-index"><a href="{{url('rbt')}}">List Rbts</a></li>
-                                <li id="rbts-create"><a href="{{url('rbt/create')}}">Create New Item</a></li>
+                                <li id="rbts-index"><a href="{{url('rbt')}}">@lang('messages.Rbts.Rbts')</a></li>
+                                <li id="rbts-create"><a href="{{url('rbt/create')}}">@lang('messages.Rbts.Create New Item')</a></li>
                             </ul>
                             <!-- END Submenu -->
                         </li>

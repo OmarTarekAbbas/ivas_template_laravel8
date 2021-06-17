@@ -30,6 +30,65 @@ return [
         'edit-role' => 'Edit Role',
         'role-name' => 'Role name',
     ],
+    'Routes' => [
+        'Routes' => 'Routes',
+    ],
+    'Setting' => [
+        'Setting' => 'Setting',
+        'Add Settings' => 'Add Settings',
+        'Database Backups' => 'Database Backups',
+        'Clear Cashe' => 'Clear Cashe',
+        'Create Seed Files' => 'Create Seed Files',
+        'Create Migrate Files' => 'Create Migrate Files',
+        'Settings Types' => 'Settings Types',
+        'Add Type' => 'Add Type',
+        'List Types' => 'List Types',
+    ],
+    'File Manager' => [
+        'File Manager' => 'File Manager',
+        'uiFile Manager' => 'Ui File Manager',
+        'file uploader' => 'file uploader',
+    ],
+    'Image' => [
+        'Image' => 'Image',
+        'Upload/Resize Image' => 'Upload/Resize Image',
+    ],
+    'Static Translations' => [
+        'Static Translations' => 'Static Translations',
+        'Add Static Translation' => 'Add Static Translation',
+        'Languages' => 'Languages',
+        'Add Language' => 'Add Language',
+    ],
+    'Delete All Flag' => [
+        'Delete All Flag' => 'Delete All Flag',
+        'All Flag' => 'All Flag',
+    ],
+    'Operator' => [
+        'Operator' => 'Operators',
+        'Create Operator' => 'Create Operator',
+    ],
+    'provider' => [
+        'provider' => 'providers',
+        'Create provider' => 'Create provider',
+    ],
+    'Category' => [
+        'Category' => 'Categorys',
+        'Create Category' => 'Create Category',
+    ],
+    'Content Type' => [
+        'Content Type' => 'Content Types',
+        'Create Content Type' => 'Create Content Type',
+        'Content' => 'Contents',
+        'Create Content' => 'Create Content',
+    ],
+    'Post' => [
+        'Post' => 'Posts',
+        'Create Post' => 'Create Post',
+    ],
+    'Rbts' => [
+        'Rbts' => 'Rbts',
+        'Create New Item' => 'Create New Item',
+    ],
     'help' => 'Help',
     'settings' => 'Settings',
     'profile' => 'Profile',
@@ -66,7 +125,7 @@ return [
         'fatch_dlr' => 'Fatch Dlr',
         'count' => 'Count',
         'subscribed' => 'subscribed',
-        
+
     ],
     'repeat' => [
         'daily' => 'daily',
@@ -176,10 +235,10 @@ return [
         'quota-error' => 'user quota can not be greater then or equal to message sent',
         'updated' => 'updated successfuly',
         'no_selected_item' => 'No items selected',
-        'deleted' => 'Deleted Successfully' 
+        'deleted' => 'Deleted Successfully'
     ],
      'notification' => 'Notifications' ,
-    
+
       'reports' => 'Reports' ,
       'direct-message' => 'Direct Message' ,
       'template' => [

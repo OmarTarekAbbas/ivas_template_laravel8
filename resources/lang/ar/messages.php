@@ -28,6 +28,70 @@ return [
         'edit-role' => 'تعديل الدور',
         'role-name' => 'أسم الدور',
     ],
+    'Routes' => [
+        'Routes' => 'الرابط',
+        'role-name' => 'أسم الدور',
+    ],
+    'Setting' => [
+        'Setting' => 'الاعدادات',
+        'Add Settings' => 'أضافه اعدادات',
+        'Database Backups' => 'النسخ الاحتياطي لقاعدة البيانات ',
+        'Clear Cashe' => 'مسح ذاكرة التخزين المؤقت',
+        'Create Seed Files' => 'إنشاء ملفات سيدر',
+        'Create Migrate Files' => 'إنشاء ملفات ميجرات',
+        'Settings Types' => 'أنواع الإعدادات',
+        'Add Type' => 'إضافة نوع',
+        'List Types' => 'أنواع القوائم',
+    ],
+    'File Manager' => [
+        'File Manager' => 'مدير الملفات',
+        'uiFile Manager' => 'واجهة المستخدم الملفات',
+        'file uploader' => 'رافع الملف',
+    ],
+    'Image' => [
+        'Image' => 'صورة',
+        'Upload/Resize Image' => 'تحميل / تغيير حجم الصورة',
+    ],
+    'Static Translations' => [
+        'Static Translations' => 'الترجمات الثابتة',
+        'Add Static Translation' => 'أضف ترجمة ثابتة',
+        'Languages' => 'اللغات',
+        'Add Language' => 'إضافة لغة',
+    ],
+    'Delete All Flag' => [
+        'Delete All Flag' => 'حذف كافة العلامات',
+        'All Flag' => ' كافة العلامات',
+    ],
+    'Operator' => [
+        'Operator' => 'المشغل',
+        'Create Operator' => 'أنشاء مشغل',
+    ],
+    'provider' => [
+        'provider' => 'صاحب المحتوي',
+        'Create provider' => 'أنشاء صاحب المحتوي',
+    ],
+    'Category' => [
+        'Category' => 'فئات',
+        'Create Category' => 'إنشاء فئة',
+    ],
+    'content' => [
+        'Category' => 'فئات',
+        'Create Category' => 'إنشاء فئة',
+    ],
+    'Content Type' => [
+        'Content Type' => 'أنواع المحتوى',
+        'Create Content Type' => 'إنشاء نوع المحتوى',
+        'Content' => 'المحتوى',
+        'Create Content' => 'إنشاء المحتوى',
+    ],
+    'Post' => [
+        'Post' => 'المشاركات',
+        'Create Post' => 'إنشاء منشور',
+    ],
+    'Rbts' => [
+        'Rbts' => 'محتوي صوتي',
+        'Create New Item' => 'إنشاء عنصر جديد',
+    ],
     'help' => 'المساعده',
     'settings' => 'ألاعدادات',
     'profile' => 'ألحساب',
@@ -165,11 +229,10 @@ return [
         'no_selected_item' => 'لم يتم إختيار أي عنصر',
         'deleted' => 'تم الحذف بنجاح'
     ],
-     'notification' => 'اشعار' ,
+    'notification' => 'اشعار',
 
-    'reports' => 'تقارير' ,
-    'direct-message' => 'رسالة سريعة'
-    ,
+    'reports' => 'تقارير',
+    'direct-message' => 'رسالة سريعة',
     'template' => [
         'template' => 'قالب',
         'templates' => 'القوالب',
