@@ -17,10 +17,10 @@
                 <div class="box-content">
                     @if($rbt)
                     {!! Form::model($rbt,["url"=>"rbt/$rbt->id","class"=>"form-horizontal","method"=>"patch","files"=>"True"]) !!}
-                    @include('rbt.input',['buttonAction'=>'Edit','required'=>'  (optional)'])
+                    @include('rbt.input',['buttonAction'=>''.\Lang::get("messages.Edit").'','required'=>'  (optional)'])
                     @else
                     {!! Form::open(["url"=>"rbt","class"=>"form-horizontal","method"=>"POST","files"=>"True"]) !!}
-                    @include('rbt.input',['buttonAction'=>'Save'])
+                    @include('rbt.input',['buttonAction'=>''.\Lang::get("messages.save").''])
                     @endif
                     {!! Form::close() !!}
                 </div>

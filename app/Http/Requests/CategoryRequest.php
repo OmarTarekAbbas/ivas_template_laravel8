@@ -23,12 +23,12 @@ class CategoryRequest extends Request
      */
     public function rules()
     {
-       return [
-        'title' => 'required|array',
-        'title.*' => 'required|string',
-        'image' => 'mimes:png,jpg,jpeg',
-        'parent_id' => '' ,
-       ];
+        return [
+            'title' => 'required|array',
+            'title.*' => 'required|string',
+            'image' => 'mimes:png,jpg,jpeg',
+            'parent_id' => '',
+        ];
     }
 
 
@@ -39,9 +39,16 @@ class CategoryRequest extends Request
      */
     public function attributes()
     {
-        return [
-            'title.ar' => 'Title Arabic',
-            'title.en' => 'Title English',
-        ];
+        if (\App::getLocale() == "en") {
+            return [
+                'title.ar' => 'Title Arabic',
+                'title.en' => 'Title English',
+            ];
+        }else{
+            return [
+                'title.ar' => 'عنوان بالعربي',
+                'title.en' => 'العنوان الإنجليزية',
+            ];
+        }
     }
 }

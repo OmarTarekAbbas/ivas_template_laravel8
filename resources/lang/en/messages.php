@@ -283,5 +283,13 @@ return [
     'Title' => 'Title',
     'Short Code' => 'Short Code',
     'Right to Lift ?' => 'Right to Lift ?',
+    'Country Name' => 'Country Name',
+    'operator image' => 'operator image',
+    'operator name' => 'operator name',
+    'Sms Code' => 'Sms Code',
+    'Ussd Code' => 'Ussd Code',
+    'Country' => 'Ussd Code',
+    'Parent Category' => 'Parent Category',
+    'Edit' => 'تعديل',
 
 ];

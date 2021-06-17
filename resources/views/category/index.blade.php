@@ -1,6 +1,6 @@
 @extends('template')
 @section('page_title')
-    {{ request()->filled('parent_id') ? $parentTitle : 'Category' }}
+    {{ request()->filled('parent_id') ? $parentTitle : \Lang::get("messages.Category.Category") }}
 @stop
 @section('content')
     <div class="row">
@@ -10,7 +10,7 @@
                 <div class="col-md-12">
                     <div class="box box-black">
                         <div class="box-title">
-                            <h3><i class="fa fa-table"></i> Category Table</h3>
+                            <h3><i class="fa fa-table"></i> @lang('messages.Category.Category')</h3>
                             <div class="box-tool">
                                 <a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
                                 <a data-action="close" href="#"><i class="fa fa-times"></i></a>
@@ -41,9 +41,9 @@
                                             <th style="width:18px"><input type="checkbox"
                                                     onclick="select_all('categories')"></th>
                                             <th>id</th>
-                                            <th>Title</th>
-                                            <th>Image</th>
-                                            <th>Action</th>
+                                            <th>@lang('messages.Title')</th>
+                                            <th>@lang('messages.Image.Image')</th>
+                                            <th>@lang('messages.action')</th>
                                         </tr>
                                     </thead>
 

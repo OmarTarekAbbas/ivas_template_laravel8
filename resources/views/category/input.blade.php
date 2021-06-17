@@ -1,6 +1,6 @@
 @if(isset($_REQUEST['category_id']))
 <div class="form-group">
-    <label for="textfield5" class="col-sm-3 col-lg-2 control-label">Parent Category</label>
+    <label for="textfield5" class="col-sm-3 col-lg-2 control-label">@lang('messages.Parent Category')</label>
     <div class="col-sm-9 col-lg-10 controls">
         <select  name="parent_id" class="form-control chosen-rtl">
             <option id="category_{{ $_REQUEST['category_id'] }}" value="{{ $_REQUEST['category_id'] }}">{{ $_REQUEST['title']}}</option>
@@ -11,7 +11,7 @@
 
 @else
 <div class="form-group">
-    <label class="col-sm-3 col-lg-2 control-label">Parent Category</label>
+    <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Parent Category')</label>
     <div class="col-sm-9 col-lg-10 controls">
         {!! Form::select('parent_id',[""=>""]+$parents->pluck('title','id')->toArray(),null,['class'=>'form-control chosen-rtl']) !!}
     </div>
@@ -21,7 +21,7 @@
 
 
 <div class="form-group"  id="cktextarea">
-    <label class="col-sm-3 col-lg-2 control-label">Title <span class="text-danger">*</span></label>
+    <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Title') <span class="text-danger">*</span></label>
     <div class="col-sm-9 col-lg-10 controls" >
         <ul id="myTab1" class="nav nav-tabs">
                 <?php $i=0;?>
@@ -47,7 +47,7 @@
 <br>
 
 <div class="form-group">
-    <label class="col-sm-3 col-md-2 control-label">Image</label>
+    <label class="col-sm-3 col-md-2 control-label">@lang('messages.Image.Image') </label>
     <div class="col-sm-9 col-md-8 controls">
         <div class="fileupload fileupload-new" data-provides="fileupload">
             <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">

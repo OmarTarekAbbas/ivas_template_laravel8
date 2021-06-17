@@ -17,10 +17,10 @@
                 <div class="box-content">
                     @if($country)
                     {!! Form::model($country,["url"=>"country/$country->id","class"=>"form-horizontal","method"=>"patch","files"=>"True"]) !!}
-                    @include('country.input',['buttonAction'=>'Edit','required'=>'  (optional)'])
+                    @include('country.input',['buttonAction'=>''.\Lang::get("messages.Edit").'','required'=>'  (optional)'])
                     @else
                     {!! Form::open(["url"=>"country","class"=>"form-horizontal","method"=>"POST","files"=>"True"]) !!}
-                    @include('country.input',['buttonAction'=>'Save','required'=>'  *'])
+                    @include('country.input',['buttonAction'=>''.\Lang::get("messages.save").'','required'=>'  *'])
                     @endif
                     {!! Form::close() !!}
                 </div>
