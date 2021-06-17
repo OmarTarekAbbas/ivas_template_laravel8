@@ -17,10 +17,10 @@
                 <div class="box-content">
                     @if($operator)
                     {!! Form::model($operator,["url"=>"operator/$operator->id","class"=>"form-horizontal","method"=>"patch","files"=>"True"]) !!}
-                    @include('operator.input',['buttonAction'=>'Edit','required'=>'  (optional)'])
+                    @include('operator.input',['buttonAction'=>''.\Lang::get("messages.Edit").'','required'=>'  (optional)'])
                     @else
                     {!! Form::open(["url"=>"operator","class"=>"form-horizontal","method"=>"POST","files"=>"True"]) !!}
-                    @include('operator.input',['buttonAction'=>'Save'])
+                    @include('operator.input',['buttonAction'=>''.\Lang::get("messages.save").''])
                     @endif
                     {!! Form::close() !!}
                 </div>

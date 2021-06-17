@@ -1,12 +1,12 @@
 <div class="form-group">
-    <label class="col-sm-3 col-lg-2 control-label">Title <span class="text-danger">*</span></label>
+    <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Title') <span class="text-danger">*</span></label>
     <div class="col-sm-9 col-lg-10 controls">
-        {!! Form::text('title',null,['placeholder'=>'Title','class'=>'form-control input-lg']) !!}
+        {!! Form::text('title',null,['placeholder'=>''.\Lang::get("messages.Title").'','class'=>'form-control input-lg']) !!}
     </div>
 </div>
 
 <div class="form-group">
-    <label class="col-sm-3 col-md-2 control-label">Image</label>
+    <label class="col-sm-3 col-md-2 control-label">@lang('messages.Image.Image')</label>
     <div class="col-sm-9 col-md-8 controls">
         <div class="fileupload fileupload-new" data-provides="fileupload">
             <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">

@@ -1,34 +1,34 @@
 <div class="form-group">
-    <label class="col-sm-3 col-lg-2 control-label">Operator Name <span class="text-danger">*</span></label>
+    <label class="col-sm-3 col-lg-2 control-label">@lang('messages.operator name') <span class="text-danger">*</span></label>
     <div class="col-sm-9 col-lg-10 controls">
-        {!! Form::text('name',null,['placeholder'=>'Operator Name','class'=>'form-control btn-lg','required']) !!}
+        {!! Form::text('name',null,['placeholder'=>''.\Lang::get("messages.operator name").'','class'=>'form-control btn-lg','required']) !!}
     </div>
 </div>
 
 <div class="form-group">
-    <label class="col-sm-3 col-lg-2 control-label">Ussd Code </label>
+    <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Ussd Code') </label>
     <div class="col-sm-9 col-lg-10 controls">
-        {!! Form::number('rbt_ussd_code',null,['placeholder'=>'Ussd Code','class'=>'form-control','min'=>0]) !!}
+        {!! Form::number('rbt_ussd_code',null,['placeholder'=>''.\Lang::get("messages.Ussd Code").'','class'=>'form-control','min'=>0]) !!}
     </div>
 </div>
 
 <div class="form-group">
-    <label class="col-sm-3 col-lg-2 control-label">Sms Code </label>
+    <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Sms Code') </label>
     <div class="col-sm-9 col-lg-10 controls">
-        {!! Form::number('rbt_sms_code',null,['placeholder'=>'Sms Code','class'=>'form-control','min'=>0]) !!}
+        {!! Form::number('rbt_sms_code',null,['placeholder'=>''.\Lang::get("messages.Sms Code").'','class'=>'form-control','min'=>0]) !!}
     </div>
 </div>
 
 @if(isset($_REQUEST['country_id']))
 <div class="form-group">
-    <label class="col-sm-3 col-lg-2 control-label">Country <span class="text-danger">*</span></label>
+    <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Country') <span class="text-danger">*</span></label>
     <div class="col-sm-9 col-lg-10 controls">
         {!! Form::select('country_id',array($_REQUEST['country_id'] => $_REQUEST['title']),null,['class'=>'form-control chosen-rtl btn-lg','required' => true]) !!}
     </div>
 </div>
 @else
 <div class="form-group">
-    <label class="col-sm-3 col-lg-2 control-label">Country<span class="text-danger">*</span></label>
+    <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Country')<span class="text-danger">*</span></label>
     <div class="col-sm-9 col-lg-10 controls">
         {!! Form::select('country_id',$countrys->pluck('title','id'),null,['class'=>'form-control chosen-rtl','required']) !!}
     </div>
@@ -36,7 +36,7 @@
 @endif
 
 <div class="form-group">
-    <label class="col-sm-3 col-md-2 control-label">Image </label>
+    <label class="col-sm-3 col-md-2 control-label">@lang('messages.operator image') </label>
     <div class="col-sm-9 col-md-8 controls">
         <div class="fileupload fileupload-new" data-provides="fileupload">
             <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">

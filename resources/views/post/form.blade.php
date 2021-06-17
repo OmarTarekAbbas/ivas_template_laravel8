@@ -17,10 +17,10 @@
                 <div class="box-content">
                     @if($post)
                     {!! Form::model($post,["url"=>"post/$post->id","class"=>"form-horizontal","method"=>"patch","files"=>"True"]) !!}
-                    @include('post.input',['buttonAction'=>'Edit','required'=>'  (optional)'])
+                    @include('post.input',['buttonAction'=>''.\Lang::get("messages.Edit").'','required'=>'  (optional)'])
                     @else
                     {!! Form::open(["url"=>"post","class"=>"form-horizontal","method"=>"POST","files"=>"True"]) !!}
-                    @include('post.input',['buttonAction'=>'Save'])
+                    @include('post.input',['buttonAction'=>''.\Lang::get("messages.save").''])
                     @endif
                     {!! Form::close() !!}
                 </div>

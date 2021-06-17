@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label class="col-sm-3 col-lg-2 control-label">Country Name <span class="text-danger">*</span></label>
+    <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Country Name') <span class="text-danger">*</span></label>
     <div class="col-sm-9 col-lg-10 controls">
         {!! Form::text('title',null,['placeholder'=>'Title','class'=>'form-control input-lg']) !!}
     </div>

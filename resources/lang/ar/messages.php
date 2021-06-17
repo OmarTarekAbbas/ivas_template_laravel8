@@ -276,6 +276,14 @@ return [
     'Title' => 'عنوان',
     'Short Code' => 'رمز قصير',
     'Right to Lift ?' => 'شمال او يمين',
+    'Country Name' => 'اسم الدولة',
+    'operator image' => 'صورة المشغل',
+    'operator name' => 'اسم المشغل',
+    'Sms Code' => 'كود الرسائل القصيرة',
+    'Ussd Code' => 'كود Ussde',
+    'Country' => 'دولة',
+    'Parent Category' => 'الفئة الأصلية',
+
 
 
 ];

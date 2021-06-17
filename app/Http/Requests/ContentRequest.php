@@ -65,29 +65,57 @@ class ContentRequest extends Request
      */
     public function attributes()
     {
-        $rules = [
-            'title.ar' => 'Title Arabic',
-            'title.en' => 'Title English',
-        ];
+        if (\App::getLocale() == "en") {
+            $rules = [
+                'title.ar' => 'Title Arabic',
+                'title.en' => 'Title English',
+            ];
+        } else {
+            $rules = [
+                'title.ar' => 'عنوان بالعربي',
+                'title.en' => 'العنوان الإنجليزية',
+            ];
+        }
 
         if ((request()->get('content_type_id') == ContentTypes::ADVANCED_TEXT || request()->get('content_type_id') == ContentTypes::NORMAL_TEXT) && $this->method() == 'POST') {
-            $rules['path.ar'] = 'TEXT Arabic';
-            $rules['path.en'] = 'TEXT English';
+            if (\App::getLocale() == "en") {
+                $rules['path.ar'] = 'TEXT Arabic';
+                $rules['path.en'] = 'TEXT English';
+            } else {
+                $rules['path.ar'] = 'نص عربي';
+                $rules['path.en'] = 'نص الإنجليزية';
+            }
         }
 
         if (request()->get('content_type_id') == ContentTypes::IMAGE && $this->method() == 'POST') {
-            $rules['path'] = 'Image';
+            if (\App::getLocale() == "en") {
+                $rules['path'] = 'Image';
+            } else {
+                $rules['path'] = 'صوره';
+            }
         }
         if (request()->get('content_type_id') == ContentTypes::VIDEO && $this->method() == 'POST') {
-            $rules['path'] = 'Video';
+            if (\App::getLocale() == "en") {
+                $rules['path'] = 'Video';
+            } else {
+                $rules['path'] = 'فيديو';
+            }
         }
 
         if (request()->get('content_type_id') == ContentTypes::AUDIO && $this->method() == 'POST') {
-            $rules['path'] = 'Audio';
+            if (\App::getLocale() == "en") {
+                $rules['path'] = 'Audio';
+            } else {
+                $rules['path'] = 'صوتي';
+            }
         }
 
         if (request()->get('content_type_id') == ContentTypes::YOUTUBVIDEO && $this->method() == 'POST') {
-            $rules['path'] = 'Link Youtub';
+            if (\App::getLocale() == "en") {
+                $rules['path'] = 'Link Youtub';
+            } else {
+                $rules['path'] = 'ربط يوتيوب';
+            }
         }
         return $rules;
     }
