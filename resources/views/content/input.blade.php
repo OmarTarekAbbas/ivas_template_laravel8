@@ -1,6 +1,6 @@
 @if (isset($_REQUEST['category_id']))
     <div class="form-group">
-        <label for="textfield5" class="col-sm-3 col-lg-2 control-label">Category<span
+        <label for="textfield5" class="col-sm-3 col-lg-2 control-label">@lang('messages.content.Category')<span
                 class="text-danger">*</span></label>
         <div class="col-sm-9 col-lg-10 controls">
             <select name="category_id" class="form-control chosen-rtl">
@@ -11,7 +11,7 @@
     </div>
 @else
     <div class="form-group">
-        <label class="col-sm-3 col-lg-2 control-label">Category<span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-lg-2 control-label">@lang('messages.content.Category')<span class="text-danger">*</span></label>
         <div class="col-sm-9 col-lg-10 controls">
             {!! Form::select('category_id', $categorys->pluck('title', 'id'), null, ['class' => 'form-control chosen-rtl', 'required']) !!}
         </div>
@@ -19,14 +19,14 @@
 @endif
 
 <div class="form-group">
-    <label class="col-sm-3 col-lg-2 control-label">Content Type<span class="text-danger">*</span></label>
+    <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content Type')<span class="text-danger">*</span></label>
     <div class="col-sm-9 col-lg-10 controls">
         {!! Form::select('content_type_id', $content_types->pluck('title', 'id'), null, ['class' => 'form-control chosen-rtl', 'id' => 'first_select', 'required']) !!}
     </div>
 </div>
 
 <div class="form-group" id="cktextarea">
-    <label class="col-sm-3 col-lg-2 control-label">Title <span class="text-danger">*</span></label>
+    <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Title') <span class="text-danger">*</span></label>
     <div class="col-sm-9 col-lg-10 controls">
         <ul id="myTab1" class="nav nav-tabs">
             <?php $i = 0; ?>
@@ -48,7 +48,7 @@
 </div>
 
 <div class="form-group">
-    <label class="col-sm-3 col-lg-2 control-label">Patch Number </label>
+    <label class="col-sm-3 col-lg-2 control-label">@lang('messages.content.patch number') </label>
     <div class="col-sm-9 col-lg-10 controls">
         {!! Form::number('patch_number', null, ['placeholder' => 'Patch Number', 'class' => 'form-control', 'min' => 0]) !!}
     </div>
@@ -58,7 +58,7 @@
 
     @if ($content->type->id == 1)
         <div class="form-group" id="advanced">
-            <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+            <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
             <div class="col-sm-9 col-lg-10 controls">
                 <ul id="myTab1" class="nav nav-tabs">
                     <?php $i = 0; ?>
@@ -87,7 +87,7 @@
 
     @else
         <div class="form-group" hidden id="advanced">
-            <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+            <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
             <div class="col-sm-9 col-lg-10 controls">
                 {!! Form::textarea('path', null, ['class' => 'form-control ckeditor', 'rows' => 6, 'cols' => 40, 'disabled' => true]) !!}
             </div>
@@ -96,7 +96,7 @@
 
     @if ($content->type->id == 2)
         <div class="form-group" id="normal">
-            <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+            <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
             <div class="col-sm-9 col-lg-10 controls">
                 <ul id="myTab1" class="nav nav-tabs">
                     <?php $i = 0; ?>
@@ -118,9 +118,9 @@
         </div>
     @else
         <div class="form-group" hidden id="normal">
-            <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+            <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
             <div class="col-sm-9 col-lg-10 controls">
-                {!! Form::text('path', null, ['placeholder' => 'Content', 'class' => 'form-control', 'disabled' => true]) !!}
+                {!! Form::text('path', null, ['placeholder' => trans('messages.Content Type.Content'), 'class' => 'form-control', 'disabled' => true]) !!}
             </div>
         </div>
     @endif
@@ -128,7 +128,7 @@
 
     @if ($content->type->id == 3)
         <div class="form-group" id="image">
-            <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+            <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
             <div class="col-sm-9 col-md-8 controls">
                 <div class="fileupload fileupload-new" data-provides="fileupload">
                     <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
@@ -154,7 +154,7 @@
         </div>
     @else
         <div class="form-group" hidden id="image">
-            <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+            <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
             <div class="col-sm-9 col-md-8 controls">
                 <div class="fileupload fileupload-new" data-provides="fileupload">
                     <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
@@ -182,7 +182,7 @@
 
     @if ($content->type->id == 4)
         <div class="form-group" id="audio">
-            <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+            <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
             <div class="col-sm-9 col-md-8 controls">
                 <div class="fileupload fileupload-new" data-provides="fileupload">
                     <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
@@ -208,7 +208,7 @@
         </div>
     @else
         <div class="form-group" hidden id="audio">
-            <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+            <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
             <div class="col-sm-9 col-md-8 controls">
                 <div class="fileupload fileupload-new" data-provides="fileupload">
                     <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
@@ -263,7 +263,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+                <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
                 <div class="col-sm-9 col-md-8 controls">
                     <div class="fileupload fileupload-new" data-provides="fileupload">
                         <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
@@ -319,7 +319,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+                <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
                 <div class="col-sm-9 col-md-8 controls">
                     <div class="fileupload fileupload-new" data-provides="fileupload">
                         <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
@@ -377,9 +377,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+                <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
                 <div class="col-sm-9 col-lg-10 controls">
-                    {!! Form::text('path', null, ['placeholder' => 'Content', 'class' => 'form-control']) !!}
+                    {!! Form::text('path', null, ['placeholder' => trans('messages.Content Type.Content'), 'class' => 'form-control']) !!}
                 </div>
             </div>
         </div>
@@ -412,31 +412,31 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+                <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
                 <div class="col-sm-9 col-lg-10 controls">
-                    {!! Form::text('path', null, ['placeholder' => 'Content', 'class' => 'form-control', 'disabled' => true]) !!}
+                    {!! Form::text('path', null, ['placeholder' => trans('messages.Content Type.Content'), 'class' => 'form-control', 'disabled' => true]) !!}
                 </div>
             </div>
         </div>
     @endif
     @if ($content->type->id == 7)
         <div class="form-group" id="normal">
-            <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+            <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
             <div class="col-sm-9 col-lg-10 controls">
-                {!! Form::text('path', null, ['placeholder' => 'Content', 'class' => 'form-control']) !!}
+                {!! Form::text('path', null, ['placeholder' => trans('messages.Content Type.Content'), 'class' => 'form-control']) !!}
             </div>
         </div>
     @else
         <div class="form-group" hidden id="normal">
-            <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+            <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
             <div class="col-sm-9 col-lg-10 controls">
-                {!! Form::text('path', null, ['placeholder' => 'Content', 'class' => 'form-control', 'disabled' => true]) !!}
+                {!! Form::text('path', null, ['placeholder' => trans('messages.Content Type.Content'), 'class' => 'form-control', 'disabled' => true]) !!}
             </div>
         </div>
     @endif
 @else
     {{-- <div class="form-group" id="advanced">
-        <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
         <div class="col-sm-9 col-lg-10 controls">
             {!! Form::textarea('path', null, ['class' => 'form-control ckeditor', 'rows' => 6, 'cols' => 40]) !!}
         </div>
@@ -444,7 +444,7 @@
 
 
     <div class="form-group" id="advanced">
-        <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
         <div class="col-sm-9 col-lg-10 controls">
             <ul id="myTab1" class="nav nav-tabs">
                 <?php $i = 0; ?>
@@ -470,7 +470,7 @@
     </div>
 
     <div class="form-group" hidden id="normal">
-        <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
         <div class="col-sm-9 col-lg-10 controls">
             <ul id="myTab1" class="nav nav-tabs">
                 <?php $i = 0; ?>
@@ -517,7 +517,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+            <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
             <div class="col-sm-9 col-md-10 controls">
                 <div class="fileupload fileupload-new" data-provides="fileupload">
                     <div class="fileupload-preview fileupload-exists img-thumbnail"
@@ -539,7 +539,7 @@
     </div>
 
     <div class="form-group" hidden id="audio">
-        <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
         <div class="col-sm-9 col-md-10 controls">
             <div class="fileupload fileupload-new" data-provides="fileupload">
                 <div class="fileupload-preview fileupload-exists img-thumbnail"
@@ -558,7 +558,7 @@
     </div>
 
     <div class="form-group" hidden id="image">
-        <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+        <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
         <div class="col-sm-9 col-md-8 controls">
             <div class="fileupload fileupload-new" data-provides="fileupload">
                 <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
@@ -610,9 +610,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 col-lg-2 control-label">Content <span class="text-danger">*</span></label>
+            <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
             <div class="col-sm-9 col-lg-10 controls">
-                {!! Form::text('path', null, ['placeholder' => 'Content', 'class' => 'form-control', 'disabled' => true]) !!}
+                {!! Form::text('path', null, ['placeholder' => trans('messages.Content Type.Content'), 'class' => 'form-control', 'disabled' => true]) !!}
             </div>
         </div>
     </div>

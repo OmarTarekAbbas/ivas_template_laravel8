@@ -82,6 +82,7 @@ return [
     'content' => [
         'Category' => 'فئات',
         'Create Category' => 'إنشاء فئة',
+        'patch number' => 'رقم المحتوى'
     ],
     'Content Type' => [
         'Content Type' => 'أنواع المحتوى',

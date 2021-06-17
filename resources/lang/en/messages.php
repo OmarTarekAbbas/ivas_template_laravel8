@@ -84,6 +84,7 @@ return [
         'Create Content Type' => 'Create Content Type',
         'Content' => 'Contents',
         'Create Content' => 'Create Content',
+        'patch number' => 'patch number'
     ],
     'Post' => [
         'Post' => 'Posts',

@@ -38,11 +38,11 @@
                   <tr>
                     <th style="width:18px"><input type="checkbox" onclick="select_all('contents')"></th>
                     <th>id</th>
-                    <th>Title</th>
-                    <th>Content</th>
-                    <th>Category</th>
-                    <th>Content Type</th>
-                    <th>patch number</th>
+                    <th>@lang('messages.Title')</th>
+                    <th>@lang('messages.Content Type.Content')</th>
+                    <th>@lang('messages.content.Category')</th>
+                    <th>@lang('messages.Content Type.Content Type')</th>
+                    <th>@lang('messages.content.patch number')</th>
                     <th>@lang('messages.action')</th>
                   </tr>
                 </thead>
