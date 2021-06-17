@@ -6,7 +6,7 @@
 
 @section('content')
     @include('errors')
-    
+
     <div class="row">
         <div class="col-md-12">
             <div class="box">
@@ -20,28 +20,28 @@
                 <div class="box-content">
                 {!! Form::open(["url"=>"routes/index_v2","class"=>"form-horizontal","method"=>"GET","id"=>"form_body"]) !!}
                     <div class="form-group">
-                        <label class="col-sm-3 col-lg-2 control-label">Select Controller</label>
+                        <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Routes.controller')</label>
                         <div class="col-sm-9 col-md-10 controls">
                             <select class="form-control chosen-rtl" onchange="get_controller_methods(this)" name="controller_name" required>
-                                <option value>Select Controller</option>
+                                <option value>@lang('messages.Routes.controller')</option>
                                 @foreach($controllers as $controller_name=>$item)
                                     <option value="{{$controller_name}}">{{$controller_name}}</option>
                                 @endforeach
-                            </select> 
+                            </select>
                         <br/>
                         </div>
-                    </div> 
- 
+                    </div>
+
                     <div class="form-group">
                         <label class="col-sm-3 col-lg-2 control-label" id="methods_word"></label>
                         <div class="col-sm-9 col-md-10 controls">
                             <ul id="methods">
-                            
+
                             </ul>
                         </div>
                     </div>
-                {!! Form::close() !!} 
-                </div> 
+                {!! Form::close() !!}
+                </div>
             </div>
         </div>
 
@@ -53,14 +53,14 @@
     <script>
         function get_controller_methods(element)
         {
-            // var controller_name = element.name ; 
+            // var controller_name = element.name ;
             // var frame_code = ' <div class="box-content"> '+
             //         '<div class="embed-responsive embed-responsive-16by9"> '+
             //             '<iframe class="embed-responsive-item" src="{{url("routes/index_v2?controller_name=")}} "></iframe>'+
             //         '</div>'+
             //     '</div>' ;
             // $('#routes_v2_table').append("<li><strong>"+item+"</strong></li>") ;
-            
+
 
             $('#form_body').submit();
 
@@ -74,7 +74,7 @@
             // });
 
         }
- 
+
 
     </script>
     <script>

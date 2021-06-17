@@ -1,12 +1,12 @@
 <div class="form-group">
-    <label class="col-sm-3 col-lg-2 control-label">Key Word *</label>
+    <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Key')*</label>
     <div class="col-sm-9 col-lg-10 controls">
         {!! Form::text('key_word',old('key_word'), ['class'=>'form-control input-lg','required' => 'required']) !!}
     </div>
 </div>
 
 <div class="form-group text_field1">
-  <label class="col-sm-3 col-lg-2 control-label">Value *</label>
+  <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Value') *</label>
   <div class="col-sm-9 col-lg-10 controls tabbable">
       <ul id="myTab1" class="nav nav-tabs">
         <?php $i=0;?>
@@ -28,6 +28,6 @@
 
 <div class="form-group">
     <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-        {!! Form::button('<i class="fa fa-check"></i> Save',['type'=>'submit','class'=>'btn btn-primary']) !!}
+        {!! Form::button('<i class="fa fa-check"></i> '.\Lang::get("messages.save").'',['type'=>'submit','class'=>'btn btn-primary']) !!}
     </div>
 </div>

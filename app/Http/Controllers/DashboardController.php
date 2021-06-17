@@ -321,7 +321,12 @@ class DashboardController extends Controller
     public function clear_cache() {
         Artisan::call('cache:clear');
         Artisan::call('view:clear');
-        \Session::flash('success', 'Cashe Cleared successfully');
+        if (\App::getLocale() == "en") {
+            \Session::flash('success', 'Cashe Cleared successfully');
+        }else{
+            \Session::flash('success', 'تم مسح Cashe بنجاح');
+
+        }
         return redirect('dashboard');
     }
 public function seed_manager() {

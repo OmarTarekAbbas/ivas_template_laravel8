@@ -1,13 +1,13 @@
 @extends('template')
 @section('page_title')
-    Routes
+@lang('messages.Routes.Routes')
 @stop
 @section('content')
     <div class="row">
         <div class="col-md-12">
             <div class="box box-black">
                 <div class="box-title">
-                    <h3><i class="fa fa-table"></i>Routes</h3>
+                    <h3><i class="fa fa-table"></i>@lang('messages.Routes.Routes')</h3>
                     <div class="box-tool">
                         <a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
                         <a data-action="close" href="#"><i class="fa fa-times"></i></a>
@@ -30,12 +30,12 @@
                                 <tr>
                                     <th style="width:18px"><input type="checkbox"
                                             onclick="select_all('{{ $table_name }}')"></th>
-                                    <th>method</th>
-                                    <th>route</th>
-                                    <th>controller</th>
-                                    <th>method</th>
-                                    <th>Roles Assigned</th>
-                                    <th class="visible-md visible-lg" style="width:130px">Action</th>
+                                    <th>@lang('messages.Routes.method')</th>
+                                    <th>@lang('messages.Routes.route')</th>
+                                    <th>@lang('messages.Routes.controller')</th>
+                                    <th>@lang('messages.Routes.method')</th>
+                                    <th>@lang('messages.Routes.Roles Assigned')</th>
+                                    <th class="visible-md visible-lg" style="width:130px">@lang('messages.action')</th>
                                 </tr>
                             </thead>
                             <tbody>

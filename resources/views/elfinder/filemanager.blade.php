@@ -1,7 +1,7 @@
 @extends('template')
 
 @section('page_title')
-View Content
+@lang('messages.File Manager.file uploader')
 @stop
 
 @section('content')

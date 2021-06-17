@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label class="col-sm-3 col-lg-2 control-label">Method Type *</label>
+    <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Routes.method') Type *</label>
     <div class="col-sm-9 col-lg-10 controls">
         <select class="form-control chosen-rtl" name="method" required>
             @foreach($method_types as $index=>$type)
@@ -10,7 +10,7 @@
 </div>
 
 <div class="form-group">
-    <label class="col-sm-3 col-lg-2 control-label">Route *</label>
+    <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Routes.Routes') *</label>
     <div class="col-sm-9 col-lg-10 controls">
         {!! Form::text('route',null, ['class'=>'form-control input-lg','required' => 'required']) !!}
     </div>
@@ -36,7 +36,7 @@
 ?>
 
 <div class="form-group">
-  <label class="col-sm-3 col-lg-2 control-label">Controller Name *</label>
+  <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Routes.controller') *</label>
   <div class="col-sm-9 col-lg-10 controls">
    @if($controller_name)
     {!! Form::text('controller_name',$controller_name, ['class'=>'form-control input-lg','required' => 'required','readonly']) !!}
@@ -47,7 +47,7 @@
 </div>
 
 <div class="form-group">
-  <label class="col-sm-3 col-lg-2 control-label">Function Name *</label>
+  <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Routes.method') *</label>
   <div class="col-sm-9 col-lg-10 controls">
    <select class="form-control chosen-rtl" name="function_name">
       <option value=""></option>
@@ -68,7 +68,7 @@
 </div>
 
 <div class="form-group">
-  <label class="col-sm-3 col-lg-2 control-label">Choose roles (optional)</label>
+  <label class="col-sm-3 col-lg-2 control-label">@lang('messages.role') (optional)</label>
   <div class="col-sm-9 col-lg-10 controls">
       <select name="role[]" class="form-control chosen-rtl" multiple>
           @foreach($roles as $role)

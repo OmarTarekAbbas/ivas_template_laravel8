@@ -1,7 +1,7 @@
 @extends('template')
 
 @section('page_title')
-    Migrate Manager
+@lang('messages.Setting.Create Migrate Files')
 @stop
 
 @section('content')
@@ -11,7 +11,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-title">
-                    <h3><i class="fa fa-table"></i> Migrate Manager</h3>
+                    <h3><i class="fa fa-table"></i> @lang('messages.Setting.Create Migrate Files')</h3>
                     <div class="box-tool">
                         <a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
                         <a data-action="close" href="#"><i class="fa fa-times"></i></a>
@@ -26,7 +26,7 @@
                                     <th>
                                         <label class="checkbox-inline">
                                             <input type="checkbox" onchange="check_all()"/>
-                                            create Migrate files
+                                            @lang('messages.Setting.Create Migrate Files')
                                         </label>
                                     </th>
                                 </tr>

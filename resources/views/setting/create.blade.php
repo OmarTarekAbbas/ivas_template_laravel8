@@ -1,6 +1,7 @@
 @extends('template')
 @section('page_title')
-    Settings
+@lang('messages.Setting.Setting')
+
 @stop
 @section('content')
 
@@ -11,7 +12,8 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-title">
-                    <h3><i class="fa fa-bars"></i>Setting</h3>
+                    <h3><i class="fa fa-bars"></i>@lang('messages.Setting.Setting')
+                    </h3>
                     <div class="box-tool">
                         <a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
                         <a data-action="close" href="#"><i class="fa fa-times"></i></a>
@@ -25,7 +27,8 @@
                           <input id="hidden_key" name="key" type="hidden" />
 
                         <div class="form-group">
-                            <label for="textfield5" class="col-sm-3 col-lg-2 control-label">Setting type</label>
+                            <label for="textfield5" class="col-sm-3 col-lg-2 control-label">@lang('messages.Setting.Setting')
+                                type</label>
                             <div class="col-sm-9 col-lg-10 controls">
                                 <select id="first_select" name="type_id" class="form-control chosen-rtl">
                                    @foreach ($types as $key => $value)
@@ -36,7 +39,7 @@
                         </div>
 
                          <div class="form-group">
-                            <label for="textfield5" class="col-sm-3 col-lg-2 control-label">Key *</label>
+                            <label for="textfield5" class="col-sm-3 col-lg-2 control-label">@lang('messages.Key') *</label>
                             <div class="col-sm-9 col-lg-10 controls">
                                 <input type="text" name="key" id="key" placeholder="key" class="form-control" required>
                             </div>
@@ -44,14 +47,14 @@
 
 
                         <div class="form-group"  id="cktextarea">
-                            <label class="col-sm-3 col-lg-2 control-label">Value *</label>
+                            <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Value') *</label>
                             <div class="col-sm-9 col-lg-10 controls" >
                                 <textarea class="form-control col-md-12 ckeditor" name="advanced_text" rows="6"></textarea>
                             </div>
                         </div>
 
                         <div class="form-group" hidden id="normal_textarea">
-                            <label class="col-sm-3 col-lg-2 control-label">Value *</label>
+                            <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Value') *</label>
                             <div class="col-sm-9 col-lg-10 controls" >
                                 <textarea class="form-control col-md-12" name="normal_text" rows="6"></textarea>
                             </div>
@@ -59,7 +62,7 @@
 
 
                         <div class="form-group" hidden id="image_div">
-                            <label class="col-sm-3 col-lg-2 control-label">Image *</label>
+                            <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Image.Image') *</label>
                             <div class='col-sm-9 col-lg-10 controls'>
                                 <div class='fileupload fileupload-new' data-provides='fileupload'>
                                     <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
@@ -67,10 +70,10 @@
                                     </div>
                                     <div class='fileupload-preview fileupload-exists img-thumbnail' style='max-width: 200px; max-height: 150px; line-height: 20px;'></div>
                                     <div>
-                                                <span class='btn btn-default btn-file'><span class='fileupload-new'>Select image</span>
-                                                <span class='fileupload-exists'>Change</span>
+                                                <span class='btn btn-default btn-file'><span class='fileupload-new'>Select @lang('messages.Image.Image')</span>
+                                                <span class='fileupload-exists'></span>
                                                 <input type='file' name='image' accept="image/*"></span>
-                                        <a href='#' class='btn btn-default fileupload-exists' data-dismiss='fileupload'>Remove</a>
+                                        <a href='#' class='btn btn-default fileupload-exists' data-dismiss='fileupload'>@lang('messages.campain.remove-file')</a>
                                     </div>
                                 </div>
                                 <span class='label label-important'>NOTE!</span>
@@ -111,7 +114,7 @@
                         </div>
 
                         <div class="form-group" hidden id="selector">
-                            <label class="col-sm-3 col-lg-2 control-label">Value *</label>
+                            <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Value') *</label>
                             <div class="col-sm-9 col-lg-10 controls" >
                                 <select class="form-control" name="selector">
                                   <option value="1"> True </option>
@@ -123,7 +126,7 @@
 
                         <div class="form-group last">
                             <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
-                               <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Save</button>
+                               <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>@lang('messages.save') </button>
                             </div>
                         </div>
                      </form>

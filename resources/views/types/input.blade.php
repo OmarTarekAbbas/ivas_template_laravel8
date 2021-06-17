@@ -1,7 +1,7 @@
 @extends('template')
 @section('page_title')
 
-	Type 
+@lang('messages.Setting.Settings Types')
 
 @stop
 @section('content')
@@ -11,9 +11,9 @@
             <div class="box box-blue">
                 <div class="box-title">
                     @if($type != null)
-                        <h3><i class="fa fa-table"></i> Update Type</h3>
+                        <h3><i class="fa fa-table"></i> Update @lang('messages.Setting.Settings Types')</h3>
                     @else
-                        <h3><i class="fa fa-table"></i> Add Type</h3>
+                        <h3><i class="fa fa-table"></i> @lang('messages.Setting.Add Type')</h3>
                     @endif
                     <div class="box-tool">
                         <a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>

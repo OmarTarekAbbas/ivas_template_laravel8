@@ -18,6 +18,8 @@ return [
     'dashboard-welcome' => 'مرحباً بكم فى لوحة تحكم IVAS',
     'your-balance' => 'رصيدك',
     'quick-text-message' => 'رسالة سريعة',
+    'video' => 'فيديو',
+    'audio' => 'صوتي',
     'outbox' => 'الإرساليات',
     'recipients' => 'المستقبلين',
     'body' => 'نص الرساله',
@@ -30,7 +32,10 @@ return [
     ],
     'Routes' => [
         'Routes' => 'الرابط',
-        'role-name' => 'أسم الدور',
+        'route' => 'الرابط',
+        'controller' => 'كونترول',
+        'method' => 'طريقة',
+        'Roles Assigned' => 'الأدوار المعينة',
     ],
     'Setting' => [
         'Setting' => 'الاعدادات',
@@ -265,5 +270,12 @@ return [
     'select_image' => 'أختيار صوره',
     'add_user' => 'أضافة مستخدم جديد',
     'action' => 'إجراء',
+    'Key' => 'مفتاح',
+    'Value' => 'القيمه',
+    'Translation' => 'ترجمة',
+    'Title' => 'عنوان',
+    'Short Code' => 'رمز قصير',
+    'Right to Lift ?' => 'شمال او يمين',
+
 
 ];

@@ -32,6 +32,10 @@ return [
     ],
     'Routes' => [
         'Routes' => 'Routes',
+        'route' => 'route',
+        'controller' => 'controller',
+        'method' => 'method',
+        'Roles Assigned' => 'Roles Assigned',
     ],
     'Setting' => [
         'Setting' => 'Setting',
@@ -273,5 +277,11 @@ return [
     'select_image' => 'Select Image',
     'add_user' => 'Add User',
     'action' => 'Action',
+    'Key' => 'Key',
+    'Value' => 'Value',
+    'Translation' => 'Translation',
+    'Title' => 'Title',
+    'Short Code' => 'Short Code',
+    'Right to Lift ?' => 'Right to Lift ?',
 
 ];

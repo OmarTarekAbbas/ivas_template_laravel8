@@ -1,7 +1,7 @@
 @extends('template')
 
 @section('page_title')
-    Seed Manager
+@lang('messages.Setting.Create Seed Files')
 @stop
 
 @section('content')
@@ -11,7 +11,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-title">
-                    <h3><i class="fa fa-table"></i> Seed Manager</h3>
+                    <h3><i class="fa fa-table"></i> @lang('messages.Setting.Create Seed Files')</h3>
                     <div class="box-tool">
                         <a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
                         <a data-action="close" href="#"><i class="fa fa-times"></i></a>
@@ -22,27 +22,27 @@
                         <table class="table table-striped table-hover fill-head">
                             <thead>
                                 <tr>
-                                    <th>Table</th>                                     
+                                    <th>Table</th>
                                     <th>
                                         <label class="checkbox-inline">
                                             <input type="checkbox" onchange="check_all()"/>
-                                            create seed files
+                                            @lang('messages.Setting.Create Seed Files')
                                         </label>
-                                    </th> 
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
-                            {!! Form::open(["url"=>"admin/seed_tables","class"=>"form-horizontal"]) !!} 
+                            {!! Form::open(["url"=>"admin/seed_tables","class"=>"form-horizontal"]) !!}
                                 @foreach($tables as $value)
                                 <tr>
                                     <td>
-                                        {{$value}} 
-                                    </td>                                    
+                                        {{$value}}
+                                    </td>
                                     <td>
                                         <input class="seed_class" type="checkbox" name="tables[]" value="{{$value}}" />
                                     </td>
                                 </tr>
-                                @endforeach  
+                                @endforeach
                                 <div class="btn-group">
                                     <input type="submit" class="btn btn-primary btn-success" value="Seed Tables">
                                 </div>
@@ -60,10 +60,10 @@
 @stop
 @section('script')
     <script>
-        var checked = false ; 
+        var checked = false ;
         function check_all()
         {
-            checked = !checked ; 
+            checked = !checked ;
             $('.seed_class').prop('checked',checked);
         }
     </script>

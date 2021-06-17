@@ -1,13 +1,13 @@
 @extends('template')
 @section('page_title')
-	Static Translation
+@lang('messages.Static Translations.Static Translations')
 @stop
 @section('content')
 	<div class="row">
 		<div class="col-md-12">
 			<div class="box box-black">
 				<div class="box-title">
-					<h3><i class="fa fa-table"></i>Static Translation</h3>
+					<h3><i class="fa fa-table"></i>@lang('messages.Static Translations.Static Translations')</h3>
 					<div class="box-tool">
 						<a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
 						<a data-action="close" href="#"><i class="fa fa-times"></i></a>
@@ -29,9 +29,9 @@
 							<thead>
 							<tr>
 							<th style="width:18px"><input type="checkbox" onclick="select_all('{{$table_name}}')"></th>
-							<th>Key Word</th>
-								<th>Translation</th>
-								<th class="visible-md visible-lg" style="width:130px">Action</th>
+							<th>@lang('messages.Key')</th>
+								<th>@lang('messages.Translation')</th>
+								<th class="visible-md visible-lg" style="width:130px">@lang('messages.action')</th>
 							</tr>
 							</thead>
 							<tbody>

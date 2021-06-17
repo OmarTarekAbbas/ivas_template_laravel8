@@ -9,9 +9,9 @@
 
 
 <div class="form-group">
-    {!! Form::label('title',\Lang::get('messages.type.name-type').'*',['class'=>'col-sm-3 col-lg-2 control-label']) !!}
+    {!! Form::label('title',\Lang::get('messages.Setting.Settings Types').'*',['class'=>'col-sm-3 col-lg-2 control-label']) !!}
     <div class="col-sm-9 col-lg-10 controls">
-        {!! Form::text('title',null,['class'=>'form-control input-lg','required'=>'required','placeholder'=>\Lang::get('messages.type.name-type')]) !!}
+        {!! Form::text('title',null,['class'=>'form-control input-lg','required'=>'required','placeholder'=>\Lang::get('messages.Setting.Settings Types')]) !!}
     </div>
 </div>
 
@@ -29,4 +29,4 @@
         $('#type-create').addClass('active');
     </script>
 @stop
-        
+
