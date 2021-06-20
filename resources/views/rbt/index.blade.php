@@ -1,6 +1,6 @@
 @extends('template')
 @section('page_title')
-    {{ request()->filled('operator_id') || request()->filled('content_id') ? $pageTitle : 'Rbt Code' }}
+    {{ request()->filled('operator_id') || request()->filled('content_id') ? $pageTitle : trans('messages.Rbts.Rbts') }}
 @stop
 @section('content')
     <div class="row">
@@ -10,7 +10,7 @@
                 <div class="col-md-12">
                     <div class="box box-black">
                         <div class="box-title">
-                            <h3><i class="fa fa-table"></i> Rbt Table</h3>
+                            <h3><i class="fa fa-table"></i> @lang('messages.Rbts.Rbts')</h3>
                             <div class="box-tool">
                                 <a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
                                 <a data-action="close" href="#"><i class="fa fa-times"></i></a>
@@ -41,11 +41,11 @@
                                         <tr>
                                             <th style="width:18px"><input type="checkbox" onclick="select_all('rbt_codes')">
                                             </th>
-                                            <th>content</th>
-                                            <th>rbt code</th>
-                                            <th>operator code</th>
-                                            <th>operator</th>
-                                            <th>Action</th>
+                                            <th>@lang('messages.content')</th>
+                                            <th>@lang('messages.rbt code')</th>
+                                            <th>@lang('messages.operator code')</th>
+                                            <th>@lang('messages.Operator.Operator')</th>
+                                            <th>@lang('messages.action')</th>
                                         </tr>
                                     </thead>
 

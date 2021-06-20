@@ -291,6 +291,15 @@ return [
     'Ussd Code' => 'Ussd Code',
     'Country' => 'Ussd Code',
     'Parent Category' => 'Parent Category',
-    'Edit' => 'تعديل',
+    'Edit' => 'Edit',
+    'Image Preview' => 'Image Preview',
+    'content' => 'content',
+    'published date' => 'published date',
+    'Status' => 'Status',
+    'user' => 'user',
+    'url' => 'url',
+    'rbt code' => 'rbt code',
+    'operator code' => 'operator code',
+
 
 ];

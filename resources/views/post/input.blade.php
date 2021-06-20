@@ -1,6 +1,6 @@
 @if(isset($_REQUEST['content_id']))
 <div class="form-group">
-    <label for="textfield5" class="col-sm-3 col-lg-2 control-label">Content<span class="text-danger">*</span></label>
+    <label for="textfield5" class="col-sm-3 col-lg-2 control-label">@lang('messages.content')<span class="text-danger">*</span></label>
     <div class="col-sm-9 col-lg-10 controls">
         <select  name="content_id" class="form-control chosen-rtl">
             <option id="category_{{ $_REQUEST['content_id'] }}" value="{{ $_REQUEST['content_id'] }}">{{ $_REQUEST['title']}}</option>
@@ -9,14 +9,14 @@
 </div>
 @else
 <div class="form-group">
-    <label class="col-sm-3 col-lg-2 control-label">Content<span class="text-danger">*</span></label>
+    <label class="col-sm-3 col-lg-2 control-label">@lang('messages.content')<span class="text-danger">*</span></label>
     <div class="col-sm-9 col-lg-10 controls">
         {!! Form::select('content_id',$contents->pluck('title','id'),null,['class'=>'form-control chosen-rtl','required']) !!}
     </div>
 </div>
 @endif
 <div class="form-group">
-    <label class="col-sm-3 col-lg-2 control-label">Operator<span class="text-danger">*</span></label>
+    <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Operator.Operator')<span class="text-danger">*</span></label>
     <div class="col-sm-9 col-lg-10 controls">
       <select class="form-control chosen-rtl"  name="operator_id[]" required @if(!$post) multiple @endif>
         @foreach($operators as $operator)
@@ -28,14 +28,14 @@
 </div>
 
 <div class="form-group">
-    <label class="col-sm-3 col-lg-2 control-label">Published Date <span class="text-danger">*</span></label>
+    <label class="col-sm-3 col-lg-2 control-label">@lang('messages.published date') <span class="text-danger">*</span></label>
     <div class="col-sm-9 col-lg-10 controls">
         {!! Form::text('published_date',null,['placeholder'=>'published_date','class'=>'form-control js-datepicker' ,'value' => 'date("Y-m-d")' , 'autocomplete' => 'off' ]) !!}
     </div>
 </div>
 
 <div class="form-group">
-    <label class="col-sm-3 col-lg-2 control-label">Status<span class="text-danger">*</span></label>
+    <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Status')<span class="text-danger">*</span></label>
     <div class="col-sm-9 col-lg-10 controls">
         {!! Form::select('active',array('1' => 'Active' , '0' => 'Not Active'),null,['class'=>'form-control chosen-rtl','required']) !!}
     </div>

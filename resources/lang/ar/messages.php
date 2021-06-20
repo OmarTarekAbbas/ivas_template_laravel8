@@ -89,6 +89,7 @@ return [
         'Create Content Type' => 'إنشاء نوع المحتوى',
         'Content' => 'المحتوى',
         'Create Content' => 'إنشاء المحتوى',
+        'patch number' => 'رقم التصحيح'
     ],
     'Post' => [
         'Post' => 'المشاركات',
@@ -284,7 +285,14 @@ return [
     'Ussd Code' => 'كود Ussde',
     'Country' => 'دولة',
     'Parent Category' => 'الفئة الأصلية',
-
-
+    'Edit' => 'تعديل',
+    'Image Preview' => 'معاينة الصورة',
+    'content' => 'المحتوى',
+    'published date' => 'تاريخ النشر',
+    'Status' => 'حالة',
+    'user' => 'المستعمل',
+    'url' => 'رابط',
+    'rbt code' => 'كود محتوي الصوتي',
+    'operator code' => 'كود المشغل',
 
 ];

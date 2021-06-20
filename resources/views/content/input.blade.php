@@ -293,7 +293,7 @@
     @else
         <div hidden id="video">
             <div class="form-group">
-                <label class="col-sm-3 col-md-2 control-label">Image Preview</label>
+                <label class="col-sm-3 col-md-2 control-label">@lang('messages.Image Preview')</label>
                 <div class="col-sm-9 col-md-8 controls">
                     <div class="fileupload fileupload-new" data-provides="fileupload">
                         <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
@@ -351,7 +351,7 @@
     @if ($content->type->id == 6)
         <div id="external">
             <div class="form-group">
-                <label class="col-sm-3 col-md-2 control-label">Image Preview</label>
+                <label class="col-sm-3 col-md-2 control-label">@lang('messages.Image Preview')</label>
                 <div class="col-sm-9 col-md-8 controls">
                     <div class="fileupload fileupload-new" data-provides="fileupload">
                         <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
@@ -386,7 +386,7 @@
     @else
         <div hidden id="external">
             <div class="form-group">
-                <label class="col-sm-3 col-md-2 control-label">Image Preview</label>
+                <label class="col-sm-3 col-md-2 control-label">@lang('messages.Image Preview')</label>
                 <div class="col-sm-9 col-md-8 controls">
                     <div class="fileupload fileupload-new" data-provides="fileupload">
                         <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
@@ -492,7 +492,7 @@
 
     <div hidden id="video">
         <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">Image Preview</label>
+            <label class="col-sm-3 col-md-2 control-label">@lang('messages.Image Preview')</label>
             <div class="col-sm-9 col-md-8 controls">
                 <div class="fileupload fileupload-new" data-provides="fileupload">
                     <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">
@@ -585,7 +585,7 @@
 
     <div hidden id="external">
         <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">Image Preview</label>
+            <label class="col-sm-3 col-md-2 control-label">@lang('messages.Image Preview')</label>
             <div class="col-sm-9 col-md-8 controls">
                 <div class="fileupload fileupload-new" data-provides="fileupload">
                     <div class="fileupload-new img-thumbnail" style="width: 200px; height: 150px;">

@@ -40,9 +40,9 @@
                     <th>id</th>
                     <th>@lang('messages.Title')</th>
                     <th>@lang('messages.Content Type.Content')</th>
-                    <th>@lang('messages.content.Category')</th>
+                    <th>@lang('messages.Category.Category')</th>
                     <th>@lang('messages.Content Type.Content Type')</th>
-                    <th>@lang('messages.content.patch number')</th>
+                    <th>@lang('messages.Content Type.patch number')</th>
                     <th>@lang('messages.action')</th>
                   </tr>
                 </thead>
