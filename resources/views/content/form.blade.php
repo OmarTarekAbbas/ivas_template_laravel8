@@ -1,6 +1,6 @@
 @extends('template')
 @section('page_title')
-  Content
+@lang('messages.Content Type.Content')
 @stop
 @section('content')
     @include('errors')
@@ -8,7 +8,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-title">
-                    <h3><i class="fa fa-bars"></i>Content Form</h3>
+                    <h3><i class="fa fa-bars"></i>@lang('messages.Content Type.Content')</h3>
                     <div class="box-tool">
                         <a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
                         <a data-action="close" href="#"><i class="fa fa-times"></i></a>

@@ -98,7 +98,12 @@ class CategoryController extends Controller
                         </ul>';
             })
             ->addColumn('image', function (Category $category) {
-                return "<img src='$category->image' alt='$category->title' style='width:250px' height='200px'>";
+
+                if ($category->image) {
+                    return "<img src='$category->image' alt='$category->title' style='width:100px' height='100px'>";
+                } else {
+                    return "<img src='https://ui-avatars.com/api/?name=$category->title' alt='$category->title' style='width:100px' height='100px'>";
+                }
             })
             ->addColumn('action', function (Category $value) {
                 return view('category.action', compact('value'))->render();
@@ -144,7 +149,7 @@ class CategoryController extends Controller
         $category = $this->categoryRepository->find($id);
         $parents = $this->categoryRepository->parent()->get();
         $languages = $this->languageRepository->all();
-        return view('category.form', compact('category', 'parents','languages'));
+        return view('category.form', compact('category', 'parents', 'languages'));
     }
 
     /**

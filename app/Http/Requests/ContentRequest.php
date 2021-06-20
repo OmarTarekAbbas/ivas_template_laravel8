@@ -76,7 +76,7 @@ class ContentRequest extends Request
                 'title.en' => 'العنوان الإنجليزية',
             ];
         }
-
+        // dd(request()->all());
         if ((request()->get('content_type_id') == ContentTypes::ADVANCED_TEXT || request()->get('content_type_id') == ContentTypes::NORMAL_TEXT) && $this->method() == 'POST') {
             if (\App::getLocale() == "en") {
                 $rules['path.ar'] = 'TEXT Arabic';
