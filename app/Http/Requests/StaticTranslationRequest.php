@@ -23,9 +23,34 @@ class StaticTranslationRequest extends Request
      */
     public function rules()
     {
-       return [
+        return [
             "key_word" => "required",
-            'translations' => 'required'
-       ];
+            'translations' => 'required|array',
+            'translations.*' => 'required|string',
+        ];
     }
+
+
+     /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        if (\App::getLocale() == "en") {
+            return [
+                'key_word' => 'Key',
+                'translations.1' => 'Title Arabic',
+                'translations.2' => 'Title English',
+            ];
+        }else{
+            return [
+                'key_word' => 'النص',
+                'translations.1' => 'عنوان بالعربي',
+                'translations.2' => 'العنوان الإنجليزية',
+            ];
+        }
+    }
+
 }

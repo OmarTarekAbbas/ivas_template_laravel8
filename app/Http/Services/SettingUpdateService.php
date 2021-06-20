@@ -50,8 +50,7 @@ class SettingUpdateService
         ImageTypeService $imageTypeService,
         VideoTypeService $videoTypeService,
         ExstentionTypeService $exstentionTypeService
-    )
-    {
+    ) {
         $this->settingRepository      = $settingRepository;
         $this->audioTypeService       = $audioTypeService;
         $this->imageTypeService       = $imageTypeService;
@@ -65,53 +64,53 @@ class SettingUpdateService
      */
     public function handle($request, $setting)
     {
-        if($request['type_id'] == SettingTypes::ADVANCED_TEXT) {
+        if ($request['type_id'] == SettingTypes::ADVANCED_TEXT) {
             $request = array_merge($request, [
                 'value' => $request['value']
             ]);
         }
 
-        if($request['type_id'] == SettingTypes::NORMAL_TEXT) {
+        if ($request['type_id'] == SettingTypes::NORMAL_TEXT) {
             $request = array_merge($request, [
                 'value' => $request['value']
             ]);
         }
+        if (isset($request['value'])) {
+            if ($request['type_id'] == SettingTypes::IMAGE) {
+                $request = array_merge($request, [
+                    'value' => $this->imageTypeService->handle($request['value'])
+                ]);
+            }
 
-        if($request['type_id'] == SettingTypes::IMAGE) {
-            $request = array_merge($request, [
-                'value' => $this->imageTypeService->handle($request['value'])
-            ]);
+            if ($request['type_id'] == SettingTypes::VIDEO) {
+                $request = array_merge($request, [
+                    'value' => $this->videoTypeService->handle($request['value'])
+                ]);
+            }
+
+            if ($request['type_id'] == SettingTypes::AUDIO) {
+                $request = array_merge($request, [
+                    'value' => $this->audioTypeService->handle($request['value'])
+                ]);
+            }
         }
 
-        if($request['type_id'] == SettingTypes::VIDEO) {
-            $request = array_merge($request, [
-                'value' => $this->videoTypeService->handle($request['value'])
-            ]);
-        }
-
-        if($request['type_id'] == SettingTypes::AUDIO) {
-            $request = array_merge($request, [
-                'value' => $this->audioTypeService->handle($request['value'])
-            ]);
-        }
-
-        if($request['type_id'] == SettingTypes::EXSTENTION) {
+        if ($request['type_id'] == SettingTypes::EXSTENTION) {
             $request = array_merge($request, [
                 'value' => $this->exstentionTypeService->handle($request['value'])
             ]);
         }
 
-        if($request['type_id'] == SettingTypes::SELECTOR) {
+        if ($request['type_id'] == SettingTypes::SELECTOR) {
             $request = array_merge($request, [
                 'value' => $request['value']
             ]);
         }
 
-        $request = Arr::only($request,['key','value','type_id','order']);
+        $request = Arr::only($request, ['key', 'value', 'type_id', 'order']);
 
         $setting = $setting->update($request);
 
-    	return $setting;
+        return $setting;
     }
-
 }

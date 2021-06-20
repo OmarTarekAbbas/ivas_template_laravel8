@@ -57,9 +57,15 @@
                                                 <td>
                                                     {{ $value->title }}
                                                 </td>
+                                                
                                                 <td>
-                                                    <img class=" img-circle" width="100px" height="100px"
-                                                        src="{{ $value->image }}" />
+                                                    @if ($value->image)
+                                                        <img class=" img-circle" width="100px" height="100px"
+                                                            src="{{ $operator->image }}" />
+                                                    @else
+                                                        <img class=" img-circle" width="100px" height="100px"
+                                                            src="https://ui-avatars.com/api/?name={{ $value->title }}" />
+                                                    @endif
                                                 </td>
                                                 <td class="visible-md visible-xs visible-sm visible-lg">
                                                     <div class="btn-group">

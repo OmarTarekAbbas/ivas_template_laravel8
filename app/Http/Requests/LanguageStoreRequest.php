@@ -23,10 +23,31 @@ class LanguageStoreRequest extends Request
      */
     public function rules()
     {
-       return [
+        return [
             "title" => "required|unique:languages,title",
             "short_code" => "required|unique:languages,short_code",
             "rtl" => "required"
-       ];
+        ];
     }
+
+
+     /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        if (\App::getLocale() == "en") {
+            return [
+                'short_code' => 'Short Code',
+            ];
+        }else{
+            return [
+                'short_code' => 'رمز قصير',
+            ];
+        }
+    }
+
+
 }

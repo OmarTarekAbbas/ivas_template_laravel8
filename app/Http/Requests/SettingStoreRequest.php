@@ -46,28 +46,88 @@ class SettingStoreRequest extends Request
 
         $rules['type_id'] = 'required';
 
-        if(request()->get('type_id') == SettingTypes::ADVANCED_TEXT) {
+        if (request()->get('type_id') == SettingTypes::ADVANCED_TEXT) {
             $rules['advanced_text'] = 'required';
         }
-        if(request()->get('type_id') == SettingTypes::NORMAL_TEXT) {
+        if (request()->get('type_id') == SettingTypes::NORMAL_TEXT) {
             $rules['normal_text'] = 'required';
         }
-        if(request()->get('type_id') == SettingTypes::IMAGE) {
+        if (request()->get('type_id') == SettingTypes::IMAGE) {
             $rules['image'] = 'required|mimes:png,jpeg,jpg';
         }
-        if(request()->get('type_id') == SettingTypes::VIDEO) {
+        if (request()->get('type_id') == SettingTypes::VIDEO) {
             $rules['video'] = 'required|mimes:mp4,flv,3gp';
         }
-        if(request()->get('type_id') == SettingTypes::AUDIO) {
+        if (request()->get('type_id') == SettingTypes::AUDIO) {
             $rules['audio'] = 'required|mimes:mp3,webm,wav';
         }
-        if(request()->get('type_id') == SettingTypes::SELECTOR) {
+        if (request()->get('type_id') == SettingTypes::SELECTOR) {
             $rules['selector'] = 'required';
         }
-        if(request()->get('type_id') == SettingTypes::EXSTENTION) {
+        if (request()->get('type_id') == SettingTypes::EXSTENTION) {
             $rules['extensions'] = 'required';
         }
 
-      return $rules;
+        return $rules;
+    }
+
+    /**
+     * Method attributes
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        if (\App::getLocale() == "en") {
+            $rules = [
+                'key' => 'key'
+            ];
+        } else {
+            $rules = [
+                'key' => 'نص'
+            ];
+        }
+        // dd(request()->all());
+        if ((request()->get('type_id') == SettingTypes::ADVANCED_TEXT || request()->get('type_id') == SettingTypes::NORMAL_TEXT) && $this->method() == 'POST') {
+            if (\App::getLocale() == "en") {
+                $rules['advanced_text'] = 'TEXT Arabic';
+                $rules['normal_text'] = 'TEXT Arabic';
+            } else {
+                $rules['advanced_text'] = 'نص عربي';
+                $rules['normal_text'] = 'نص عربي';
+            }
+        }
+
+        if (request()->get('type_id') == SettingTypes::IMAGE && $this->method() == 'POST') {
+            if (\App::getLocale() == "en") {
+                $rules['image'] = 'Image';
+            } else {
+                $rules['image'] = 'صوره';
+            }
+        }
+        if (request()->get('type_id') == SettingTypes::VIDEO && $this->method() == 'POST') {
+            if (\App::getLocale() == "en") {
+                $rules['video'] = 'Video';
+            } else {
+                $rules['video'] = 'فيديو';
+            }
+        }
+
+        if (request()->get('type_id') == SettingTypes::AUDIO && $this->method() == 'POST') {
+            if (\App::getLocale() == "en") {
+                $rules['audio'] = 'Audio';
+            } else {
+                $rules['audio'] = 'صوتي';
+            }
+        }
+
+        if (request()->get('type_id') == SettingTypes::SELECTOR && $this->method() == 'POST') {
+            if (\App::getLocale() == "en") {
+                $rules['selector'] = 'selector';
+            } else {
+                $rules['selector'] = 'اختيار';
+            }
+        }
+        return $rules;
     }
 }
