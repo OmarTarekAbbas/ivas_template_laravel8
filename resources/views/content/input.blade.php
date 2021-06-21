@@ -482,7 +482,7 @@
                 <?php $i = 0; ?>
                 @foreach ($languages as $language)
                     <div class="tab-pane fade in {{ $i++ ? '' : 'active' }}" id="path{{ $language->short_code }}">
-                        <input class="form-control" name="path[{{ $language->short_code }}]" value="@if ($content) {!! $content->getTranslation('path', $language->short_code) !!} @endif" />
+                        <input class="form-control" disabled name="path[{{ $language->short_code }}]" value="@if ($content) {!! $content->getTranslation('path', $language->short_code) !!} @endif" />
                     </div>
                 @endforeach
             </div>

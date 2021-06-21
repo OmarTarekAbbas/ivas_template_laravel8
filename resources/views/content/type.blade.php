@@ -19,6 +19,7 @@
         <video src="{{ $content->path }}" style="width:250px;height:200px" height="200px" controls
             poster="{{ $content->image_preview }}"></video>'
     @elseif($content->type->id == $contentTypes::YOUTUBVIDEO)
+    
         <iframe src="{{ $content->path }}" width="250px" height="200px"></iframe>
     @elseif($content->type->id == $contentTypes::EXTERNALLINK)
         <a href="'.$content->path.'">{{ $content->path }}</a>

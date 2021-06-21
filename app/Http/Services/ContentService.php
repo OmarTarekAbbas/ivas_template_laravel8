@@ -86,7 +86,6 @@ class ContentService
         $contentTypeStrategy  = new ContentTypeContext(new $contentTypeClass);
 
         if (isset($request['path'])) {
-            // dd($request['content_type_id']);
             $request = array_merge($request, [
                 'path' => $contentTypeStrategy->handleType($request['path'])
             ]);
@@ -97,18 +96,21 @@ class ContentService
                 'image_preview' => $this->handleFile($request['image_preview'])
             ]);
         }
-        if (isset($request['image_preview'])) {
+
+        if (isset($request['path'])) {
             if ($request['content_type_id'] == ContentTypes::VIDEO) {
                 $request = array_merge($request, [
                     'image_preview' => $this->handleVideoImagePreview($request)
                 ]);
             }
-            if ($request['content_type_id'] == ContentTypes::YOUTUBVIDEO) {
-                $request = array_merge($request, [
-                    'image_preview' => $this->handleYoutubeImagePreview($request)
-                ]);
-            }
         }
+
+        if ($request['content_type_id'] == ContentTypes::YOUTUBVIDEO) {
+            $request = array_merge($request, [
+                'image_preview' => $this->handleYoutubeImagePreview($request)
+            ]);
+        }
+
         $content = $this->transTitle($content, $request);
         $path = '';
         if ($request['content_type_id'] == ContentTypes::ADVANCED_TEXT || request()->get('content_type_id') == ContentTypes::NORMAL_TEXT) {
@@ -170,6 +172,7 @@ class ContentService
      */
     public function handleVideoImagePreview($request)
     {
+        // $request['path'] = '';
         $ourPath = $this->uploaderService->creatOurFolderPath(self::IMAGE_PATH);
         $image_path =  'uploads/' . self::IMAGE_PATH . '/' . $ourPath['date_path'] . time() . '.png';
         $command = 'ffmpeg -ss 00:00:02 -i ' . base_path($request['path']) . ' -vframes 1 -q:v 2 ' . base_path($image_path) . '';
@@ -185,7 +188,8 @@ class ContentService
     public function handleYoutubeImagePreview($request)
     {
         $ourPath = $this->uploaderService->creatOurFolderPath(self::IMAGE_PATH);
-        $image_path =  'uploads/' . self::IMAGE_PATH . '/' . $ourPath['date_path'] . $request['title'] . '.png';
+        $image_path =  'uploads/' . self::IMAGE_PATH . '/' . $ourPath['date_path'] . time() . rand(0, 999) . '.png';
+        // dd($image_path);
         $link = explode('embed/', $request['path']);
         if (isset($link[1])) {
             $youtube_id = explode('?', $link[1]);
@@ -193,6 +197,7 @@ class ContentService
         } else {
             $link = explode('?v=', $request['path']);
             file_put_contents(base_path($image_path), file_get_contents('http://img.youtube.com/vi/' . $link[1] . '/maxresdefault.jpg'));
+            request()->request->add(['path' => 'http://www.youtube.com/embed/' . $link[1] . '?rel=0']);
         }
         return $image_path;
     }

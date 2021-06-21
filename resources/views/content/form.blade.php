@@ -86,6 +86,15 @@
               $('#normal').hide('slow').find('input').prop('disabled',true);
               $('#video').hide('slow').find('input').prop('disabled',true);
             }
+
+            if (this.value == 7) {
+              $('#normal').show(1000).find('input').prop('disabled',false);
+              $('#advanced').hide('slow');
+              $('#image').hide('slow').find('input').prop('disabled',true);
+              $('#audio').hide('slow').find('input').prop('disabled',true);
+              $('#video').hide('slow').find('input').prop('disabled',true);
+              $('#external').hide('slow').find('input').prop('disabled',true);
+            }
         });
     </script>
 @stop
