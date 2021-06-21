@@ -61,7 +61,7 @@
                                                             href="{{ url('country/' . $country->id . '/edit') }}"
                                                             data-original-title="Edit"><i class="fa fa-edit"></i></a>
                                                     @endif
-                                                    @if (get_action_icons('country/{id}/edit', 'delete'))
+                                                    @if (get_action_icons('country/{id}/delete', 'get'))
 
                                                         <a class="btn btn-sm btn-danger show-tooltip" title=""
                                                             onclick='return ConfirmDelete()'

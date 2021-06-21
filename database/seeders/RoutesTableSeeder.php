@@ -1269,6 +1269,46 @@ class RoutesTableSeeder extends Seeder
                 'updated_at' => '2019-02-14 13:01:13',
                 'function_name' => 'update',
             ),
+            125 =>
+            array (
+                'id' => 175,
+                'method' => 'get',
+                'route' => 'content/allData',
+                'controller_name' => 'ContentController',
+                'created_at' => '2019-02-14 13:01:13',
+                'updated_at' => '2019-02-14 13:01:13',
+                'function_name' => 'allData',
+            ),
+            126 =>
+            array (
+                'id' => 176,
+                'method' => 'get',
+                'route' => 'category/allData',
+                'controller_name' => 'CategoryController',
+                'created_at' => '2019-02-14 13:01:13',
+                'updated_at' => '2019-02-14 13:01:13',
+                'function_name' => 'allData',
+            ),
+            127 =>
+            array (
+                'id' => 177,
+                'method' => 'get',
+                'route' => 'post/allData',
+                'controller_name' => 'PostController',
+                'created_at' => '2019-02-14 13:01:13',
+                'updated_at' => '2019-02-14 13:01:13',
+                'function_name' => 'allData',
+            ),
+            128 =>
+            array (
+                'id' => 178,
+                'method' => 'get',
+                'route' => 'rbt/allData',
+                'controller_name' => 'RbtController',
+                'created_at' => '2019-02-14 13:01:13',
+                'updated_at' => '2019-02-14 13:01:13',
+                'function_name' => 'allData',
+            ),
         ));
 
 

@@ -85,10 +85,12 @@ function get_static_routes()
         Route::post('admin/seed_tables', 'DashboardController@seed_tables');
         Route::get('admin/migrate_manager', 'DashboardController@migrate_manager');
         Route::post('admin/migrate_tables', 'DashboardController@migrate_tables');
-        Route::get('content/allData', 'ContentController@allData');
-        Route::get('category/allData', 'CategoryController@allData');
-        Route::get('post/allData', 'PostController@allData');
-        Route::get('rbt/allData', 'RbtController@allData');
+
+
+        // Route::get('content/allData', 'ContentController@allData');
+        // Route::get('category/allData', 'CategoryController@allData');
+        // Route::get('post/allData', 'PostController@allData');
+        // Route::get('rbt/allData', 'RbtController@allData');
     });
 
 
