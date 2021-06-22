@@ -300,6 +300,18 @@ return [
     'url' => 'url',
     'rbt code' => 'rbt code',
     'operator code' => 'operator code',
+    'User Added Successfully' => 'User Added Successfully',
+    'User updated successfully' => 'User updated successfully',
+    'User has been deleted successfully' => 'User has been deleted successfully',
+    'Role Added successfully' => 'Role Added successfully',
+    'password confirmation must be the same of the new password, and all fields are required' => 'password confirmation must be the same of the new password, and all fields are required',
+    'Password updated successfully' => 'Password updated successfully',
+    'Wrong current password entered!' => 'Wrong current password entered!',
+    'Submitting Image Form without image !!!! please choose image before submitting that form!' => 'Submitting Image Form without image !!!! please choose image before submitting that form!',
+    'Image must be jpg, png, or jpeg only !! No updates takes place, try again with that extensions please..' => 'Image must be jpg, png, or jpeg only !! No updates takes place, try again with that extensions please..',
+    'Profile picture updated' => 'Profile picture updated',
+    'Email and phone must be unique' => 'Email and phone must be unique',
+    'Updated Successfully' => 'Updated Successfully',
 
 
 ];

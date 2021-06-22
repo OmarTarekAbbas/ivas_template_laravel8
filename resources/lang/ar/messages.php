@@ -294,5 +294,19 @@ return [
     'url' => 'رابط',
     'rbt code' => 'كود محتوي الصوتي',
     'operator code' => 'كود المشغل',
+    'User Added Successfully' => 'تمت إضافة المستخدم بنجاح',
+    'User updated successfully' => 'تم تحديث المستخدم بنجاح',
+    'User has been deleted successfully' => 'تم حذف المستخدم بنجاح',
+    'Role Added successfully' => 'تمت إضافة الدور بنجاح',
+    'password confirmation must be the same of the new password, and all fields are required' => 'يجب أن يكون تأكيد كلمة المرور هو نفسه كلمة المرور الجديدة ، وجميع الحقول مطلوبة',
+    'Password updated successfully' => 'تم تحديث كلمة السر بنجاح',
+    'Wrong current password entered!' => 'تم إدخال كلمة مرور حالية خاطئة!',
+    'Submitting Image Form without image !!!! please choose image before submitting that form!' => 'تقديم استمارة بدون صورة !!!! الرجاء اختيار الصورة قبل إرسال هذا النموذج!',
+    'Image must be jpg, png, or jpeg only !! No updates takes place, try again with that extensions please..' => 'يجب أن تكون الصورة jpg أو png أو jpeg فقط !! لا توجد تحديثات ، حاول مرة أخرى بهذه الامتدادات من فضلك ..',
+    'Profile picture updated' => 'تم تحديث صورة الملف الشخصي',
+    'Email and phone must be unique' => 'يجب أن يكون البريد الإلكتروني والهاتف فريدًا',
+    'Updated Successfully' => 'تم التحديث بنجاح',
+
+
 
 ];
