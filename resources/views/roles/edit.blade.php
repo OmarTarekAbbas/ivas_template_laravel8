@@ -1,6 +1,6 @@
 @extends('template')
 @section('page_title')
-    @lang('messages.role') 
+    @lang('messages.role')
 @stop
 @section('content')
     @include('errors')
@@ -26,11 +26,11 @@
                                 {{-- <span class="help-inline">Enter a new Role name</span> --}}
                             </div>
                         </div>
-                        
+
                         <div class="form-group" id="priority-type">
                             <label class="col-sm-3 col-lg-2 control-label">Priority *</label>
                             <div class="col-sm-9 col-md-10 controls">
-                                <select class="form-control chosen" id="role_priority" name="role_priority" >
+                                <select class="form-control" id="role_priority" name="role_priority" >
                                     <option value>Select Priority</option>
                                     <option value="1" @if ($role !=null && $role->role_priority == 1) selected @endif>1</option>
                                     <option value="2" @if ($role !=null && $role->role_priority == 2) selected @endif>2</option>
