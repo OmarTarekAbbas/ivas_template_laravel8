@@ -7,8 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Repository\CategoryRepository;
 use App\Http\Repository\ContentRepository;
 use App\Http\Repository\ContentTypeRepository;
-use App\Http\Requests\ContentRequest;
-use App\Http\Services\ContentService;
+use App\Http\Requests\ContentStoreRequest;
+use App\Http\Requests\ContentUpdateRequest;
+use App\Http\Services\ContentStoreService;
+use App\Http\Services\ContentUpdateService;
 use App\Http\Repository\LanguageRepository;
 use App\Models\Content;
 use Illuminate\Http\Request;
@@ -31,11 +33,13 @@ class ContentController extends Controller
      */
     private $contentRepository;
     /**
-     * contentService
+     * ContentStoreService
      *
-     * @var ContentService
+     * @var ContentStoreService
+     * @var ContentUpdateService
      */
-    private $contentService;
+    private $ContentStoreService;
+    private $ContentUpdateService;
     /**
      * contentTypeRepository
      *
@@ -54,7 +58,8 @@ class ContentController extends Controller
      *
      * @param  ContentRepository $contentRepository
      * @param  ContentTypeRepository $contentTypeRepository
-     * @param  ContentService $contentService
+     * @param  ContentStoreService $ContentStoreService
+     * @param  ContentUpdateService $ContentUpdateService
      * @param  CategoryRepository $categoryRepository
      * @param  LanguageRepository $languageRepository
      * @return void
@@ -64,12 +69,14 @@ class ContentController extends Controller
         ContentRepository $contentRepository,
         ContentTypeRepository $contentTypeRepository,
         CategoryRepository $categoryRepository,
-        ContentService $contentService,
+        ContentStoreService $ContentStoreService,
+        ContentUpdateService $ContentUpdateService,
         LanguageRepository $languageRepository
     ) {
         $this->get_privilege();
         $this->contentRepository = $contentRepository;
-        $this->contentService = $contentService;
+        $this->ContentStoreService = $ContentStoreService;
+        $this->ContentUpdateService = $ContentUpdateService;
         $this->contentTypeRepository = $contentTypeRepository;
         $this->categoryRepository = $categoryRepository;
         $this->languageRepository    = $languageRepository;
@@ -136,7 +143,10 @@ class ContentController extends Controller
                     return $content->category->title;
             })
             ->addColumn('patch number', function (Content $content) {
-                return $content->patch_number;
+                if ($content->patch_number) {
+                    return $content->patch_number;
+                }
+                return '---';
             })
             ->addColumn('action', function (Content $value) {
                 return view('content.action', compact('value'))->render();
@@ -175,13 +185,13 @@ class ContentController extends Controller
     /**
      * store content data
      *
-     * @param  ContentRequest $request
+     * @param  ContentStoreRequest $request
      * @return Redirect
      */
-    public function store(ContentRequest $request)
+    public function store(ContentStoreRequest $request)
     {
         // dd($request->all());
-        $this->contentService->handle($request->validated());
+        $this->ContentStoreService->handle($request->validated());
 
         $request->session()->flash('success', 'Content created successfull');
 
@@ -206,16 +216,16 @@ class ContentController extends Controller
      * update
      *
      * @param  int $id
-     * @param  ContentRequest $request
+     * @param  ContentUpdateRequest $request
      * @return Redirect
      */
-    public function update($id, ContentRequest $request)
+    public function update($id, ContentUpdateRequest $request)
     {
         //  dd($request->all());
 
         $content = $this->contentRepository->findOrfail($id);
 
-        $this->contentService->handle($request->validated(), $id);
+        $this->ContentUpdateService->handle($request->validated(), $id);
 
         $request->session()->flash('success', 'updated successfully');
 

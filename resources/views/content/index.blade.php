@@ -86,7 +86,7 @@
             {data: 'patch number'},
             {data: 'action', searchable: false}
             ]
-            , "pageLength": 5
+            , "pageLength": 10
         });
     };
 
