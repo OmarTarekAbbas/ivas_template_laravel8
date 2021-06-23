@@ -83,7 +83,7 @@
 
             if (this.value == 6) {
                 $('#external').show(1000).find('input').prop('disabled', false);
-                $('#advanced').hide('slow').hide('slow').find('textarea').prop('disabled', true);
+                $('#advanced').hide('slow').hide('slow').find('textarea').prop('disabled', true); 
                 $('#image').hide('slow').find('input').prop('disabled', true);
                 $('#audio').hide('slow').find('input').prop('disabled', true);
                 $('#normal').hide('slow').find('input').prop('disabled', true);
