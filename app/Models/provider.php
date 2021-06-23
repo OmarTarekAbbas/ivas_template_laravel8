@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Translatable;
 
 class Provider extends Model
 {
+    use Translatable;
+    protected $table = 'providers';
     protected $fillable = ['title', 'image'];
 
     ///////////////////set image///////////////////////////////
@@ -18,11 +21,11 @@ class Provider extends Model
 
     public function getImageAttribute($value)
     {
+        // dd($value);
         if ($value) {
             return url('/uploads/provider/' . $value);
-        } else {
-            return false;
         }
+        return false;
 
     }
     public function categories()

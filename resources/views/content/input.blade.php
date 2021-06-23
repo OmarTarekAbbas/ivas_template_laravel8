@@ -89,7 +89,28 @@
         <div class="form-group" hidden id="advanced">
             <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
             <div class="col-sm-9 col-lg-10 controls">
-                {!! Form::textarea('path', null, ['class' => 'form-control ckeditor', 'rows' => 6, 'cols' => 40, 'disabled' => true]) !!}
+                <ul id="myTab1" class="nav nav-tabs">
+                    <?php $i = 0; ?>
+                    @foreach ($languages as $language)
+                        <li class="{{ $i++ ? '' : 'active' }}"><a href="#description{{ $language->short_code }}"
+                                data-toggle="tab"> {{ $language->title }}</a></li>
+                    @endforeach
+                </ul>
+                <div class="tab-content">
+                    <?php $i = 0; ?>
+                    @foreach ($languages as $language)
+                        <div class="tab-pane fade in {{ $i++ ? '' : 'active' }}"
+                            id="description{{ $language->short_code }}">
+                            <textarea class="form-control col-md-12 ckeditor" id="ckeditor"
+                                name="path[{{ $language->short_code }}]" rows="6">
+                            @if ($content)
+                            {!! $content->getTranslation('path', $language->short_code) !!}
+                            @endif
+                                {{ old('path.' . $language->short_code) }}
+                        </textarea>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     @endif
@@ -120,7 +141,22 @@
         <div class="form-group" hidden id="normal">
             <label class="col-sm-3 col-lg-2 control-label">@lang('messages.Content Type.Content') <span class="text-danger">*</span></label>
             <div class="col-sm-9 col-lg-10 controls">
-                {!! Form::text('path', null, ['placeholder' => trans('messages.Content Type.Content'), 'class' => 'form-control', 'disabled' => true]) !!}
+                <ul id="myTab1" class="nav nav-tabs">
+                    <?php $i = 0; ?>
+                    @foreach ($languages as $language)
+                        <li class="{{ $i++ ? '' : 'active' }}"><a href="#path{{ $language->short_code }}"
+                                data-toggle="tab"> {{ $language->title }}</a></li>
+                    @endforeach
+                </ul>
+                <div class="tab-content">
+                    <?php $i = 0; ?>
+                    @foreach ($languages as $language)
+                        <div class="tab-pane fade in {{ $i++ ? '' : 'active' }}"
+                            id="path{{ $language->short_code }}">
+                            <input class="form-control" name="path[{{ $language->short_code }}]" value="@if ($content) {!! $content->getTranslation('path', $language->short_code) !!} @endif" />
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     @endif

@@ -1,6 +1,6 @@
 @extends('template')
 @section('page_title')
-@lang('messages.provider.provider')
+    @lang('messages.provider.provider')
 @stop
 @section('content')
     <div class="row">
@@ -55,13 +55,16 @@
                                                 </td>
                                                 <td>{{ $value->id }}</td>
                                                 <td>
-                                                    {{ $value->title }}
+                                                    @foreach ($languages as $language)
+                                                        <li> <b>{{ $language->title }} :</b>
+                                                            {{ $value->getTranslation('title', $language->short_code) }}</li>
+                                                    @endforeach
                                                 </td>
-                                                
+
                                                 <td>
                                                     @if ($value->image)
                                                         <img class=" img-circle" width="100px" height="100px"
-                                                            src="{{ $operator->image }}" />
+                                                            src="{{ $value->image }}" />
                                                     @else
                                                         <img class=" img-circle" width="100px" height="100px"
                                                             src="https://ui-avatars.com/api/?name={{ $value->title }}" />
@@ -84,22 +87,23 @@
                                                         @endif
                                                         @if (get_action_icons('provider/{id}/delete', 'get'))
 
-                                                        <form action="{{ url('provider/' . $value->id . '/delete') }}"
-                                                            method="GET" style="display: initial;">
-                                                            @csrf
-                                                            <input type="hidden" name="_method" value="DELETE" />
-                                                            <button type="submit" class="btn btn-sm btn-danger"
-                                                                style="height: 28px;"><i class="fa fa-trash"></i></button>
-                                                        </form>
+                                                            <form action="{{ url('provider/' . $value->id . '/delete') }}"
+                                                                method="GET" style="display: initial;">
+                                                                @csrf
+                                                                <input type="hidden" name="_method" value="DELETE" />
+                                                                <button type="submit" class="btn btn-sm btn-danger"
+                                                                    style="height: 28px;"><i
+                                                                        class="fa fa-trash"></i></button>
+                                                            </form>
                                                         @endif
                                                         @if (get_action_icons('category', 'get'))
 
-                                                        @if (count($value->categories) > 0)
-                                                            <a class="btn btn-sm show-tooltip show-tooltip"
-                                                                href="{{ url("provider/$value->id") }}"
-                                                                title="category"><i class="fa fa-step-forward"></i>
-                                                            </a>
-                                                        @endif
+                                                            @if (count($value->categories) > 0)
+                                                                <a class="btn btn-sm show-tooltip show-tooltip"
+                                                                    href="{{ url("provider/$value->id") }}"
+                                                                    title="category"><i class="fa fa-step-forward"></i>
+                                                                </a>
+                                                            @endif
                                                         @endif
 
                                                     </div>
@@ -123,6 +127,5 @@
     <script>
         $('#provider').addClass('active');
         $('#provider_index').addClass('active');
-
     </script>
 @stop

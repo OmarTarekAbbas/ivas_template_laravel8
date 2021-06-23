@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Repository\LanguageRepository;
 
 use App\Models\Provider;
 use Validator;
+
 class ProviderController extends Controller
 {
     /**
@@ -17,14 +19,16 @@ class ProviderController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function __construct()
+    public function __construct(LanguageRepository $languageRepository)
     {
-      $this->get_privilege();
+        $this->get_privilege();
+        $this->languageRepository    = $languageRepository;
     }
     public function index()
     {
         $providers = Provider::all();
-        return view('provider.index',compact('providers'));
+        $languages = $this->languageRepository->all();
+        return view('provider.index', compact('providers','languages'));
     }
 
     /**
@@ -35,7 +39,9 @@ class ProviderController extends Controller
     public function create()
     {
         $provider = null;
-        return view('provider.form',compact('provider'));
+        $languages = $this->languageRepository->all();
+
+        return view('provider.form', compact('provider','languages'));
     }
 
     /**
@@ -46,30 +52,34 @@ class ProviderController extends Controller
      */
     public function store(Request $request)
     {
-      $validator = Validator::make($request->all(), [
-                  'title' => 'required|string',
-                  'image' => ''
-          ]);
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|array',
+            'title.*' => 'required|string',
+            'image' => ''
+        ]);
 
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
 
-        if($request->image)
+        if ($request->image) {
+            $imgExtensions = array("png", "jpeg", "jpg");
+            $file = $request->image;
+            if (!in_array($file->getClientOriginalExtension(), $imgExtensions)) {
+                \Session::flash('failed', 'Image must be jpg, png, or jpeg only !! No updates takes place, try again with that extensions please..');
+                return back();
+            }
+        }
+
+        $provider = new Provider();
+        $provider->fill($request->except('title'));
+        foreach ($request->title as $key => $value)
         {
-          $imgExtensions = array("png","jpeg","jpg");
-          $file = $request->image;
-          if(! in_array($file->getClientOriginalExtension(),$imgExtensions))
-          {
-              \Session::flash('failed','Image must be jpg, png, or jpeg only !! No updates takes place, try again with that extensions please..');
-              return back();
-         }
-       }
-
-      $provider = Provider::create($request->all());
-
-      \Session::flash('success', 'provider Created Successfully');
-      return redirect('/provider');
+            $provider->setTranslation('title', $key, $value);
+        }
+        $provider->save();
+        \Session::flash('success', 'provider Created Successfully');
+        return redirect('/provider');
     }
 
     /**
@@ -83,7 +93,7 @@ class ProviderController extends Controller
         $provider = Provider::findOrFail($id);
         $categorys = $provider->categories;
         //dd($categorys);
-        return view('category.index',compact('provider','categorys'));
+        return view('category.index', compact('provider', 'categorys'));
     }
 
     /**
@@ -95,7 +105,8 @@ class ProviderController extends Controller
     public function edit($id)
     {
         $provider = Provider::findOrFail($id);
-        return view('provider.form',compact('provider'));
+        $languages = $this->languageRepository->all();
+        return view('provider.form', compact('provider','languages'));
     }
 
     /**
@@ -107,31 +118,39 @@ class ProviderController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $validator = Validator::make($request->all(), [
-                  'title' => 'required|string',
-                  'image' => ''
-          ]);
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|array',
+            'title.*' => 'required|string',
+            'image' => ''
+        ]);
 
-      if ($validator->fails()) {
-          return back()->withErrors($validator)->withInput();
-      }
-      $provider = Provider::findOrFail($id);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        $provider = Provider::findOrFail($id);
 
-      if($request->image){
-        $imgExtensions = array("png","jpeg","jpg");
-        $file = $request->image;
-        if(! in_array($file->getClientOriginalExtension(),$imgExtensions))
+        if ($request->image) {
+            $imgExtensions = array("png", "jpeg", "jpg");
+            $file = $request->image;
+            if (!in_array($file->getClientOriginalExtension(), $imgExtensions)) {
+                \Session::flash('failed', 'Image must be jpg, png, or jpeg only !! No updates takes place, try again with that extensions please..');
+                return back();
+            }
+            // dd($provider->image);
+            if ($provider->image) {
+                $this->delete_image_if_exists(base_path('/uploads/provider/' . basename($provider->image)));
+            }
+        }
+
+        $provider->fill($request->except('title'));
+        foreach ($request->title as $key => $value)
         {
-            \Session::flash('failed','Image must be jpg, png, or jpeg only !! No updates takes place, try again with that extensions please..');
-            return back();
-       }
-        $this->delete_image_if_exists(base_path('/uploads/provider/'.basename($provider->image)));
-      }
+            $provider->setTranslation('title', $key, $value);
+        }
+        $provider->save();
 
-      $provider->update($request->all());
-
-      \Session::flash('success', 'Category Updated Successfully');
-      return redirect('/provider');
+        \Session::flash('success', 'Category Updated Successfully');
+        return redirect('/provider');
     }
 
     /**
