@@ -201,6 +201,7 @@ class DashboardController extends Controller
     public function export_DB_backup()
     {
         // $this->backup_tables('localhost',env('DB_USERNAME'),env('DB_PASSWORD'),env('DB_DATABASE'));
+        // dd(PHP_OS);
 
         $database_name = env('DB_DATABASE');
         $database_password = env('DB_PASSWORD');
@@ -210,9 +211,11 @@ class DashboardController extends Controller
         else
             $database_password = "";
 
-        // $mysqldump_command = "E:/XAMPP/mysql/bin/mysqldump" ; // for windows
-        $mysqldump_command = "mysql"; // for linux server
-
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') { //php get operating system
+            $mysqldump_command = "E:/XAMPP/mysql/bin/mysqldump"; // for windows
+        } else {
+            $mysqldump_command = "mysqldump" ; // for linux server
+        }
         $command = "$mysqldump_command -u $database_username $database_password $database_name > " . $this->databases_base_path . date("Y-m-d_H-i-s") . '.sql';
         $command = str_replace("\\", "/", $command);
 
@@ -427,7 +430,7 @@ class DashboardController extends Controller
             }
             $ex = exec($command);
             // dd($ex);
-            
+
             \Session::flash('success', 'Created a Migrate file from tables successfully');
             return redirect('dashboard');
         } else {
