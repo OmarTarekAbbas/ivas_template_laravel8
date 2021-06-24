@@ -28,6 +28,7 @@
         <!-- BEGIN Main Content -->
         <div class="login-wrapper">
 
+            {{-- {{ dd(Session::has('success')) }} --}}
             <!-- BEGIN Login Form -->
                 {!! Form::open(['url'=>'password/email']) !!}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
