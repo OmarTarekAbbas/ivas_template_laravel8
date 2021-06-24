@@ -104,7 +104,7 @@ class RbtController extends Controller
     {
         $this->rbtService->handle($request->validated());
 
-        session()->flash('success', 'rbt created Successfully');
+        session()->flash('success', trans('messages.Added Successfully'));
 
         return redirect('rbt/' . $request->content_id);
     }
@@ -147,7 +147,7 @@ class RbtController extends Controller
     {
         $this->rbtService->handle($request->validated(), $id);
 
-        session()->flash('success', 'RbtCode Update Successfully');
+        session()->flash('success', trans('messages.updated successfully'));
 
         return redirect('rbt/' . $request->content_id);
     }
@@ -162,7 +162,7 @@ class RbtController extends Controller
     {
         $rbt = $this->rbtRepository->findOrFail($id);
         $rbt->delete();
-        session()->flash('success', 'RbtCode Delete Successfully');
+        session()->flash('success', trans('messages.has been deleted successfully'));
         return back();
     }
 }

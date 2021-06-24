@@ -68,7 +68,7 @@ class ContentTypeController extends Controller
     public function store(ContentTypeStoreRequest $request)
     {
     	$contentType = $this->contentTypeService->handle($request->validated());
-    	$request->session()->flash('success', 'Created Successfully');
+    	$request->session()->flash('success', trans('messages.Added Successfully'));
     	return redirect('contentType');
     }
 
@@ -94,7 +94,7 @@ class ContentTypeController extends Controller
     public function update($id,ContentTypeUpdateRequest $request)
     {
     	$this->contentTypeService->handle($request->validated(), $id);
-    	$request->session()->flash('success', 'Updated Successfully');
+    	$request->session()->flash('success', trans('messages.updated successfully'));
     	return redirect('contentType');
     }
 
@@ -107,7 +107,7 @@ class ContentTypeController extends Controller
     public function destroy($id)
     {
     	$this->contentTypeRepository->destroy($id);
-    	\Session::flash('success', 'Deleted Successfully');
+    	\Session::flash('success', trans('messages.has been deleted successfully'));
     	return redirect('contentType');
     }
 }

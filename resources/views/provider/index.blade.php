@@ -72,13 +72,13 @@
                                                 </td>
                                                 <td class="visible-md visible-xs visible-sm visible-lg">
                                                     <div class="btn-group">
-                                                        @if (get_action_icons('category/create', 'get'))
+                                                        {{-- @if (get_action_icons('category/create', 'get'))
 
                                                             <a class="btn btn-sm btn-success"
                                                                 href="{{ url('category/create?provider_id=' . $value->id . '&title=' . $value->title) }}"
                                                                 title="Add Category"><i class="fa fa-plus"></i>
                                                             </a>
-                                                        @endif
+                                                        @endif --}}
                                                         @if (get_action_icons('provider/{id}/edit', 'get'))
 
                                                             <a class="btn btn-sm show-tooltip"
@@ -96,7 +96,7 @@
                                                                         class="fa fa-trash"></i></button>
                                                             </form>
                                                         @endif
-                                                        @if (get_action_icons('category', 'get'))
+                                                        {{-- @if (get_action_icons('category', 'get'))
 
                                                             @if (count($value->categories) > 0)
                                                                 <a class="btn btn-sm show-tooltip show-tooltip"
@@ -104,7 +104,7 @@
                                                                     title="category"><i class="fa fa-step-forward"></i>
                                                                 </a>
                                                             @endif
-                                                        @endif
+                                                        @endif --}}
 
                                                     </div>
                                                 </td>

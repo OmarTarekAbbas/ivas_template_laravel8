@@ -74,7 +74,7 @@ class TypeController extends Controller
     {
         $this->typeService->handle($request->validated());
 
-        \Session::flash('success','Type added successfully');
+        \Session::flash('success',trans('messages.Added Successfully'));
 
         return redirect('types/index');
 
@@ -105,7 +105,7 @@ class TypeController extends Controller
 
         $this->typeService->handle($request->validated(), $id);
 
-        \Session::flash('success','Type Updated successfully');
+        \Session::flash('success',trans('messages.updated successfully'));
 
         return redirect('types/index');
 
@@ -124,7 +124,7 @@ class TypeController extends Controller
 
         $type->delete();
 
-        \Session::flash('success','Type Deleted successfully');
+        \Session::flash('success',trans('messages.has been deleted successfully'));
 
         return redirect('types/index');
     }

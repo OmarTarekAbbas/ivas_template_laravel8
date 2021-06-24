@@ -80,7 +80,7 @@ class OperatorController extends Controller
     public function store(OperatorStoreRequest $request)
     {
         $this->operatorService->handle($request->validated());
-        $request->session()->flash('success', 'Created Successfully');
+        $request->session()->flash('success', trans('messages.Added Successfully'));
         return redirect('operator');
     }
 
@@ -118,7 +118,7 @@ class OperatorController extends Controller
     public function update(OperatorUpdateRequest $request, $id)
     {
         $this->operatorService->handle($request->validated(), $id);
-        $request->session()->flash('success', 'Created Successfully');
+        $request->session()->flash('success', trans('messages.updated successfully'));
         return redirect('operator');
     }
 
@@ -132,7 +132,7 @@ class OperatorController extends Controller
     {
         $operator = $this->operatorRepository->find($id);
         $operator->delete();
-        session()->flash('success', 'Deleted Successfully');
+        session()->flash('success', trans('messages.has been deleted successfully'));
         return redirect('operator');
     }
 }

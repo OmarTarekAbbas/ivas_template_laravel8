@@ -83,7 +83,7 @@ class StaticTranslationController extends Controller
     public function store(StaticTranslationRequest $request)
     {
         $this->staticTraslationService->handle($request->validated());
-        $request->session()->flash('success', 'Created Successfully');
+        $request->session()->flash('success', trans('messages.Added Successfully'));
         return redirect('static_translation');
     }
 
@@ -123,7 +123,7 @@ class StaticTranslationController extends Controller
     public function update(StaticTranslationRequest $request, $id)
     {
         $this->staticTraslationService->handle($request->validated(), $id);
-        $request->session()->flash('success', 'Created Successfully');
+        $request->session()->flash('success', trans('messages.updated successfully'));
         return redirect('static_translation');
     }
 
@@ -137,7 +137,7 @@ class StaticTranslationController extends Controller
     {
         $static_translation = $this->staticTraslationRepository->find($id);
         $static_translation->delete();
-        $request->session()->flash('success', 'Deleted Successfully');
+        $request->session()->flash('success', trans('messages.has been deleted successfully'));
         return redirect('static_translation');
     }
 }

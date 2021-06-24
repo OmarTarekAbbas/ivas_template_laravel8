@@ -66,7 +66,7 @@ class ProviderController extends Controller
             $imgExtensions = array("png", "jpeg", "jpg");
             $file = $request->image;
             if (!in_array($file->getClientOriginalExtension(), $imgExtensions)) {
-                \Session::flash('failed', 'Image must be jpg, png, or jpeg only !! No updates takes place, try again with that extensions please..');
+                \Session::flash('failed', trans('messages.Image must be jpg, png, or jpeg only !! No updates takes place, try again with that extensions please..'));
                 return back();
             }
         }
@@ -78,7 +78,7 @@ class ProviderController extends Controller
             $provider->setTranslation('title', $key, $value);
         }
         $provider->save();
-        \Session::flash('success', 'provider Created Successfully');
+        \Session::flash('success', trans('messages.has been deleted successfully'));
         return redirect('/provider');
     }
 
@@ -133,7 +133,7 @@ class ProviderController extends Controller
             $imgExtensions = array("png", "jpeg", "jpg");
             $file = $request->image;
             if (!in_array($file->getClientOriginalExtension(), $imgExtensions)) {
-                \Session::flash('failed', 'Image must be jpg, png, or jpeg only !! No updates takes place, try again with that extensions please..');
+                \Session::flash('failed',trans('messages.Image must be jpg, png, or jpeg only !! No updates takes place, try again with that extensions please..'));
                 return back();
             }
             // dd($provider->image);
@@ -149,7 +149,7 @@ class ProviderController extends Controller
         }
         $provider->save();
 
-        \Session::flash('success', 'Category Updated Successfully');
+        \Session::flash('success', trans('messages.updated successfully'));
         return redirect('/provider');
     }
 

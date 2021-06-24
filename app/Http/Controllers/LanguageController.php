@@ -84,7 +84,7 @@ class LanguageController extends Controller
     public function store(LanguageStoreRequest $request)
     {
     	$language = $this->languageService->handle($request->validated());
-    	$request->session()->flash('success', 'Created Successfully');
+    	$request->session()->flash('success', trans('messages.Added Successfully'));
     	return redirect('language');
     }
 
@@ -110,7 +110,7 @@ class LanguageController extends Controller
     public function update($id,LanguageUpdateRequest $request)
     {
     	$this->languageService->handle($request->validated(), $id);
-    	$request->session()->flash('success', 'Updated Successfully');
+    	$request->session()->flash('success', trans('messages.updated successfully'));
     	return redirect('language');
     }
 
@@ -123,7 +123,7 @@ class LanguageController extends Controller
     public function destroy($id)
     {
     	$this->languageRepository->destroy($id);
-    	\Session::flash('success', 'Deleted Successfully');
+    	\Session::flash('success', trans('messages.has been deleted successfully'));
     	return redirect('language');
     }
 }

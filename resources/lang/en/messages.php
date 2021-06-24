@@ -300,9 +300,11 @@ return [
     'url' => 'url',
     'rbt code' => 'rbt code',
     'operator code' => 'operator code',
-    'User Added Successfully' => 'User Added Successfully',
-    'User updated successfully' => 'User updated successfully',
-    'User has been deleted successfully' => 'User has been deleted successfully',
+
+    'Added Successfully' => 'Added Successfully',
+    'updated successfully' => 'Updated Successfully',
+    'has been deleted successfully' => 'Has Been Deleted Successfully',
+
     'Role Added successfully' => 'Role Added successfully',
     'password confirmation must be the same of the new password, and all fields are required' => 'password confirmation must be the same of the new password, and all fields are required',
     'Password updated successfully' => 'Password updated successfully',

@@ -199,7 +199,7 @@ class RouteController extends Controller
             }
         }
 
-        \Session::flash('success',\Lang::get('messages.custom-messages.created'));
+        \Session::flash('success',trans('messages.Added Successfully'));
         return redirect('all_routes') ;
     }
 
@@ -282,7 +282,7 @@ class RouteController extends Controller
                 $this->sync_role_route($IDs,$check_route->id) ;
             }
         }
-        $request->session()->flash('success',"Route Added Successfully");
+        $request->session()->flash('success',trans('messages.Added Successfully'));
         return back() ;
     }
 
@@ -356,7 +356,7 @@ class RouteController extends Controller
                 RoleRoute::create($role_route) ;
             }
         }
-        \Session::flash('success',\Lang::get('messages.custom-messages.updated'));
+        \Session::flash('success',trans('messages.updated successfully'));
         return redirect('all_routes') ;
     }
 
@@ -369,7 +369,7 @@ class RouteController extends Controller
     public function destroy($id)
     {
         RouteModel::destroy($id) ;
-        \Session::flash('success',\Lang::get('messages.custom-messages.deleted'));
+        \Session::flash('success',trans('messages.has been deleted successfully'));
         return redirect('all_routes') ;
     }
 }

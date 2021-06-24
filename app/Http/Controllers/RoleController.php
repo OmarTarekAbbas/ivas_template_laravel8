@@ -19,7 +19,7 @@ class RoleController extends Controller
     {
       $this->get_privilege();
     }
-    
+
     public function index()
     {
 
@@ -55,7 +55,7 @@ class RoleController extends Controller
             if ($validator->fails()) {
                 return back()->withError($validator)->withInput();
             }
-            \Session::flash('success','Role added successfully');
+            \Session::flash('success',trans('messages.Added Successfully'));
             Role::create(['name' => $request->name , 'role_priority' => $request->role_priority]);
 
             return redirect('roles');
@@ -94,7 +94,7 @@ class RoleController extends Controller
 
             $role->name = $request->name;
             $role->role_priority = $request->role_priority;
-            \Session::flash('success','Role Updated successfully');
+            \Session::flash('success',trans('messages.updated successfully'));
             $role->update();
 
             return redirect('roles');

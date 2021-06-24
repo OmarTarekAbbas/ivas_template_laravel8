@@ -69,7 +69,7 @@ class CountryController extends Controller
     public function store(CountryStoreRequest $request)
     {
     	$country = $this->countryService->handle($request->validated());
-    	$request->session()->flash('success', 'Created Successfully');
+    	$request->session()->flash('success', trans('messages.Added Successfully'));
     	return redirect('country');
     }
 
@@ -96,7 +96,7 @@ class CountryController extends Controller
     {
         // dd($id);
     	$this->countryService->handle($request->validated(), $id);
-    	$request->session()->flash('success', 'Updated Successfully');
+    	$request->session()->flash('success', trans('messages.updated successfully'));
     	return redirect('country');
     }
 
@@ -109,7 +109,7 @@ class CountryController extends Controller
     public function delete($id)
     {
     	$this->countryRepository->destroy($id);
-    	\Session::flash('success', 'Deleted Successfully');
+    	\Session::flash('success', trans('messages.has been deleted successfully'));
     	return redirect('country');
     }
 }

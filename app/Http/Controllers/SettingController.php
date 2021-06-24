@@ -96,7 +96,7 @@ class SettingController extends Controller
     {
         $this->settingStoreService->handle($request->validated());
 
-        $request->session()->flash('success', 'Setting created successfull');
+        $request->session()->flash('success', trans('messages.Added Successfully'));
 
         return redirect('setting');
     }
@@ -126,7 +126,7 @@ class SettingController extends Controller
 
         $this->settingUpdateService->handle($request->validated(), $setting);
 
-        $request->session()->flash('success', 'updated successfully');
+        $request->session()->flash('success', trans('messages.updated successfully'));
 
         return redirect('setting');
     }
@@ -144,7 +144,7 @@ class SettingController extends Controller
 
         $setting->delete();
 
-        \Session::flash('success', 'deleted successfully');
+        \Session::flash('success', trans('messages.has been deleted successfully'));
 
         return back();
     }

@@ -135,7 +135,7 @@ class CategoryController extends Controller
     {
         // dd($request->all());
         $category = $this->categoryService->handle($request->validated());
-        $request->session()->flash('success', 'Created Successfully');
+        $request->session()->flash('success', trans('messages.Added Successfully'));
         if ($request->has('parent_id')) {
             return redirect('category?parent_id=' . $request->parent_id . '');
         }
@@ -162,7 +162,7 @@ class CategoryController extends Controller
     public function update($id, CategoryRequest $request)
     {
         $this->categoryService->handle($request->validated(), $id);
-        $request->session()->flash('success', 'Updated Successfully');
+        $request->session()->flash('success', trans('messages.updated successfully'));
         if ($request->has('parent_id')) {
             return redirect('category?parent_id=' . $request->parent_id . '');
         }
@@ -179,7 +179,7 @@ class CategoryController extends Controller
     {
         $category = $this->categoryRepository->find($id);
         $this->categoryRepository->destroy($id);
-        \Session::flash('success', 'Deleted Successfully');
+        \Session::flash('success', trans('messages.has been deleted successfully'));
         if ($category->parent_id) {
             return redirect('category?parent_id=' . $category->parent_id . '');
         }

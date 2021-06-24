@@ -143,7 +143,7 @@ class PostController extends Controller
     {
         $this->postStoreService->handle($request->validated());
 
-        $request->session()->flash('success', 'Post created successfull');
+        $request->session()->flash('success', trans('messages.Added Successfully'));
 
         return redirect('post');
     }
@@ -175,7 +175,7 @@ class PostController extends Controller
 
         $this->postUpdateService->handle($request->validated(), $post);
 
-        $request->session()->flash('success', 'updated successfully');
+        $request->session()->flash('success', trans('messages.updated successfully'));
 
         return redirect('post');
     }
@@ -193,7 +193,7 @@ class PostController extends Controller
 
         $post->delete();
 
-        session()->flash('success', 'deleted successfully');
+        session()->flash('success', trans('messages.has been deleted successfully'));
 
         return back();
     }

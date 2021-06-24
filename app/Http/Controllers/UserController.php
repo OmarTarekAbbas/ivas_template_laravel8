@@ -70,7 +70,7 @@ class UserController extends Controller
             $user->roles()->attach($request->role);
         }
 
-        $request->session()->flash('success', trans('messages.User Added Successfully'));
+        $request->session()->flash('success', trans('messages.Added Successfully'));
         return redirect('users');
     }
 
@@ -114,7 +114,7 @@ class UserController extends Controller
         if ($request->role) {
             $user->roles()->sync($request->role);
         }
-        \Session::flash('success', trans('messages.User updated successfully'));
+        \Session::flash('success', trans('messages.updated successfully'));
         return redirect('users');
     }
 
@@ -129,7 +129,7 @@ class UserController extends Controller
                 Storage::delete($user->profile_image);
             $user->delete();
 
-            \Session::flash('success', trans('messages.User has been deleted successfully'));
+            \Session::flash('success', trans('messages.has been deleted successfully'));
             return redirect('users');
         } else {
             return back();

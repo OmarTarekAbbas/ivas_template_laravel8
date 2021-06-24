@@ -294,9 +294,11 @@ return [
     'url' => 'رابط',
     'rbt code' => 'كود محتوي الصوتي',
     'operator code' => 'كود المشغل',
-    'User Added Successfully' => 'تمت إضافة المستخدم بنجاح',
-    'User updated successfully' => 'تم تحديث المستخدم بنجاح',
-    'User has been deleted successfully' => 'تم حذف المستخدم بنجاح',
+
+    'Added Successfully' => 'تمت إضافة بنجاح',
+    'updated successfully' => 'تم تحديث بنجاح',
+    'has been deleted successfully' => 'تم حذفه بنجاح',
+
     'Role Added successfully' => 'تمت إضافة الدور بنجاح',
     'password confirmation must be the same of the new password, and all fields are required' => 'يجب أن يكون تأكيد كلمة المرور هو نفسه كلمة المرور الجديدة ، وجميع الحقول مطلوبة',
     'Password updated successfully' => 'تم تحديث كلمة السر بنجاح',

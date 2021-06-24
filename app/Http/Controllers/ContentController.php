@@ -193,7 +193,7 @@ class ContentController extends Controller
         // dd($request->all());
         $this->ContentStoreService->handle($request->validated());
 
-        $request->session()->flash('success', 'Content created successfull');
+        $request->session()->flash('success', trans('messages.Added Successfully'));
 
         return redirect('content');
     }
@@ -227,7 +227,7 @@ class ContentController extends Controller
 
         $this->ContentUpdateService->handle($request->validated(), $id);
 
-        $request->session()->flash('success', 'updated successfully');
+        $request->session()->flash('success', trans('messages.updated successfully'));
 
         return redirect('content');
     }
@@ -245,7 +245,7 @@ class ContentController extends Controller
 
         $content->delete();
 
-        \Session::flash('success', 'deleted successfully');
+        \Session::flash('success', trans('messages.has been deleted successfully'));
 
         return back();
     }
