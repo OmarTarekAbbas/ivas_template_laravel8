@@ -119,7 +119,7 @@ class ContentController extends Controller
 
         return DataTables::of($contents)
             ->addColumn('index', function (Content $content) {
-                return '<input class="select_all_template" type="checkbox" name="selected_rows[]" value="{{$content->id}}" class="roles" onclick="collect_selected(this)">';
+                return '<input class="select_all_template" type="checkbox" name="selected_rows[]" value="'.$content->id.'" class="roles" onclick="collect_selected(this)">';
             })
             ->addColumn('id', function (Content $content) {
                 return $content->id;

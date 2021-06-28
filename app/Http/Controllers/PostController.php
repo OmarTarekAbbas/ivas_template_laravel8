@@ -96,7 +96,7 @@ class PostController extends Controller
 
         return \DataTables::of($posts)
             ->addColumn('index', function(Post $post) {
-                return '<input class="select_all_template" type="checkbox" name="selected_rows[]" value="{{$post->id}}" class="roles" onclick="collect_selected(this)">';
+                return '<input class="select_all_template" type="checkbox" name="selected_rows[]" value="'.$post->id.'" class="roles" onclick="collect_selected(this)">';
             })
             ->addColumn('content', function(Post $post) {
                 return $post->content->title;

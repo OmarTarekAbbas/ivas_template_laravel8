@@ -86,7 +86,7 @@ class CategoryController extends Controller
 
         return \DataTables::eloquent($categorys)
             ->addColumn('index', function (Category $category) {
-                return '<input class="select_all_template" type="checkbox" name="selected_rows[]" value="{{$category->id}}" class="roles" onclick="collect_selected(this)">';
+                return '<input class="select_all_template" type="checkbox" name="selected_rows[]" value="'.$category->id.'" class="roles" onclick="collect_selected(this)">';
             })
             ->addColumn('id', function (Category $category) {
                 return $category->id;
