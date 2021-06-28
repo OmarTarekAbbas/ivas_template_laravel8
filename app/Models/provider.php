@@ -9,7 +9,7 @@ class Provider extends Model
 {
     use Translatable;
     protected $table = 'providers';
-    protected $fillable = ['title', 'image'];
+    protected $fillable = ['title', 'image']; 
 
     ///////////////////set image///////////////////////////////
     public function setImageAttribute($value)
